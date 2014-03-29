@@ -47,12 +47,6 @@ public class PollImageView extends ImageView {
     private class GestureListener extends GestureDetector.SimpleOnGestureListener {
 
         @Override
-        public boolean onDown(MotionEvent e) {
-            Toast.makeText(getContext().getApplicationContext(), "onDown() occurred", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-
-        @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY){
             Toast.makeText(getContext().getApplicationContext(), "onFling() occurred", Toast.LENGTH_SHORT).show();
             return true;
