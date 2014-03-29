@@ -5,14 +5,20 @@
 
         <item android:id="@+id/action_search"
             android:icon="@drawable/ic_act_bar_1"
-            yourapp:showAsAction="ifRoom"  />
+            android:title="First"
+            yourapp:showAsAction="ifRoom"
+            android:showAsAction="ifRoom"/>
 
         <item android:id="@+id/action_search"
             android:icon="@drawable/ic_act_bar_2"
-            yourapp:showAsAction="ifRoom"  />
+            android:title="Second"
+            yourapp:showAsAction="ifRoom"
+            android:showAsAction="ifRoom"/>
 
         <item android:id="@+id/action_search"
             android:icon="@drawable/ic_act_bar_3"
-            yourapp:showAsAction="ifRoom"  />
+            android:title="Second"
+            yourapp:showAsAction="ifRoom"
+            android:showAsAction="ifRoom"/>
 
 </menu>
