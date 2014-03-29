@@ -41,7 +41,6 @@ public class Login extends Activity {
 
     public void login(View loginButton) {
         EditText userEmailField = (EditText) findViewById(R.id.et_userEmail);
-
         mUserEmail = userEmailField.getText().toString();
         EditText userPasswordField = (EditText) findViewById(R.id.et_userPassword);
         mUserPassword = userPasswordField.getText().toString();
