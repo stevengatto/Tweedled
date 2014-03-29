@@ -24,12 +24,13 @@ import java.io.IOException;
 
 /**
  * Created by klam on 3/29/14.
+ * Login View
  */
 public class Login extends Activity {
     private String mUserEmail;
     private String mUserPassword;
     private SharedPreferences mPreferences;
-    private static final String LOGIN_URL = "http://tranquil-atoll-5561.herokuapp.com/api/v1/sessions";
+    private static final String LOGIN_URL = "http://107.170.50.231/api/v1/sessions";
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +41,7 @@ public class Login extends Activity {
 
     public void login(View loginButton) {
         EditText userEmailField = (EditText) findViewById(R.id.et_userEmail);
+
         mUserEmail = userEmailField.getText().toString();
         EditText userPasswordField = (EditText) findViewById(R.id.et_userPassword);
         mUserPassword = userPasswordField.getText().toString();
@@ -47,7 +49,6 @@ public class Login extends Activity {
             // input fields are empty
             Toast.makeText(this, "Please complete all the fields",
                     Toast.LENGTH_LONG).show();
-            return;
         } else {
             LoginTask loginTask = new LoginTask(this);
             loginTask.setMessageLoading("Logging in...");
@@ -72,7 +73,7 @@ public class Login extends Activity {
             HttpPost post = new HttpPost(urls[0]);
             JSONObject holder = new JSONObject();
             JSONObject userObj = new JSONObject();
-            String response = null;
+            String response;
             JSONObject json = new JSONObject();
 
             try {

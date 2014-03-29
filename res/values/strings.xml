@@ -9,4 +9,6 @@
     <string name="user_password_confirmation">Confirm Password</string>
     <string name="auto_login">Auto Login?</string>
 
+    <string name="logout">Logout</string>
+
 </resources>
