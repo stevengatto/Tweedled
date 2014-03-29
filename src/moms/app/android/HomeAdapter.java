@@ -20,17 +20,18 @@ public class HomeAdapter extends ArrayAdapter<String> {
 
     private Context context;
     private int resourceId;
-    private List<String> list;
 
     public HomeAdapter(Context context, int resourceId, List<String> list){
         super(context, resourceId, list);
 
         this.context = context;
         this.resourceId = resourceId;
-        this.list = list;
     }
 
-    public View getView(int position, View currentView, ViewGroup parent){
+    public View getView(int position, View convertView, ViewGroup parent){
+
+        View currentView = convertView;
+
         if(currentView == null){
             Log.d(TAG, "No recyclable custom view found. New view created.");
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
