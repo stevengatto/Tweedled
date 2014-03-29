@@ -14,27 +14,12 @@ import android.widget.Toast;
 public class PollImageView extends ImageView {
 
     GestureDetector gestureDetector;
-    int tapCount = 0;
 
     public PollImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        TypedArray a = context.getTheme().obtainStyledAttributes(
-                attrs,
-                R.styleable.PollImageView,
-                0, 0);
-
-        try {
-            tapCount = a.getInt(R.styleable.PollImageView_tapCount, 0);
-        } finally {
-            a.recycle();
-        }
 
         // creating new gesture detector
         gestureDetector = new GestureDetector(context, new GestureListener());
-    }
-
-    public int getTapCount(){
-        return tapCount;
     }
 
     // delegate the event to the gesture detector
@@ -43,12 +28,10 @@ public class PollImageView extends ImageView {
         return gestureDetector.onTouchEvent(e);
     }
 
-
     private class GestureListener extends GestureDetector.SimpleOnGestureListener {
 
         @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY){
-            Toast.makeText(getContext().getApplicationContext(), "onFling() occurred", Toast.LENGTH_SHORT).show();
+        public boolean onDown(MotionEvent e) {
             return true;
         }
 
