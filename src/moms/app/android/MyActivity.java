@@ -1,9 +1,9 @@
 package moms.app.android;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 
-public class MyActivity extends Activity {
+public class MyActivity extends ActionBarActivity {
     /**
      * Called when the activity is first created.
      */
