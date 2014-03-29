@@ -3,21 +3,24 @@
 <menu   xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:yourapp="http://schemas.android.com/apk/res-auto" >
 
-        <item android:id="@+id/action_search"
+        <item android:id="@+id/but_act_bar_1"
             android:icon="@drawable/ic_act_bar_1"
+            android:onClick="homeClick"
             android:title="First"
             yourapp:showAsAction="ifRoom"
             android:showAsAction="ifRoom"/>
 
-        <item android:id="@+id/action_search"
+        <item android:id="@+id/but_act_bar_2"
             android:icon="@drawable/ic_act_bar_2"
+            android:onClick="loginClick"
             android:title="Second"
             yourapp:showAsAction="ifRoom"
             android:showAsAction="ifRoom"/>
 
-        <item android:id="@+id/action_search"
+        <item android:id="@+id/but_act_bar_3"
             android:icon="@drawable/ic_act_bar_3"
-            android:title="Second"
+            android:onClick="extraButton"
+            android:title="Third"
             yourapp:showAsAction="ifRoom"
             android:showAsAction="ifRoom"/>
 
