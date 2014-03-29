@@ -1,15 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:background="#28544B">
+
+<TextView android:id="@+id/tv_poll_main_title"
+          android:layout_width="match_parent"
+          android:layout_height="40dp"
+          android:gravity="center"
+          android:textSize="35dp"
+          android:layout_marginTop="10dp"
+          android:text="Main title"/>
+
+
+<LinearLayout android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:padding="20dp"
-              android:background="#28544B">
+              android:layout_below="@id/tv_poll_main_title">
     
     <RelativeLayout android:orientation="vertical"
                   android:layout_width="0dp"
-                  android:layout_height="match_parent"
+                  android:layout_height="wrap_content"
                   android:layout_weight="1"
                   android:background="#ACBD86"
                   android:layout_marginRight="10dp"
@@ -45,7 +58,7 @@
 
     <RelativeLayout android:orientation="vertical"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="#ACBD86"
                     android:layout_marginLeft="10dp"
@@ -80,3 +93,5 @@
     </RelativeLayout>
 
 </LinearLayout>
+
+</RelativeLayout>
