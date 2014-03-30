@@ -2,6 +2,8 @@ package moms.app.android;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -11,8 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.*;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -32,13 +33,13 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        //create reference to listView and Activity so we can setAdapter later
+        //create references
         listView = inflater.inflate(R.layout.home_fragment, container, false);
+
         thisActivity = getActivity();
 
         //make web call for kitten pictures
         new DownloadImageTask().execute("http://www.zwaldtransport.com/images/placeholders/placeholder1.jpg");
-
 
         return listView;
     }

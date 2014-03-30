@@ -1,15 +1,20 @@
 package moms.app.android;
 
 import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -44,8 +49,13 @@ public class HomeAdapter extends ArrayAdapter<Drawable> {
 
             //create holder and  set up references to TextView's
             holder = new PollViewHolder();
-            holder.imageLeft = (PollImageView) currentView.findViewById(R.id.iv_poll_left);
-            holder.imageRight = (PollImageView) currentView.findViewById(R.id.iv_poll_right);
+            holder.mainTitle = (TextView) currentView.findViewById(R.id.tv_poll_main_title);
+            holder.leftTitle = (TextView) currentView.findViewById(R.id.tv_poll_left_title);
+            holder.rightTitle = (TextView) currentView.findViewById(R.id.tv_poll_right_title);
+            holder.leftImage = (PollImageView) currentView.findViewById(R.id.iv_poll_left);
+            holder.rightImage = (PollImageView) currentView.findViewById(R.id.iv_poll_right);
+            holder.leftVotes = (TextView) currentView.findViewById(R.id.tv_poll_left_votes);
+            holder.rightVotes = (TextView) currentView.findViewById(R.id.tv_poll_right_votes);
             currentView.setTag(holder);
         }
 
@@ -56,15 +66,53 @@ public class HomeAdapter extends ArrayAdapter<Drawable> {
         }
 
         //reset any variables in holder if view can be recycled
-        holder.imageLeft.setImageDrawable(list.get(position));
-        holder.imageRight.setImageDrawable(list.get(position));
+        holder.leftImage.setImageDrawable(list.get(position));
+        holder.rightImage.setImageDrawable(list.get(position));
+
+        //get all data from list so we can Bundle it for click event
+        final String mainTitle = (String)holder.mainTitle.getText();
+        final String leftTitle = (String)holder.leftTitle.getText();
+        final String rightTitle = (String)holder.rightTitle.getText();
+        final Drawable leftImage = holder.leftImage.getDrawable();
+        final Drawable rightImage = holder.rightImage.getDrawable();
+        final String leftVotes = (String)holder.leftVotes.getText();
+        final String rightVotes = (String)holder.rightVotes.getText();
+
+        //set onClickListener for poll item
+        RelativeLayout pollItem = (RelativeLayout) currentView.findViewById(R.id.custom_poll_item);
+        pollItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //move to poll item fragment
+                FragmentManager fm = ((Activity) context).getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                PollItemFragment pollItemFragment = new PollItemFragment();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("mainTitle", mainTitle);
+                bundle.putString("leftTitle", leftTitle);
+                bundle.putString("rightTitle", rightTitle);
+                bundle.putString("leftVotes", leftVotes);
+                bundle.putString("rightVotes", rightVotes);
+                pollItemFragment.setArguments(bundle);
+
+                ft.replace(R.id.main_fragment, pollItemFragment);
+                ft.addToBackStack(null);
+                ft.commit();
+            }
+        });
 
         return currentView;
     }
 
     private class PollViewHolder {
-        PollImageView imageLeft;
-        PollImageView imageRight;
+        TextView mainTitle;
+        TextView leftTitle;
+        TextView rightTitle;
+        PollImageView leftImage;
+        PollImageView rightImage;
+        TextView leftVotes;
+        TextView rightVotes;
     }
 
 }
