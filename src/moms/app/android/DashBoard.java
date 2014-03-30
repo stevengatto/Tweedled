@@ -1,12 +1,18 @@
 package moms.app.android;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.savagelook.android.UrlJsonAsyncTask;
@@ -24,28 +30,40 @@ import java.io.IOException;
  * Created by klam on 3/29/14.
  * DashBoard View
  */
-public class DashBoard extends Activity {
+public class DashBoard extends Fragment {
+
+    private Activity thisActivity;
     private SharedPreferences mPreferences;
     private String mAuth_token = null;
     final String LOGOUT_URL = "http://107.170.50.231/api/v1/sessions/?auth_token=";
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dashboard);
-        mPreferences = getSharedPreferences("CurrentUser", MODE_PRIVATE);
-        TextView mAuth = (TextView)findViewById(R.id.auth);
+        thisActivity = getActivity();
+        mPreferences = thisActivity.getSharedPreferences("CurrentUser", thisActivity.MODE_PRIVATE);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.dashboard, container, false);
+
+        TextView mAuth = (TextView)view.findViewById(R.id.auth);
         mAuth_token = mPreferences.getString("AuthToken", "");
         mAuth.setText(mAuth_token);
 
+        //set logout button onclick
+        Button butLogout = (Button) view.findViewById(R.id.but_logout);
+        butLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LogoutTask loginTask = new LogoutTask(thisActivity);
+                loginTask.setMessageLoading("Logging out...");
+                loginTask.execute(LOGOUT_URL + mAuth_token);
+            }
+        });
 
-
-
-    }
-
-    public void logout(View logoutButton)
-    {
-        LogoutTask loginTask = new LogoutTask(this);
-        loginTask.setMessageLoading("Logging out...");
-        loginTask.execute(LOGOUT_URL + mAuth_token);
+        return view;
     }
 
     private class LogoutTask extends UrlJsonAsyncTask {
@@ -92,11 +110,15 @@ public class DashBoard extends Activity {
                     editor.putString("logout_info", json.getString("info"));
                     editor.commit();
 
-                    finish();
+                    //thisActivity.finish();
 
-                    Intent intent = new Intent(getApplicationContext(),
-                            Login.class);
-                    startActivity(intent);
+                    FragmentManager fm = getFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
+
+                    Login loginFragment = new Login();
+                    ft.replace(R.id.main_fragment, loginFragment);
+                    ft.addToBackStack(null);
+                    ft.commit();
                 }
                 Toast.makeText(context, json.getString("info"),
                         Toast.LENGTH_LONG).show();

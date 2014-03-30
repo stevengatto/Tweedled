@@ -29,8 +29,7 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="@string/user_password"
-                android:inputType="textPassword"
-                android:onClick="register"/>
+                android:inputType="textPassword"/>
 
         <CheckBox
                   android:id="@+id/cb_autoLogin"
@@ -44,7 +43,6 @@
                   android:layout_weight="1"
                   android:hint="@string/user_password"
                   android:text="@string/register"
-                  android:onClick="register"
                   android:paddingBottom="15dp"
                   android:textSize="20dp" android:clickable="true"/>
         <Button
@@ -52,7 +50,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:onClick="login"
                 android:text="@string/login" />
     </LinearLayout>
 

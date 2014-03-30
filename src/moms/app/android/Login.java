@@ -1,15 +1,17 @@
 package moms.app.android;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.savagelook.android.UrlJsonAsyncTask;
@@ -28,7 +30,9 @@ import java.io.IOException;
  * Created by klam on 3/29/14.
  * Login View
  */
-public class Login extends Activity {
+public class Login extends Fragment {
+
+    private Activity thisActivity;
     private String mUserEmail;
     private String mUserPassword;
     private SharedPreferences mPreferences;
@@ -36,52 +40,44 @@ public class Login extends Activity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
-        mPreferences = getSharedPreferences("CurrentUser", MODE_PRIVATE);
+        thisActivity = getActivity();
+        mPreferences = thisActivity.getSharedPreferences("CurrentUser", thisActivity.MODE_PRIVATE);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu items for use in the action bar
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.home_activity_menu, menu);
-        return true;
-    }
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-    public void homeClick(MenuItem item){
-        Intent myIntent = new Intent(Login.this, HomeActivity.class);
-        Login.this.startActivity(myIntent);
-    }
+        View view = inflater.inflate(R.layout.login, container, false);
+        final EditText userEmailField = (EditText) view.findViewById(R.id.et_userEmail);
+        final EditText userPasswordField = (EditText) view.findViewById(R.id.et_userPassword);
 
-    public void loginClick(MenuItem item){
-        Intent myIntent = new Intent(Login.this, Login.class);
-        Login.this.startActivity(myIntent);
-    }
+        //set login button onclick
+        Button butLogin = (Button) view.findViewById(R.id.but_loginButton);
+        butLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-    public void extraButton(MenuItem item){
-        Toast.makeText(getApplicationContext(), "Third button pressed", Toast.LENGTH_SHORT).show();
-    }
+                mUserEmail = userEmailField.getText().toString();
+                mUserPassword = userPasswordField.getText().toString();
+                if (mUserEmail.length() == 0 || mUserPassword.length() == 0) {
+                    // input fields are empty
+                    Toast.makeText(thisActivity, "Please complete all the fields",
+                            Toast.LENGTH_LONG).show();
+                } else {
+                    LoginTask loginTask = new LoginTask(getActivity());
+                    loginTask.setMessageLoading("Logging in...");
+                    loginTask.execute(LOGIN_URL);
 
-    public void login(View loginButton) {
-        EditText userEmailField = (EditText) findViewById(R.id.et_userEmail);
-        mUserEmail = userEmailField.getText().toString();
-        EditText userPasswordField = (EditText) findViewById(R.id.et_userPassword);
-        mUserPassword = userPasswordField.getText().toString();
-        if (mUserEmail.length() == 0 || mUserPassword.length() == 0) {
-            // input fields are empty
-            Toast.makeText(this, "Please complete all the fields",
-                    Toast.LENGTH_LONG).show();
-        } else {
-            LoginTask loginTask = new LoginTask(this);
-            loginTask.setMessageLoading("Logging in...");
-            loginTask.execute(LOGIN_URL);
+                    //switch to Dashboard fragment
 
-        }
-    }
+                    //thisActivity.finish();
+                }
+            }
+        });
 
-    public void register(View registerText) {
-        Intent intent = new Intent(this, Register.class);
-        startActivity(intent);
+        //set register onclick here
+
+        return view;
     }
 
     private class LoginTask extends UrlJsonAsyncTask {
@@ -139,11 +135,14 @@ public class Login extends Activity {
                     editor.putString("AuthToken", json.getJSONObject("data")
                             .getString("auth_token"));
                     editor.commit();
+                    FragmentManager fm = getFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
 
-                    finish();
-                    Intent intent = new Intent(getApplicationContext(),
-                            DashBoard.class);
-                    startActivity(intent);
+                    DashBoard dashBoardFragment = new DashBoard();
+                    ft.replace(R.id.main_fragment, dashBoardFragment);
+                    ft.addToBackStack(null);
+                    ft.commit();
+
                 }
                 Toast.makeText(context, json.getString("info"),
                         Toast.LENGTH_LONG).show();
