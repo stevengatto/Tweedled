@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import moms.app.android.model.Poll;
 import org.w3c.dom.Text;
 
 import java.util.List;
@@ -21,15 +22,15 @@ import java.util.List;
 /**
  * Created by Steve on 3/29/14.
  */
-public class HomeAdapter extends ArrayAdapter<Drawable> {
+public class HomeAdapter extends ArrayAdapter<Poll> {
 
     private static final String TAG = HomeAdapter.class.getName();
 
     private Context context;
     private int resourceId;
-    private List<Drawable> list;
+    private List<Poll> list;
 
-    public HomeAdapter(Context context, int resourceId, List<Drawable> list){
+    public HomeAdapter(Context context, int resourceId, List<Poll> list){
         super(context, resourceId, list);
 
         this.context = context;
@@ -66,17 +67,14 @@ public class HomeAdapter extends ArrayAdapter<Drawable> {
         }
 
         //reset any variables in holder if view can be recycled
-        holder.leftImage.setImageDrawable(list.get(position));
-        holder.rightImage.setImageDrawable(list.get(position));
-
-        //get all data from list so we can Bundle it for click event
-        final String mainTitle = (String)holder.mainTitle.getText();
-        final String leftTitle = (String)holder.leftTitle.getText();
-        final String rightTitle = (String)holder.rightTitle.getText();
-        final Drawable leftImage = holder.leftImage.getDrawable();
-        final Drawable rightImage = holder.rightImage.getDrawable();
-        final String leftVotes = (String)holder.leftVotes.getText();
-        final String rightVotes = (String)holder.rightVotes.getText();
+        final Poll currentPoll = list.get(position);
+        holder.mainTitle.setText(currentPoll.getMainTitle());
+        holder.leftTitle.setText(currentPoll.getLeftTitle());
+        holder.rightTitle.setText(currentPoll.getRightTitle());
+        holder.leftImage.setImageDrawable(currentPoll.getLeftImage());
+        holder.rightImage.setImageDrawable(currentPoll.getRightImage());
+        holder.leftVotes.setText(currentPoll.getLeftVotes().toString());
+        holder.rightVotes.setText(currentPoll.getRightVotes().toString());
 
         //set onClickListener for poll item
         RelativeLayout pollItem = (RelativeLayout) currentView.findViewById(R.id.custom_poll_item);
@@ -86,14 +84,16 @@ public class HomeAdapter extends ArrayAdapter<Drawable> {
                 //move to poll item fragment
                 FragmentManager fm = ((Activity) context).getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
+                ft.setCustomAnimations(R.anim.slide_in_right,R.anim.slide_out_right);
+
                 PollItemFragment pollItemFragment = new PollItemFragment();
 
                 Bundle bundle = new Bundle();
-                bundle.putString("mainTitle", mainTitle);
-                bundle.putString("leftTitle", leftTitle);
-                bundle.putString("rightTitle", rightTitle);
-                bundle.putString("leftVotes", leftVotes);
-                bundle.putString("rightVotes", rightVotes);
+                bundle.putString("mainTitle", currentPoll.getMainTitle());
+                bundle.putString("leftTitle", currentPoll.getLeftTitle());
+                bundle.putString("rightTitle", currentPoll.getRightTitle());
+                bundle.putInt("leftVotes", currentPoll.getLeftVotes());
+                bundle.putInt("rightVotes", currentPoll.getRightVotes());
                 pollItemFragment.setArguments(bundle);
 
                 ft.replace(R.id.main_fragment, pollItemFragment);
