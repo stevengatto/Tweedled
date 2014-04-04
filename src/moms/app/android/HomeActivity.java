@@ -1,20 +1,13 @@
 package moms.app.android;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
-
-import java.util.zip.Inflater;
 
 public class HomeActivity extends Activity {
     /**
@@ -52,8 +45,8 @@ public class HomeActivity extends Activity {
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
 
-        Login loginFragment = new Login();
-        ft.replace(R.id.main_fragment, loginFragment);
+        LoginFragment loginFragmentFragment = new LoginFragment();
+        ft.replace(R.id.main_fragment, loginFragmentFragment);
         ft.addToBackStack(null);
         ft.commit();
     }
