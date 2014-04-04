@@ -18,5 +18,6 @@
         <activity android:name=".BaseActivity"/>
         <activity android:name=".RegisterActivity"/>
         <activity android:name=".DashboardActivity"/>
+        <activity android:name=".PollItemActivity"/>
     </application>
 </manifest>

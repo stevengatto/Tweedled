@@ -115,7 +115,7 @@ public class DashboardFragment extends Fragment {
                     FragmentTransaction ft = fm.beginTransaction();
 
                     LoginFragment loginFragmentFragment = new LoginFragment();
-                    ft.replace(R.id.main_fragment, loginFragmentFragment);
+                    ft.replace(R.id.dashboard_fragment, loginFragmentFragment);
                     ft.addToBackStack(null);
                     ft.commit();
                 }

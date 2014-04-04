@@ -139,7 +139,7 @@ public class LoginFragment extends Fragment {
                     FragmentTransaction ft = fm.beginTransaction();
 
                     DashboardFragment dashboardFragmentFragment = new DashboardFragment();
-                    ft.replace(R.id.main_fragment, dashboardFragmentFragment);
+                    ft.replace(R.id.login_fragment, dashboardFragmentFragment);
                     ft.addToBackStack(null);
                     ft.commit();
 

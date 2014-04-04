@@ -17,10 +17,6 @@ public class HomeActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
-
-        // add fragments to activity
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.add(R.id.main_fragment, new HomeFragment(), "Home").commit();
     }
 
     @Override
@@ -32,23 +28,11 @@ public class HomeActivity extends Activity {
     }
 
     public void homeClick(MenuItem item){
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-
-        HomeFragment homeFragment = new HomeFragment();
-        ft.replace(R.id.main_fragment, homeFragment);
-        ft.addToBackStack(null);
-        ft.commit();
+        //launch home activity
     }
 
     public void loginClick(MenuItem item){
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-
-        LoginFragment loginFragmentFragment = new LoginFragment();
-        ft.replace(R.id.main_fragment, loginFragmentFragment);
-        ft.addToBackStack(null);
-        ft.commit();
+        //launch login activity
     }
 
     public void extraButton(MenuItem item){
