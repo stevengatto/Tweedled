@@ -1,4 +1,4 @@
-package moms.app.android;
+package moms.app.android.ui;
 
 import android.content.Context;
 import android.content.res.TypedArray;

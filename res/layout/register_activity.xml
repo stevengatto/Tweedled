@@ -2,6 +2,6 @@
 
 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
           android:id="@+id/register_fragment"
-          android:name="moms.app.android.RegisterFragment"
+          android:name="moms.app.android.ui.RegisterFragment"
           android:layout_width="match_parent"
           android:layout_height="match_parent"/>

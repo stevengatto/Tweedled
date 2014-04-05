@@ -1,4 +1,4 @@
-package moms.app.android;
+package moms.app.android.ui;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.savagelook.android.UrlJsonAsyncTask;
+import moms.app.android.R;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpDelete;

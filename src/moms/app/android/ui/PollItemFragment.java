@@ -1,4 +1,4 @@
-package moms.app.android;
+package moms.app.android.ui;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+import moms.app.android.R;
 import moms.app.android.model.Comment;
 
 import java.util.ArrayList;

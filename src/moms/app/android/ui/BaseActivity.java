@@ -1,4 +1,4 @@
-package moms.app.android;
+package moms.app.android.ui;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
+import moms.app.android.R;
 
 /**
  * Created by Steve on 4/3/14.

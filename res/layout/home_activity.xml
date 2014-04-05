@@ -2,7 +2,7 @@
 
 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
           android:id="@+id/home_fragment"
-          android:name="moms.app.android.HomeFragment"
+          android:name="moms.app.android.ui.HomeFragment"
           android:layout_width="match_parent"
           android:layout_height="match_parent"/>
 

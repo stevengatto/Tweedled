@@ -41,7 +41,7 @@
                       android:layout_height="wrap_content"
                       android:orientation="horizontal">
 
-            <moms.app.android.PollImageView
+            <moms.app.android.ui.PollImageView
                     android:id="@+id/iv_poll_left"
                     android:layout_weight="1"
                     android:layout_width="0dp"
@@ -49,7 +49,7 @@
                     android:scaleType="centerCrop"
                     android:clickable="false"/>
 
-            <moms.app.android.PollImageView
+            <moms.app.android.ui.PollImageView
                     android:id="@+id/iv_poll_right"
                     android:layout_weight="1"
                     android:layout_width="0dp"

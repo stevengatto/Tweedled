@@ -1,7 +1,7 @@
-package moms.app.android;
+package moms.app.android.ui;
 
-import android.app.Activity;
 import android.os.Bundle;
+import moms.app.android.R;
 
 /**
  * Created by Steve on 4/4/14.
