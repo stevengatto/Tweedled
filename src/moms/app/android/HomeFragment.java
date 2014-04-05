@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -27,25 +28,29 @@ import java.util.Random;
  */
 public class HomeFragment extends Fragment {
 
-    //mock list of bitmaps for testing
+    private static final String TAG = HomeFragment.class.getName();
+
     private List<Poll> list = new ArrayList<Poll>();
-    private View listView;
+    private View layout;
+    private ListView listView;
     private Activity thisActivity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        //create references
-        listView = inflater.inflate(R.layout.home_fragment, container, false);
-
         thisActivity = getActivity();
+
+        //create references
+        layout = inflater.inflate(R.layout.home_fragment, container, false);
+        listView = (ListView) layout.findViewById(R.id.home_list_view);
 
         //make web call for kitten pictures
         new DownloadImageTask().execute("http://www.zwaldtransport.com/images/placeholders/placeholder1.jpg");
 
-        return listView;
+        return layout;
     }
 
+    //terrible class to download placeholder image off for listview
     private class DownloadImageTask extends AsyncTask<String, Void, Drawable> {
 
         protected Drawable doInBackground(String... urls) {
@@ -62,8 +67,8 @@ public class HomeFragment extends Fragment {
 
         protected void onPostExecute(Drawable result) {
 
-            Random random = new Random();
             //create mock list of Poll objects to show in list
+            Random random = new Random();
             for(int i=1; i<100; i++){
                 //set params one by one for clarity
                 Poll poll = new Poll(null,null,null,null,null,null);
@@ -75,8 +80,20 @@ public class HomeFragment extends Fragment {
                 poll.setRightVotes(random.nextInt(10000));
                 list.add(poll);
             }
+
+            //set up listView adapter and onItemClick listener
             HomeAdapter adapter = new HomeAdapter(thisActivity, R.layout.poll_item, list);
-            ((ListView) listView).setAdapter(adapter);
+            listView.setAdapter(adapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
+                    Log.d(TAG, "Entering onItemClick method in Polls ListView");
+                    Intent intent = new Intent(thisActivity, PollItemActivity.class);
+                    //TODO: add extra to intent with info on which poll was selected
+                    startActivity(intent);
+                    thisActivity.overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                }
+            });
         }
     }
 }

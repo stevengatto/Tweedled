@@ -10,14 +10,18 @@
                  android:icon="@drawable/ic_launcher"
                  android:logo="@drawable/action_bar_logo"
                  android:theme="@style/CustomTheme">
-        <activity android:name=".SplashScreenActivity"/>
-        <activity android:name=".HomeActivity">
+        <activity android:name=".SplashScreenActivity"
+                  android:theme="@android:style/Theme.NoTitleBar"
+                  android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".BaseActivity"/>
+        <activity android:name=".HomeActivity"/>
+        <activity android:name=".BaseActivity"
+                  android:screenOrientation="portrait">
+        </activity>
         <activity android:name=".PollItemActivity"/>
         <activity android:name=".RegisterActivity"/>
         <activity android:name=".DashboardActivity"/>

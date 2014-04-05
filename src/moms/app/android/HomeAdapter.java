@@ -23,7 +23,7 @@ import org.w3c.dom.Text;
 import java.util.List;
 
 /**
- * Created by Steve on 3/29/14.
+ * ListView adapter for the polls page
  */
 public class HomeAdapter extends ArrayAdapter<Poll> {
 
@@ -46,6 +46,7 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
         View currentView = convertView;
         PollViewHolder holder;
 
+        //if not recyclable view, create new
         if(currentView == null){
             Log.d(TAG, "No recyclable custom view found. New view created.");
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
@@ -62,8 +63,8 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
             currentView.setTag(holder);
         }
 
+        // get the recycled view (stored in tag)
         else {
-            // get the recycled view (stored in tag)
             Log.d(TAG, "View recycled");
             holder = (PollViewHolder)currentView.getTag();
         }
@@ -77,22 +78,16 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
         holder.leftVotes.setText(currentPoll.getLeftVotes().toString());
         holder.rightVotes.setText(currentPoll.getRightVotes().toString());
 
-        //set onClickListener for poll item
-        LinearLayout pollItem = (LinearLayout) currentView.findViewById(R.id.custom_poll_item);
-        pollItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(context, PollItemActivity.class);
-                //TODO: add extra to intent with info on which poll was selected
-                context.startActivity(intent);
-
-            }
-        });
-
         return currentView;
     }
 
+    @Override
+    public boolean isEnabled(int position)
+    {
+        return true;
+    }
+
+    //holder class to store references to listView sub views
     private class PollViewHolder {
         TextView mainTitle;
         TextView subTitle;

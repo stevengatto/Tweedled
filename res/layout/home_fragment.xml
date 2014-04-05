@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ListView  xmlns:android="http://schemas.android.com/apk/res/android"
-    android:isScrollContainer="false"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:scrollbars="none"
-    android:divider="@android:color/transparent"
-    android:background="#C2C2C2">
+           android:id="@+id/home_list_view"
+           android:isScrollContainer="false"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:scrollbars="none"
+           android:divider="@android:color/transparent"
+           android:background="#C2C2C2">
 </ListView>
