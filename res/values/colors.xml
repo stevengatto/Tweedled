@@ -2,4 +2,5 @@
 <resources>
     <color name="action_bar">#a4d4bf</color>
     <color name="background">#f1efef</color>
+    <color name="divider">#20ffffff</color>
 </resources>

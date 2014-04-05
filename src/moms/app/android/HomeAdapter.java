@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.LinearGradient;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import moms.app.android.model.Poll;
@@ -51,8 +54,7 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
             //create holder and  set up references to TextView's
             holder = new PollViewHolder();
             holder.mainTitle = (TextView) currentView.findViewById(R.id.tv_poll_main_title);
-            holder.leftTitle = (TextView) currentView.findViewById(R.id.tv_poll_left_title);
-            holder.rightTitle = (TextView) currentView.findViewById(R.id.tv_poll_right_title);
+            holder.subTitle = (TextView) currentView.findViewById(R.id.tv_poll_sub_title);
             holder.leftImage = (PollImageView) currentView.findViewById(R.id.iv_poll_left);
             holder.rightImage = (PollImageView) currentView.findViewById(R.id.iv_poll_right);
             holder.leftVotes = (TextView) currentView.findViewById(R.id.tv_poll_left_votes);
@@ -69,36 +71,22 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
         //reset any variables in holder if view can be recycled
         final Poll currentPoll = list.get(position);
         holder.mainTitle.setText(currentPoll.getMainTitle());
-        holder.leftTitle.setText(currentPoll.getLeftTitle());
-        holder.rightTitle.setText(currentPoll.getRightTitle());
+        holder.subTitle.setText(currentPoll.getSubTitle());
         holder.leftImage.setImageDrawable(currentPoll.getLeftImage());
         holder.rightImage.setImageDrawable(currentPoll.getRightImage());
         holder.leftVotes.setText(currentPoll.getLeftVotes().toString());
         holder.rightVotes.setText(currentPoll.getRightVotes().toString());
 
         //set onClickListener for poll item
-        RelativeLayout pollItem = (RelativeLayout) currentView.findViewById(R.id.custom_poll_item);
+        LinearLayout pollItem = (LinearLayout) currentView.findViewById(R.id.custom_poll_item);
         pollItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //move to poll item fragment
-                FragmentManager fm = ((Activity) context).getFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.setCustomAnimations(R.anim.slide_in_right,R.anim.slide_out_right);
 
-                PollItemFragment pollItemFragment = new PollItemFragment();
+                Intent intent = new Intent(context, PollItemActivity.class);
+                //TODO: add extra to intent with info on which poll was selected
+                context.startActivity(intent);
 
-                Bundle bundle = new Bundle();
-                bundle.putString("mainTitle", currentPoll.getMainTitle());
-                bundle.putString("leftTitle", currentPoll.getLeftTitle());
-                bundle.putString("rightTitle", currentPoll.getRightTitle());
-                bundle.putInt("leftVotes", currentPoll.getLeftVotes());
-                bundle.putInt("rightVotes", currentPoll.getRightVotes());
-                pollItemFragment.setArguments(bundle);
-
-                ft.replace(R.id.main_fragment, pollItemFragment);
-                ft.addToBackStack(null);
-                ft.commit();
             }
         });
 
@@ -107,8 +95,7 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
 
     private class PollViewHolder {
         TextView mainTitle;
-        TextView leftTitle;
-        TextView rightTitle;
+        TextView subTitle;
         PollImageView leftImage;
         PollImageView rightImage;
         TextView leftVotes;

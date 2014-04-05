@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -15,15 +16,12 @@ public class PollItemFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.poll_item_fragment, container, false);
 
-        //set views with args from transaction
-        Bundle bundle = this.getArguments();
-        ((TextView)view.findViewById(R.id.tv_poll_main_title_fragment)).setText(bundle.get("mainTitle").toString());
-        ((TextView)view.findViewById(R.id.tv_poll_left_title_fragment)).setText(bundle.get("leftTitle").toString());
-        ((TextView)view.findViewById(R.id.tv_poll_right_title_fragment)).setText(bundle.get("rightTitle").toString());
-        ((TextView)view.findViewById(R.id.tv_poll_right_votes_fragment)).setText(bundle.get("rightVotes").toString());
-        ((TextView)view.findViewById(R.id.tv_poll_left_votes_fragment)).setText(bundle.get("leftVotes").toString());
-        ((PollImageView)view.findViewById(R.id.iv_poll_left_fragment)).setImageResource(R.drawable.ic_placeholder);
-        ((PollImageView)view.findViewById(R.id.iv_poll_right_fragment)).setImageResource(R.drawable.ic_placeholder);
+        //TODO: make webcall to get data on specific poll and modify view
+        ImageView leftImage = (ImageView) view.findViewById(R.id.iv_poll_left);
+        ImageView rightImage = (ImageView) view.findViewById(R.id.iv_poll_right);
+
+        leftImage.setImageResource(R.drawable.ic_placeholder);
+        rightImage.setImageResource(R.drawable.ic_placeholder);
 
         return view;
     }

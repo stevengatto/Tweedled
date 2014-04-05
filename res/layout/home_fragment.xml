@@ -4,5 +4,7 @@
     android:isScrollContainer="false"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scrollbars="none">
+    android:scrollbars="none"
+    android:divider="@android:color/transparent"
+    android:background="#C2C2C2">
 </ListView>

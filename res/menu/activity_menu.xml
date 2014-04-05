@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu   xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/menu_polls"
+          android:icon="@drawable/ic_home"
+          android:title="Polls (until AB works)"
+          android:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/menu_login"
+          android:icon="@drawable/ic_login"
+          android:title="Login (until AB works)"
+          android:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/menu_favorites"
+          android:icon="@drawable/ic_contest"
+          android:title="Favorites"
+          android:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/menu_post"
+          android:icon="@drawable/ic_post"
+          android:title="Post"
+          android:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/menu_settings"
+          android:icon="@drawable/ic_settings"
+          android:title="Settings"
+          android:showAsAction="never"/>
+</menu>

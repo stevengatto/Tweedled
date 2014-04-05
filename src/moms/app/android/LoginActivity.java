@@ -4,12 +4,12 @@ import android.app.Activity;
 import android.os.Bundle;
 
 /**
- * Created by Steve on 4/3/14.
+ * Created by Steve on 4/4/14.
  */
-public class RegisterActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.register_activity);
+        setContentView(R.layout.login_activity);
 
         // Enable application home button
 //        ActionBar bar = getActionBar();

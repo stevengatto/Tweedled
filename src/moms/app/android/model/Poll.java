@@ -10,18 +10,16 @@ import android.graphics.drawable.Drawable;
 public class Poll {
 
     private String mainTitle;
-    private String leftTitle;
-    private String rightTitle;
+    private String subTitle;
     private Drawable leftImage;
     private Drawable rightImage;
     private Integer leftVotes;
     private Integer rightVotes;
 
-    public Poll(String mainTitle, String leftTitle, String rightTitle, Drawable leftImage,
+    public Poll(String mainTitle, String subTitle, Drawable leftImage,
                 Drawable rightImage, Integer leftVotes, Integer rightVotes){
         this.mainTitle = mainTitle;
-        this.leftTitle = leftTitle;
-        this.rightTitle = rightTitle;
+        this.subTitle = subTitle;
         this.leftImage = leftImage;
         this.rightImage = rightImage;
         this.leftVotes = leftVotes;
@@ -36,21 +34,9 @@ public class Poll {
         this.mainTitle = mainTitle;
     }
 
-    public String getLeftTitle() {
-        return leftTitle;
-    }
+    public String getSubTitle() { return subTitle; }
 
-    public void setLeftTitle(String leftTitle) {
-        this.leftTitle = leftTitle;
-    }
-
-    public String getRightTitle() {
-        return rightTitle;
-    }
-
-    public void setRightTitle(String rightTitle) {
-        this.rightTitle = rightTitle;
-    }
+    public void setSubTitle(String subTitle) { this.subTitle = subTitle; }
 
     public Drawable getLeftImage() {
         return leftImage;
@@ -82,13 +68,5 @@ public class Poll {
 
     public void setRightVotes(Integer rightVotes) {
         this.rightVotes = rightVotes;
-    }
-
-    public void incLeftVotes(){
-        leftVotes = leftVotes + 1;
-    }
-
-    public void incRightVotes(){
-        rightVotes = rightVotes + 1;
     }
 }

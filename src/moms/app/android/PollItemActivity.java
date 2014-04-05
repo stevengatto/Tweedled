@@ -6,7 +6,7 @@ import android.os.Bundle;
 /**
  * Created by Steve on 4/4/14.
  */
-public class PollItemActivity extends Activity {
+public class PollItemActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.poll_item_activity);

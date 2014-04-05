@@ -6,7 +6,7 @@ import android.os.Bundle;
 /**
  * Created by Steve on 4/3/14.
  */
-public class DashboardActivity extends Activity {
+public class DashboardActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_activity);

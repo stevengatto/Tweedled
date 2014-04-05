@@ -66,14 +66,13 @@ public class HomeFragment extends Fragment {
             //create mock list of Poll objects to show in list
             for(int i=1; i<100; i++){
                 //set params one by one for clarity
-                Poll poll = new Poll(null,null,null,null,null,null,null);
-                poll.setMainTitle("Poll Title #"+i);
-                poll.setLeftTitle("Left Sub #" + i);
-                poll.setRightTitle("Right Sub #" + i);
+                Poll poll = new Poll(null,null,null,null,null,null);
+                poll.setMainTitle("Main Title #"+i);
+                poll.setSubTitle("Subtitle #" + i);
                 poll.setLeftImage(result);
                 poll.setRightImage(result);
-                poll.setLeftVotes(random.nextInt(100));
-                poll.setRightVotes(random.nextInt(100));
+                poll.setLeftVotes(random.nextInt(10000));
+                poll.setRightVotes(random.nextInt(10000));
                 list.add(poll);
             }
             HomeAdapter adapter = new HomeAdapter(thisActivity, R.layout.poll_item, list);
