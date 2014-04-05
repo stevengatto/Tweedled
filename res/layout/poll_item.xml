@@ -7,7 +7,10 @@
 
     <LinearLayout android:id="@+id/custom_poll_item"
                   android:orientation="vertical"
-                  android:layout_margin="10dp"
+                  android:layout_marginLeft="10dp"
+                  android:layout_marginRight="10dp"
+                  android:layout_marginBottom="5dp"
+                  android:layout_marginTop="5dp"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:paddingTop="10dp"
@@ -18,8 +21,9 @@
                   android:layout_height="wrap_content"
                   android:gravity="center"
                   android:fontFamily="sans-serif-thin"
-                  android:textStyle="normal|bold"
-                  android:textSize="30sp"
+                  android:textStyle="italic"
+                  android:textSize="24sp"
+                  android:textColor="#606060"
                   android:text="Main title"/>
 
         <TextView android:id="@+id/tv_poll_sub_title"
@@ -27,9 +31,9 @@
                   android:layout_height="wrap_content"
                   android:gravity="center"
                   android:fontFamily="sans-serif-thin"
-                  android:textStyle="normal|bold|italic"
-                  android:textColor="#012530"
-                  android:textSize="25sp"
+                  android:textStyle="normal|bold"
+                  android:textColor="#606060"
+                  android:textSize="18sp"
                   android:layout_marginBottom="10dp"
                   android:text="Subtitle"/>
 
@@ -66,9 +70,9 @@
                             android:layout_height="wrap_content">
 
                 <ImageView android:id="@+id/poll_heart_left"
-                           android:layout_width="30dp"
+                           android:layout_width="20dp"
                            android:layout_height="30dp"
-                           android:layout_marginLeft="15dp"
+                           android:layout_marginLeft="10dp"
                            android:src="@drawable/ic_heart"/>
 
                 <TextView android:id="@+id/tv_poll_left_votes"
@@ -79,7 +83,8 @@
                           android:textStyle="normal|bold"
                           android:layout_centerVertical="true"
                           android:layout_marginLeft="10dp"
-                          android:textSize="20sp"
+                          android:textSize="15sp"
+                          android:textColor="#606060"
                           android:text="Votes"/>
 
             </RelativeLayout>
@@ -89,9 +94,9 @@
                             android:layout_height="wrap_content">
 
                 <ImageView android:id="@+id/poll_heart_right"
-                           android:layout_width="30dp"
+                           android:layout_width="20dp"
                            android:layout_height="30dp"
-                           android:layout_marginLeft="15dp"
+                           android:layout_marginLeft="10dp"
                            android:src="@drawable/ic_heart"/>
 
                 <TextView android:id="@+id/tv_poll_right_votes"
@@ -102,7 +107,8 @@
                           android:textStyle="normal|bold"
                           android:layout_centerVertical="true"
                           android:layout_marginLeft="10dp"
-                          android:textSize="20sp"
+                          android:textSize="15sp"
+                          android:textColor="#606060"
                           android:text="Votes"/>
 
             </RelativeLayout>

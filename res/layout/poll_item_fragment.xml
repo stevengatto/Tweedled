@@ -1,111 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
+<!--TODO:Modify so on small phones list view is still visible-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/custom_poll_item_fragment"
+              android:orientation="vertical"
+              android:layout_margin="15dp"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:paddingTop="10dp"
+              android:background="#EFEFEF">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:id="@+id/custom_poll_item_fragment"
-                  android:orientation="vertical"
-                  android:layout_margin="15dp"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:clickable="true"
-                  android:paddingTop="10dp"
-                  android:background="#EFEFEF">
+    <TextView android:id="@+id/tv_poll_main_title"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:fontFamily="sans-serif-thin"
+              android:textStyle="italic"
+              android:textColor="#606060"
+              android:textSize="35sp"
+              android:text="Main title"/>
 
-        <TextView android:id="@+id/tv_poll_main_title"
-                  android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:gravity="center"
-                  android:fontFamily="sans-serif-thin"
-                  android:textStyle="normal|bold"
-                  android:textSize="35sp"
-                  android:text="Main title"/>
+    <TextView android:id="@+id/tv_poll_sub_title"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:fontFamily="sans-serif-thin"
+              android:textStyle="normal|bold"
+              android:textColor="#606060"
+              android:textSize="30sp"
+              android:layout_marginBottom="10dp"
+              android:text="Subtitle"/>
 
-        <TextView android:id="@+id/tv_poll_sub_title"
-                  android:layout_width="fill_parent"
+    <LinearLayout android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:gravity="center"
-                  android:fontFamily="sans-serif-thin"
-                  android:textStyle="normal|bold|italic"
-                  android:textColor="#012530"
-                  android:textSize="30sp"
+                  android:orientation="horizontal">
+
+        <moms.app.android.PollImageView
+                android:id="@+id/iv_poll_left"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="175dp"
+                android:scaleType="centerCrop"/>
+
+        <moms.app.android.PollImageView
+                android:id="@+id/iv_poll_right"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="175dp"
+                android:scaleType="centerCrop"/>
+
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="10dp"
                   android:layout_marginBottom="10dp"
-                  android:text="Subtitle"/>
+                  android:orientation="horizontal">
 
-        <LinearLayout android:layout_width="match_parent"
+        <RelativeLayout android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content">
+
+            <ImageView android:id="@+id/poll_heart_left"
+                       android:layout_width="30dp"
+                       android:layout_height="30dp"
+                       android:layout_marginLeft="15dp"
+                       android:src="@drawable/ic_heart"/>
+
+            <TextView android:id="@+id/tv_poll_left_votes"
+                      android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:orientation="horizontal">
+                      android:layout_toRightOf="@id/poll_heart_left"
+                      android:fontFamily="sans-serif-thin"
+                      android:textStyle="normal|bold"
+                      android:layout_centerVertical="true"
+                      android:layout_marginLeft="10dp"
+                      android:textSize="20sp"
+                      android:text="Votes"/>
 
-            <moms.app.android.PollImageView
-                    android:id="@+id/iv_poll_left"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="175dp"
-                    android:scaleType="centerCrop"
-                    android:clickable="false"/>
+        </RelativeLayout>
 
-            <moms.app.android.PollImageView
-                    android:id="@+id/iv_poll_right"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="175dp"
-                    android:scaleType="centerCrop"
-                    android:clickable="false"/>
+        <RelativeLayout android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content">
 
-        </LinearLayout>
+            <ImageView android:id="@+id/poll_heart_right"
+                       android:layout_width="30dp"
+                       android:layout_height="30dp"
+                       android:layout_marginLeft="15dp"
+                       android:src="@drawable/ic_heart"/>
 
-        <LinearLayout android:layout_width="match_parent"
+            <TextView android:id="@+id/tv_poll_right_votes"
+                      android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:layout_marginTop="10dp"
-                      android:layout_marginBottom="10dp"
-                      android:orientation="horizontal">
+                      android:layout_toRightOf="@id/poll_heart_right"
+                      android:fontFamily="sans-serif-thin"
+                      android:textStyle="normal|bold"
+                      android:layout_centerVertical="true"
+                      android:layout_marginLeft="10dp"
+                      android:textColor="#606060"
+                      android:textSize="20sp"
+                      android:text="Votes"/>
 
-            <RelativeLayout android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content">
+        </RelativeLayout>
 
-                <ImageView android:id="@+id/poll_heart_left"
-                           android:layout_width="30dp"
-                           android:layout_height="30dp"
-                           android:layout_marginLeft="15dp"
-                           android:src="@drawable/ic_heart"/>
+    </LinearLayout>
 
-                <TextView android:id="@+id/tv_poll_left_votes"
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:layout_toRightOf="@id/poll_heart_left"
-                          android:fontFamily="sans-serif-thin"
-                          android:textStyle="normal|bold"
-                          android:layout_centerVertical="true"
-                          android:layout_marginLeft="10dp"
-                          android:textSize="20sp"
-                          android:text="Votes"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content">
-
-                <ImageView android:id="@+id/poll_heart_right"
-                           android:layout_width="30dp"
-                           android:layout_height="30dp"
-                           android:layout_marginLeft="15dp"
-                           android:src="@drawable/ic_heart"/>
-
-                <TextView android:id="@+id/tv_poll_right_votes"
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:layout_toRightOf="@id/poll_heart_right"
-                          android:fontFamily="sans-serif-thin"
-                          android:textStyle="normal|bold"
-                          android:layout_centerVertical="true"
-                          android:layout_marginLeft="10dp"
-                          android:textSize="20sp"
-                          android:text="Votes"/>
-
-            </RelativeLayout>
-
-        </LinearLayout>
-
+    <ListView android:id="@+id/comment_list_view"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:scrollbars="none"
+              android:divider="@android:color/darker_gray"
+              android:dividerHeight="1dp"/>
 </LinearLayout>

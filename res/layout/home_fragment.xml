@@ -7,5 +7,6 @@
            android:layout_height="match_parent"
            android:scrollbars="none"
            android:divider="@android:color/transparent"
-           android:background="#C2C2C2">
+           android:background="#C2C2C2"
+           android:listSelector="@android:color/transparent">
 </ListView>
