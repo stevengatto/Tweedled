@@ -7,8 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import moms.app.android.R;
 import moms.app.android.model.Comment;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,11 +25,21 @@ public class PollItemFragment extends Fragment {
         ListView listView = (ListView) view.findViewById(R.id.comment_list_view);
 
         //TODO: make webcall to get data on specific poll and modify view
+        TextView mainTitle = (TextView) view.findViewById(R.id.tv_poll_main_title);
+        TextView subTitle = (TextView) view.findViewById(R.id.tv_poll_sub_title);
         ImageView leftImage = (ImageView) view.findViewById(R.id.iv_poll_left);
         ImageView rightImage = (ImageView) view.findViewById(R.id.iv_poll_right);
+        TextView leftVotes = (TextView) view.findViewById(R.id.tv_poll_left_votes);
+        TextView rightVotes = (TextView)view.findViewById(R.id.tv_poll_right_votes);
 
-        leftImage.setImageResource(R.drawable.ic_placeholder);
-        rightImage.setImageResource(R.drawable.ic_placeholder);
+        Bundle bundle = BaseActivity.intentToFragmentArguments(getActivity().getIntent());
+
+        mainTitle.setText((String) bundle.get("mainTitle"));
+        subTitle.setText((String) bundle.get("subTitle"));
+        leftImage.setImageResource((Integer) bundle.get("leftImage"));
+        rightImage.setImageResource((Integer) bundle.get("rightImage"));
+        leftVotes.setText(bundle.get("leftVotes").toString());
+        rightVotes.setText(bundle.get("rightVotes").toString());
 
         //make list of random comments and put them in listview
         List<Comment> list = new ArrayList<Comment>();

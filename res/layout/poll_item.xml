@@ -14,7 +14,7 @@
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:paddingTop="10dp"
-                  android:background="#EFEFEF">
+                  android:background="@color/poll_item_background">
 
         <TextView android:id="@+id/tv_poll_main_title"
                   android:layout_width="fill_parent"
@@ -23,7 +23,7 @@
                   android:fontFamily="sans-serif-thin"
                   android:textStyle="italic"
                   android:textSize="24sp"
-                  android:textColor="#606060"
+                  android:textColor="@color/text_color"
                   android:text="Main title"/>
 
         <TextView android:id="@+id/tv_poll_sub_title"
@@ -32,7 +32,7 @@
                   android:gravity="center"
                   android:fontFamily="sans-serif-thin"
                   android:textStyle="normal|bold"
-                  android:textColor="#606060"
+                  android:textColor="@color/text_color"
                   android:textSize="18sp"
                   android:layout_marginBottom="10dp"
                   android:text="Subtitle"/>
@@ -84,7 +84,7 @@
                           android:layout_centerVertical="true"
                           android:layout_marginLeft="10dp"
                           android:textSize="15sp"
-                          android:textColor="#606060"
+                          android:textColor="@color/text_color"
                           android:text="Votes"/>
 
             </RelativeLayout>
@@ -108,7 +108,7 @@
                           android:layout_centerVertical="true"
                           android:layout_marginLeft="10dp"
                           android:textSize="15sp"
-                          android:textColor="#606060"
+                          android:textColor="@color/text_color"
                           android:text="Votes"/>
 
             </RelativeLayout>

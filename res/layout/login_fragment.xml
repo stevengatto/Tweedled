@@ -44,7 +44,8 @@
                   android:hint="@string/user_password"
                   android:text="@string/register"
                   android:paddingBottom="15dp"
-                  android:textSize="20dp" android:clickable="true"/>
+                  android:textSize="20dp"
+                  android:clickable="true"/>
         <Button
                 android:id="@+id/but_loginButton"
                 android:layout_width="match_parent"

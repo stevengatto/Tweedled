@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="action_bar">#a4d4bf</color>
-    <color name="background">#f1efef</color>
+    <color name="poll_list_background">#EFEFEF</color>
     <color name="divider">#20ffffff</color>
+    <color name="poll_item_background">#FFFFFF</color>
+    <color name="text_color">#606060</color>
 </resources>

@@ -17,7 +17,7 @@
               android:gravity="center"
               android:fontFamily="sans-serif-thin"
               android:textStyle="italic"
-              android:textColor="#606060"
+              android:textColor="@color/text_color"
               android:textSize="35sp"
               android:text="Main title"/>
 
@@ -27,7 +27,7 @@
               android:gravity="center"
               android:fontFamily="sans-serif-thin"
               android:textStyle="normal|bold"
-              android:textColor="#606060"
+              android:textColor="@color/text_color"
               android:textSize="30sp"
               android:layout_marginBottom="10dp"
               android:text="Subtitle"/>
@@ -75,6 +75,7 @@
                       android:fontFamily="sans-serif-thin"
                       android:textStyle="normal|bold"
                       android:layout_centerVertical="true"
+                      android:textColor="@color/text_color"
                       android:layout_marginLeft="10dp"
                       android:textSize="20sp"
                       android:text="Votes"/>
@@ -99,7 +100,7 @@
                       android:textStyle="normal|bold"
                       android:layout_centerVertical="true"
                       android:layout_marginLeft="10dp"
-                      android:textColor="#606060"
+                      android:textColor="@color/text_color"
                       android:textSize="20sp"
                       android:text="Votes"/>
 
@@ -111,6 +112,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:scrollbars="none"
+              android:background="#E8E8E8"
               android:divider="@android:color/darker_gray"
               android:dividerHeight="1dp"/>
 </LinearLayout>

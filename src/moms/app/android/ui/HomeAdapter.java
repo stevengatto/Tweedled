@@ -64,8 +64,8 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
         final Poll currentPoll = list.get(position);
         holder.mainTitle.setText(currentPoll.getMainTitle());
         holder.subTitle.setText(currentPoll.getSubTitle());
-        holder.leftImage.setImageDrawable(currentPoll.getLeftImage());
-        holder.rightImage.setImageDrawable(currentPoll.getRightImage());
+        holder.leftImage.setImageResource(currentPoll.getLeftImage());
+        holder.rightImage.setImageResource(currentPoll.getRightImage());
         holder.leftVotes.setText(currentPoll.getLeftVotes().toString());
         holder.rightVotes.setText(currentPoll.getRightVotes().toString());
 

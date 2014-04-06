@@ -1,7 +1,5 @@
 package moms.app.android.model;
 
-import android.graphics.drawable.Drawable;
-
 /**
  * Created by Steve on 3/30/14.
  *
@@ -11,13 +9,13 @@ public class Poll {
 
     private String mainTitle;
     private String subTitle;
-    private Drawable leftImage;
-    private Drawable rightImage;
+    private Integer leftImage;
+    private Integer rightImage;
     private Integer leftVotes;
     private Integer rightVotes;
 
-    public Poll(String mainTitle, String subTitle, Drawable leftImage,
-                Drawable rightImage, Integer leftVotes, Integer rightVotes){
+    public Poll(String mainTitle, String subTitle, Integer leftImage,
+                Integer rightImage, Integer leftVotes, Integer rightVotes){
         this.mainTitle = mainTitle;
         this.subTitle = subTitle;
         this.leftImage = leftImage;
@@ -38,19 +36,19 @@ public class Poll {
 
     public void setSubTitle(String subTitle) { this.subTitle = subTitle; }
 
-    public Drawable getLeftImage() {
+    public Integer getLeftImage() {
         return leftImage;
     }
 
-    public void setLeftImage(Drawable leftImage) {
+    public void setLeftImage(Integer leftImage) {
         this.leftImage = leftImage;
     }
 
-    public Drawable getRightImage() {
+    public Integer getRightImage() {
         return rightImage;
     }
 
-    public void setRightImage(Drawable rightImage) {
+    public void setRightImage(Integer rightImage) {
         this.rightImage = rightImage;
     }
 
