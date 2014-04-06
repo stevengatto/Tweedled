@@ -41,21 +41,19 @@
                       android:layout_height="wrap_content"
                       android:orientation="horizontal">
 
-            <moms.app.android.ui.PollImageView
+            <ImageView
                     android:id="@+id/iv_poll_left"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="175dp"
-                    android:scaleType="centerCrop"
-                    android:clickable="false"/>
+                    android:scaleType="centerCrop"/>
 
-            <moms.app.android.ui.PollImageView
+            <ImageView
                     android:id="@+id/iv_poll_right"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="175dp"
-                    android:scaleType="centerCrop"
-                    android:clickable="false"/>
+                    android:scaleType="centerCrop"/>
 
         </LinearLayout>
 
@@ -65,9 +63,11 @@
                       android:layout_marginBottom="10dp"
                       android:orientation="horizontal">
 
-            <RelativeLayout android:layout_width="0dp"
+            <RelativeLayout android:id="@+id/poll_left_heart_vote_layout"
+                            android:layout_width="0dp"
                             android:layout_weight="1"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:visibility="gone">
 
                 <ImageView android:id="@+id/poll_heart_left"
                            android:layout_width="20dp"
@@ -89,9 +89,11 @@
 
             </RelativeLayout>
 
-            <RelativeLayout android:layout_width="0dp"
+            <RelativeLayout android:id="@+id/poll_right_heart_vote_layout"
+                            android:layout_width="0dp"
                             android:layout_weight="1"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:visibility="gone">
 
                 <ImageView android:id="@+id/poll_heart_right"
                            android:layout_width="20dp"

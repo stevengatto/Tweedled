@@ -6,8 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
+import android.widget.*;
 import moms.app.android.R;
 import moms.app.android.model.Poll;
 
@@ -43,14 +42,46 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             currentView = inflater.inflate(resourceId, parent, false);
 
+            //get references to two images
+            ImageView leftImage = (ImageView) currentView.findViewById(R.id.iv_poll_left);
+            ImageView rightImage = (ImageView) currentView.findViewById(R.id.iv_poll_right);
+
+            //get references to layouts with heart and vote
+            final RelativeLayout leftHeartVote = (RelativeLayout) currentView
+                    .findViewById(R.id.poll_left_heart_vote_layout);
+            final RelativeLayout rightHeartVote = (RelativeLayout) currentView
+                    .findViewById(R.id.poll_right_heart_vote_layout);
+
+            //set click listener for left image
+            leftImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(getContext(), "Left Image Click Received", Toast.LENGTH_SHORT).show();
+                    leftHeartVote.setVisibility(View.VISIBLE);
+                    rightHeartVote.setVisibility(View.VISIBLE);
+                }
+            });
+
+            //set click listener for right image
+            rightImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(getContext(), "Right Image Click Received", Toast.LENGTH_SHORT).show();
+                    leftHeartVote.setVisibility(View.VISIBLE);
+                    rightHeartVote.setVisibility(View.VISIBLE);
+                }
+            });
+
             //create holder and  set up references to TextView's
             holder = new PollViewHolder();
             holder.mainTitle = (TextView) currentView.findViewById(R.id.tv_poll_main_title);
             holder.subTitle = (TextView) currentView.findViewById(R.id.tv_poll_sub_title);
-            holder.leftImage = (PollImageView) currentView.findViewById(R.id.iv_poll_left);
-            holder.rightImage = (PollImageView) currentView.findViewById(R.id.iv_poll_right);
+            holder.leftImage = (ImageView) currentView.findViewById(R.id.iv_poll_left);
+            holder.rightImage = (ImageView) currentView.findViewById(R.id.iv_poll_right);
             holder.leftVotes = (TextView) currentView.findViewById(R.id.tv_poll_left_votes);
             holder.rightVotes = (TextView) currentView.findViewById(R.id.tv_poll_right_votes);
+            holder.leftVotesHeart = leftHeartVote;
+            holder.rightVotesHeart = rightHeartVote;
             currentView.setTag(holder);
         }
 
@@ -58,6 +89,8 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
         else {
             Log.d(TAG, "View recycled");
             holder = (PollViewHolder)currentView.getTag();
+            holder.leftVotesHeart.setVisibility(View.GONE);
+            holder.rightVotesHeart.setVisibility(View.GONE);
         }
 
         //reset any variables in holder if view can be recycled
@@ -82,10 +115,11 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
     private class PollViewHolder {
         TextView mainTitle;
         TextView subTitle;
-        PollImageView leftImage;
-        PollImageView rightImage;
+        ImageView leftImage;
+        ImageView rightImage;
         TextView leftVotes;
         TextView rightVotes;
+        RelativeLayout leftVotesHeart;
+        RelativeLayout rightVotesHeart;
     }
-
 }

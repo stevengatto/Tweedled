@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Motherly</string>
+    <string name="app_name">Tweedled</string>
     <string name="register">Register New Account</string>
     <string name="login">Login</string>
     <string name="user_name">Username</string>
