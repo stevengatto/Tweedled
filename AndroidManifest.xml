@@ -26,6 +26,7 @@
         <activity android:name=".ui.RegisterActivity"/>
         <activity android:name=".ui.DashboardActivity"/>
         <activity android:name=".ui.LoginActivity"/>
+        <activity android:name=".ui.PostPollActivity"/>
         <activity android:name=".login.Login"></activity>
         <activity android:name=".login.Dashboard"></activity>
     </application>

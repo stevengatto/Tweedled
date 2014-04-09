@@ -84,7 +84,11 @@ public class BaseActivity extends Activity {
     }
 
     public void postClick(MenuItem item){
-        Toast.makeText(getApplicationContext(), "Post button pressed", Toast.LENGTH_SHORT).show();
+        //launch post activity
+        Intent intent = new Intent(this, PostPollActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     public void settingsClick(MenuItem item){

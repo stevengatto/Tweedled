@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+    <RelativeLayout android:id="@+id/post_poll_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+        <EditText android:id="@+id/et_post_question"
+                  android:layout_width="fill_parent"
+                  android:layout_height="50dp"
+                  android:hint="Question"/>
+
+        <EditText android:id="@+id/et_post_title1"
+                  android:layout_below="@id/et_post_question"
+                  android:layout_width="fill_parent"
+                  android:layout_height="50dp"
+                  android:hint="Title 1"/>
+
+        <EditText android:id="@+id/et_post_title2"
+                  android:layout_below="@id/et_post_title1"
+                  android:layout_width="fill_parent"
+                  android:layout_height="50dp"
+                  android:hint="Title 2"/>
+
+        <LinearLayout android:id="@+id/layout_poll_post_images"
+                      android:orientation="horizontal"
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_below="@id/et_post_title2">
+
+            <ImageView android:id="@+id/iv_poll_post_left"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:clickable="true"
+                       android:scaleType="fitCenter"
+                       android:src="@drawable/ic_placeholder"/>
+
+            <ImageView android:id="@+id/iv_poll_post_right"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:clickable="true"
+                       android:scaleType="fitCenter"
+                       android:src="@drawable/ic_placeholder"/>
+
+        </LinearLayout>
+
+        <Button android:id="@+id/btn_post_submit"
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:layout_below="@id/layout_poll_post_images"
+                android:hint="Submit"/>
+
+    </RelativeLayout>
+
+</ScrollView>
