@@ -10,7 +10,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import moms.app.android.R;
 import moms.app.android.model.Comment;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
