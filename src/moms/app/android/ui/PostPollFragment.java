@@ -77,6 +77,7 @@ public class PostPollFragment extends Fragment {
         return layout;
     }
 
+    //handle result from the gallery activity selecting image
     public void onActivityResult(int requestCode, int resultCode,
                                     Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
