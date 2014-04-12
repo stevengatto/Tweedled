@@ -10,6 +10,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -35,6 +38,7 @@ import java.io.IOException;
  */
 public class PostPollFragment extends Fragment {
 
+    private static Uri imageUri;
     EditText question;
     String mQuestion_str;
     EditText title1;
@@ -45,6 +49,12 @@ public class PostPollFragment extends Fragment {
     ImageView photo2;
     Button submitBtn;
     String mAuth_token;
+    private Button takePhoto1;
+    private Button takePhoto2;
+    private static int CHOOSE_PHOTO_1 = 1;
+    private static int CHOOSE_PHOTO_2 = 2;
+    private static int TAKE_PHOTO_1 = 3;
+    private static int TAKE_PHOTO_2 = 4;
     private Activity mThisActivity;
 
     private SharedPreferences mPreferences;
@@ -61,6 +71,8 @@ public class PostPollFragment extends Fragment {
         title2 = (EditText) layout.findViewById(R.id.et_post_title2);
         photo1 = (ImageView) layout.findViewById(R.id.iv_poll_post_left);
         photo2 = (ImageView) layout.findViewById(R.id.iv_poll_post_right);
+        takePhoto1 = (Button) layout.findViewById(R.id.btn_take_photo_1);
+        takePhoto2 = (Button) layout.findViewById(R.id.btn_take_photo_2);
         submitBtn = (Button) layout.findViewById(R.id.btn_post_submit);
         mThisActivity = getActivity();
 
@@ -69,10 +81,9 @@ public class PostPollFragment extends Fragment {
             public void onClick(View view) {
                 Toast.makeText(getActivity(),
                         question.getText()+"\n"
-                        +title1.getText()+"\n"
-                        +title2.getText().toString()
+                                +title1.getText()+"\n"
+                                +title2.getText().toString()
                         , Toast.LENGTH_SHORT).show();
-                submit();
             }
         });
 
@@ -81,7 +92,7 @@ public class PostPollFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/*");
-                startActivityForResult(intent, 1);
+                startActivityForResult(intent, CHOOSE_PHOTO_1);
             }
         });
 
@@ -90,7 +101,31 @@ public class PostPollFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/*");
-                startActivityForResult(intent, 2);
+                startActivityForResult(intent, CHOOSE_PHOTO_2);
+            }
+        });
+
+        takePhoto1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                File photo = new File(Environment.getExternalStorageDirectory(),  "Pic.jpg");
+                intent.putExtra(MediaStore.EXTRA_OUTPUT,
+                        Uri.fromFile(photo));
+                imageUri = Uri.fromFile(photo);
+                startActivityForResult(intent, TAKE_PHOTO_1);
+            }
+        });
+
+        takePhoto2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                File photo = new File(Environment.getExternalStorageDirectory(),  "Pic.jpg");
+                intent.putExtra(MediaStore.EXTRA_OUTPUT,
+                        Uri.fromFile(photo));
+                imageUri = Uri.fromFile(photo);
+                startActivityForResult(intent, TAKE_PHOTO_2);
             }
         });
 
@@ -130,6 +165,30 @@ public class PostPollFragment extends Fragment {
                 if(image != null)
                     photo2.setImageBitmap(cropBitmapCenter(image));
                 break;
+            case 3:
+                if (resultCode == Activity.RESULT_OK) {
+                    selectedImage = imageUri;
+                    getActivity().getContentResolver().notifyChange(selectedImage, null);
+
+                    try{ image = decodeUri(selectedImage); }
+                    catch (Exception e) { Log.e(null, "Incorrect Uri Exception on Image Select"); }
+
+                    if(image != null)
+                        photo1.setImageBitmap(cropBitmapCenter(image));
+                    break;
+                }
+            case 4:
+                if (resultCode == Activity.RESULT_OK) {
+                    selectedImage = imageUri;
+                    getActivity().getContentResolver().notifyChange(selectedImage, null);
+
+                    try{ image = decodeUri(selectedImage); }
+                    catch (Exception e) { Log.e(null, "Incorrect Uri Exception on Image Select"); }
+
+                    if(image != null)
+                        photo2.setImageBitmap(cropBitmapCenter(image));
+                    break;
+                }
         }
     }
 
