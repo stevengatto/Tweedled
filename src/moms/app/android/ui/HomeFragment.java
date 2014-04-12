@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.savagelook.android.UrlJsonAsyncTask;
-import com.wilson.android.library.DrawableManager;
 import moms.app.android.R;
 import moms.app.android.model.testing.Poll;
 import org.apache.http.client.HttpResponseException;
@@ -26,8 +25,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -69,8 +66,6 @@ public class HomeFragment extends Fragment {
                 Intent intent = new Intent(thisActivity, PollItemActivity.class);
                 intent.putExtra("mainTitle", list.get(position).getMainTitle());
                 intent.putExtra("subTitle", list.get(position).getSubTitle());
-                //intent.putExtra("leftImage", list.get(position).getLeftImage());
-                //intent.putExtra("rightImage", list.get(position).getRightImage());
                 intent.putExtra("leftVotes", list.get(position).getLeftVotes());
                 intent.putExtra("rightVotes", list.get(position).getRightVotes());
                 startActivity(intent);
@@ -95,7 +90,6 @@ public class HomeFragment extends Fragment {
             JSONArray polls_array = json.getJSONArray("polls");
             int poll_count = json.getInt("poll_count");
             Random random = new Random();
-            DrawableManager drawableManager = new DrawableManager();
             for(int i = 0; i < poll_count;i++)
             {
 
