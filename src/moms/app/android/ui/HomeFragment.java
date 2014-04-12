@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.savagelook.android.UrlJsonAsyncTask;
-import com.wilson.android.library.DrawableManager;
+
 import moms.app.android.R;
 import moms.app.android.model.testing.Poll;
 import org.apache.http.client.HttpResponseException;
@@ -45,6 +45,7 @@ public class HomeFragment extends Fragment {
     private Activity thisActivity;
     private Drawable mImage1;
     private Drawable mImage2;
+    private String BASEURL = "http://10.0.0.18";
     private String URL = "http://10.0.0.18/polls";//getString(R.string.url) + "/polls";
     private String IMAGE_URL_PREFIX = "http://10.0.0.18/system/polls/";//getString(R.string.url) + "/system/polls/";
     private String URL_MISSING_IMAGE = "http://10.0.0.18/images/missing.png";//getString(R.string.url) + "/images/missing.png";
@@ -135,17 +136,11 @@ public class HomeFragment extends Fragment {
             JSONArray polls_array = json.getJSONArray("polls");
             int poll_count = json.getInt("poll_count");
             Random random = new Random();
-            DrawableManager drawableManager = new DrawableManager();
             for(int i = 0; i < poll_count;i++)
             {
-
                 JSONObject poll_json = polls_array.getJSONObject(i);
-                String image_1_url = (!poll_json.getString("attachment_1_file_name").equals(""))
-                                    ? IMAGE_URL_PREFIX + poll_json.getString("id") + "/original/" + poll_json.getString("attachment_1_file_name")
-                                    : URL_MISSING_IMAGE;
-                String image_2_url = (!poll_json.getString("attachment_1_file_name").equals(""))
-                        ? IMAGE_URL_PREFIX + poll_json.getString("id") + "/original/" + poll_json.getString("attachment_2_file_name")
-                        : URL_MISSING_IMAGE;
+                String image_1_url = BASEURL + poll_json.getString("attachment_1_url");
+                String image_2_url = BASEURL + poll_json.getString("attachment_2_url");
 
 
                 String question = poll_json.getString("question");
@@ -155,11 +150,7 @@ public class HomeFragment extends Fragment {
                 poll.setRightVotes(random.nextInt(10000));
                 poll.setLeftImage(image_1_url);
                 poll.setRightImage(image_2_url);
-               // downloadImage1.execute(image_1_url);
-               // poll.setLeftImage(mImage1);
-                //downloadImage2.execute(image_2_url);
-               // poll.setLeftImage(mImage1);
-               // poll.setRightImage(drawableManager.fetchDrawable(image_2_url));
+
                 list.add(poll);
 
             }
