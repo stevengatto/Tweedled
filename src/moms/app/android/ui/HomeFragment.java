@@ -15,11 +15,10 @@ import android.widget.*;
 import com.savagelook.android.UrlJsonAsyncTask;
 import com.wilson.android.library.DrawableManager;
 import moms.app.android.R;
-import moms.app.android.model.Poll;
+import moms.app.android.model.testing.Poll;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
@@ -62,24 +61,6 @@ public class HomeFragment extends Fragment {
 
         fetchingPolls();
 
-        //set up listView adapter and onItemClick listener
-//       HomeAdapter adapter = new HomeAdapter(thisActivity, R.layout.poll_item, list);
-//        listView.setAdapter(adapter);
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-//                Log.d(TAG, "Entering onItemClick method in Polls ListView");
-//                Intent intent = new Intent(thisActivity, PollItemActivity.class);
-//                intent.putExtra("mainTitle", list.get(position).getMainTitle());
-//                intent.putExtra("subTitle", list.get(position).getSubTitle());
-//                intent.putExtra("leftImage", list.get(position).getLeftImage());
-//                intent.putExtra("rightImage", list.get(position).getRightImage());
-//                intent.putExtra("leftVotes", list.get(position).getLeftVotes());
-//                intent.putExtra("rightVotes", list.get(position).getRightVotes());
-//                startActivity(intent);
-//                thisActivity.overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.fade_out);
-//            }
-//        });
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -98,31 +79,9 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        //make web call for kitten pictures
-        //new DownloadImageTask().execute("http://www.zwaldtransport.com/images/placeholders/placeholder1.jpg");
-
         return layout;
     }
 
-    //terrible class to download placeholder image off for listview
-    private class DownloadImageTask extends AsyncTask<String, Void, Drawable> {
-
-        protected Drawable doInBackground(String... urls) {
-            String url = urls[0];
-            try{
-                InputStream is = (InputStream) new URL(url).getContent();
-                Drawable d = Drawable.createFromStream(is, "src name");
-                return d;
-            }catch (Exception e) {
-                System.out.println("Exc=" + e);
-                return null;
-            }
-        }
-
-        protected void onPostExecute(Drawable result) {
-               mImage1 = result;
-        }
-   }
     private void fetchingPolls()
     {
         FetchingPollTask pollTask = new FetchingPollTask(getActivity());
@@ -156,11 +115,6 @@ public class HomeFragment extends Fragment {
                 poll.setRightVotes(random.nextInt(10000));
                 poll.setLeftImage(image_1_url);
                 poll.setRightImage(image_2_url);
-               // downloadImage1.execute(image_1_url);
-               // poll.setLeftImage(mImage1);
-                //downloadImage2.execute(image_2_url);
-               // poll.setLeftImage(mImage1);
-               // poll.setRightImage(drawableManager.fetchDrawable(image_2_url));
                 list.add(poll);
 
             }

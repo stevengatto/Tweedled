@@ -1,7 +1,6 @@
 package moms.app.android.ui;
 
 import android.app.Activity;
-import android.app.DownloadManager;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.wilson.android.library.DrawableManager;
 import moms.app.android.R;
-import moms.app.android.model.Poll;
+import moms.app.android.model.testing.Poll;
 
 import java.util.List;
 
