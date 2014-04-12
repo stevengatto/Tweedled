@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.savagelook.android.UrlJsonAsyncTask;
-
+import com.wilson.android.library.DrawableManager;
 import moms.app.android.R;
 import moms.app.android.model.testing.Poll;
 import org.apache.http.client.HttpResponseException;
@@ -45,7 +45,6 @@ public class HomeFragment extends Fragment {
     private Activity thisActivity;
     private Drawable mImage1;
     private Drawable mImage2;
-    private String BASEURL = "http://10.0.0.18";
     private String URL = "http://10.0.0.18/polls";//getString(R.string.url) + "/polls";
     private String IMAGE_URL_PREFIX = "http://10.0.0.18/system/polls/";//getString(R.string.url) + "/system/polls/";
     private String URL_MISSING_IMAGE = "http://10.0.0.18/images/missing.png";//getString(R.string.url) + "/images/missing.png";
@@ -62,24 +61,6 @@ public class HomeFragment extends Fragment {
 
         fetchingPolls();
 
-        //set up listView adapter and onItemClick listener
-//       HomeAdapter adapter = new HomeAdapter(thisActivity, R.layout.poll_item, list);
-//        listView.setAdapter(adapter);
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-//                Log.d(TAG, "Entering onItemClick method in Polls ListView");
-//                Intent intent = new Intent(thisActivity, PollItemActivity.class);
-//                intent.putExtra("mainTitle", list.get(position).getMainTitle());
-//                intent.putExtra("subTitle", list.get(position).getSubTitle());
-//                intent.putExtra("leftImage", list.get(position).getLeftImage());
-//                intent.putExtra("rightImage", list.get(position).getRightImage());
-//                intent.putExtra("leftVotes", list.get(position).getLeftVotes());
-//                intent.putExtra("rightVotes", list.get(position).getRightVotes());
-//                startActivity(intent);
-//                thisActivity.overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.fade_out);
-//            }
-//        });
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -98,31 +79,9 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        //make web call for kitten pictures
-        //new DownloadImageTask().execute("http://www.zwaldtransport.com/images/placeholders/placeholder1.jpg");
-
         return layout;
     }
 
-    //terrible class to download placeholder image off for listview
-    private class DownloadImageTask extends AsyncTask<String, Void, Drawable> {
-
-        protected Drawable doInBackground(String... urls) {
-            String url = urls[0];
-            try{
-                InputStream is = (InputStream) new URL(url).getContent();
-                Drawable d = Drawable.createFromStream(is, "src name");
-                return d;
-            }catch (Exception e) {
-                System.out.println("Exc=" + e);
-                return null;
-            }
-        }
-
-        protected void onPostExecute(Drawable result) {
-               mImage1 = result;
-        }
-   }
     private void fetchingPolls()
     {
         FetchingPollTask pollTask = new FetchingPollTask(getActivity());
@@ -136,11 +95,17 @@ public class HomeFragment extends Fragment {
             JSONArray polls_array = json.getJSONArray("polls");
             int poll_count = json.getInt("poll_count");
             Random random = new Random();
+            DrawableManager drawableManager = new DrawableManager();
             for(int i = 0; i < poll_count;i++)
             {
+
                 JSONObject poll_json = polls_array.getJSONObject(i);
-                String image_1_url = BASEURL + poll_json.getString("attachment_1_url");
-                String image_2_url = BASEURL + poll_json.getString("attachment_2_url");
+                String image_1_url = (!poll_json.getString("attachment_1_file_name").equals(""))
+                                    ? IMAGE_URL_PREFIX + poll_json.getString("id") + "/original/" + poll_json.getString("attachment_1_file_name")
+                                    : URL_MISSING_IMAGE;
+                String image_2_url = (!poll_json.getString("attachment_1_file_name").equals(""))
+                        ? IMAGE_URL_PREFIX + poll_json.getString("id") + "/original/" + poll_json.getString("attachment_2_file_name")
+                        : URL_MISSING_IMAGE;
 
 
                 String question = poll_json.getString("question");
@@ -150,7 +115,6 @@ public class HomeFragment extends Fragment {
                 poll.setRightVotes(random.nextInt(10000));
                 poll.setLeftImage(image_1_url);
                 poll.setRightImage(image_2_url);
-
                 list.add(poll);
 
             }
