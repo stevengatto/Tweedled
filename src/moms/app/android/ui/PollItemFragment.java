@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import moms.app.android.R;
-import moms.app.android.model.Comment;
+import moms.app.android.model.testing.Comment;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import moms.app.android.R;
-import moms.app.android.model.Poll;
+import moms.app.android.model.testing.Poll;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -156,21 +156,6 @@ public class HomeFragment extends Fragment {
         //set up listView adapter and onItemClick listener
         HomeAdapter adapter = new HomeAdapter(thisActivity, R.layout.poll_item, list);
         listView.setAdapter(adapter);
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-//                Log.d(TAG, "Entering onItemClick method in Polls ListView");
-//                Intent intent = new Intent(thisActivity, PollItemActivity.class);
-//                intent.putExtra("mainTitle", list.get(position).getMainTitle());
-//                intent.putExtra("subTitle", list.get(position).getSubTitle());
-//                intent.putExtra("leftImage", list.get(position).getLeftImage());
-//                intent.putExtra("rightImage", list.get(position).getRightImage());
-//                intent.putExtra("leftVotes", list.get(position).getLeftVotes());
-//                intent.putExtra("rightVotes", list.get(position).getRightVotes());
-//                startActivity(intent);
-//                thisActivity.overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.fade_out);
-//            }
-//        });
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {

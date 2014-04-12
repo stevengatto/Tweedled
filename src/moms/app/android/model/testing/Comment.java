@@ -1,4 +1,4 @@
-package moms.app.android.model;
+package moms.app.android.model.testing;
 
 /**
  * Created by Steve on 4/5/14.

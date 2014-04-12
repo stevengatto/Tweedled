@@ -1,14 +1,14 @@
-package moms.app.android.model;
+package moms.app.android.model.PollPost;
 
 /**
  * Created by Steve on 4/9/14.
  */
-public class PostPoll {
+public class PollInner {
 
-    String authToken;
-    String question;
-    String titleOne;
-    String titleTwo;
+    private String authToken;
+    private String question;
+    private String titleOne;
+    private String titleTwo;
 
     public void setTitleTwo(String titleTwo) {
         this.titleTwo = titleTwo;

@@ -2,13 +2,14 @@ package moms.app.android.ui;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import moms.app.android.R;
-import moms.app.android.model.Poll;
+import moms.app.android.model.testing.Poll;
 
 import java.util.List;
 
@@ -97,8 +98,10 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
         final Poll currentPoll = list.get(position);
         holder.mainTitle.setText(currentPoll.getMainTitle());
         holder.subTitle.setText(currentPoll.getSubTitle());
-        holder.leftImage.setImageResource(currentPoll.getLeftImage());
-        holder.rightImage.setImageResource(currentPoll.getRightImage());
+        holder.leftImage.setImageBitmap(BitmapFactory.decodeResource(getContext().getResources()
+                , currentPoll.getLeftImage()));
+        holder.rightImage.setImageBitmap(BitmapFactory.decodeResource(getContext().getResources()
+                , currentPoll.getRightImage()));
         holder.leftVotes.setText(currentPoll.getLeftVotes().toString());
         holder.rightVotes.setText(currentPoll.getRightVotes().toString());
 
