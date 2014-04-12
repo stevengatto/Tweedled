@@ -1,48 +1,55 @@
 package moms.app.android.ui;
 
+
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.*;
+import com.savagelook.android.UrlJsonAsyncTask;
 import moms.app.android.R;
+import org.apache.http.client.HttpResponseException;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.io.File;
+
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * Created by Steve on 4/8/14.
  */
 public class PostPollFragment extends Fragment {
 
-    private Uri imageUri;
-    private EditText question;
-    private EditText title1;
-    private EditText title2;
-    private ImageView photo1;
-    private ImageView photo2;
-    private Button takePhoto1;
-    private Button takePhoto2;
-    private Button submitBtn;
-    private static int CHOOSE_PHOTO_1 = 1;
-    private static int CHOOSE_PHOTO_2 = 2;
-    private static int TAKE_PHOTO_1 = 3;
-    private static int TAKE_PHOTO_2 = 4;
+    EditText question;
+    String mQuestion_str;
+    EditText title1;
+    String mTitle1_str;
+    EditText title2;
+    String mTitle2_str;
+    ImageView photo1;
+    ImageView photo2;
+    Button submitBtn;
+    String mAuth_token;
+    private Activity mThisActivity;
 
+    private SharedPreferences mPreferences;
+
+    final String URL = "http://kcl/polls/new";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,9 +61,8 @@ public class PostPollFragment extends Fragment {
         title2 = (EditText) layout.findViewById(R.id.et_post_title2);
         photo1 = (ImageView) layout.findViewById(R.id.iv_poll_post_left);
         photo2 = (ImageView) layout.findViewById(R.id.iv_poll_post_right);
-        takePhoto1 = (Button) layout.findViewById(R.id.btn_take_photo_1);
-        takePhoto2 = (Button) layout.findViewById(R.id.btn_take_photo_2);
         submitBtn = (Button) layout.findViewById(R.id.btn_post_submit);
+        mThisActivity = getActivity();
 
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +72,7 @@ public class PostPollFragment extends Fragment {
                         +title1.getText()+"\n"
                         +title2.getText().toString()
                         , Toast.LENGTH_SHORT).show();
+                submit();
             }
         });
 
@@ -74,7 +81,7 @@ public class PostPollFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/*");
-                startActivityForResult(intent, CHOOSE_PHOTO_1);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -83,31 +90,7 @@ public class PostPollFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/*");
-                startActivityForResult(intent, CHOOSE_PHOTO_2);
-            }
-        });
-
-        takePhoto1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                File photo = new File(Environment.getExternalStorageDirectory(),  "Pic.jpg");
-                intent.putExtra(MediaStore.EXTRA_OUTPUT,
-                        Uri.fromFile(photo));
-                imageUri = Uri.fromFile(photo);
-                startActivityForResult(intent, TAKE_PHOTO_1);
-            }
-        });
-
-        takePhoto2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                File photo = new File(Environment.getExternalStorageDirectory(),  "Pic.jpg");
-                intent.putExtra(MediaStore.EXTRA_OUTPUT,
-                        Uri.fromFile(photo));
-                imageUri = Uri.fromFile(photo);
-                startActivityForResult(intent, TAKE_PHOTO_2);
+                startActivityForResult(intent, 2);
             }
         });
 
@@ -123,10 +106,13 @@ public class PostPollFragment extends Fragment {
         Bitmap image = null;
 
         //will throw out of memory error if photo is too large
+        selectedImage = null;
         switch(requestCode) {
             case 1:
-                selectedImage = imageReturnedIntent.getData();
-
+                try {
+                    selectedImage = imageReturnedIntent.getData(); //can be null
+                }catch (Exception e)
+                {}
                 try{ image = decodeUri(selectedImage); }
                 catch (Exception e) { Log.e(null, "Incorrect Uri Exception on Image Select"); }
 
@@ -134,38 +120,16 @@ public class PostPollFragment extends Fragment {
                     photo1.setImageBitmap(cropBitmapCenter(image));
                 break;
             case 2:
-                selectedImage = imageReturnedIntent.getData();
-
+                try{
+                selectedImage = imageReturnedIntent.getData();  //can be null   
+                }catch (Exception e)
+                {}
                 try{ image = decodeUri(selectedImage); }
                 catch (Exception e) { Log.e(null, "Incorrect Uri Exception on Image Select"); }
 
                 if(image != null)
                     photo2.setImageBitmap(cropBitmapCenter(image));
                 break;
-            case 3:
-                if (resultCode == Activity.RESULT_OK) {
-                    selectedImage = imageUri;
-                    getActivity().getContentResolver().notifyChange(selectedImage, null);
-
-                    try{ image = decodeUri(selectedImage); }
-                    catch (Exception e) { Log.e(null, "Incorrect Uri Exception on Image Select"); }
-
-                    if(image != null)
-                        photo1.setImageBitmap(cropBitmapCenter(image));
-                    break;
-                }
-            case 4:
-                if (resultCode == Activity.RESULT_OK) {
-                    selectedImage = imageUri;
-                    getActivity().getContentResolver().notifyChange(selectedImage, null);
-
-                    try{ image = decodeUri(selectedImage); }
-                    catch (Exception e) { Log.e(null, "Incorrect Uri Exception on Image Select"); }
-
-                    if(image != null)
-                        photo2.setImageBitmap(cropBitmapCenter(image));
-                    break;
-                }
         }
     }
 
@@ -226,4 +190,93 @@ public class PostPollFragment extends Fragment {
         }
         return dstBmp;
     }
+
+    public void submit()
+    {
+        mQuestion_str = question.getText().toString();
+        mTitle1_str = title1.getText().toString();
+        mTitle2_str = title2.getText().toString();
+        //e29c93
+
+
+        mPreferences = mThisActivity.getSharedPreferences("CurrentUser", mThisActivity.MODE_PRIVATE);
+        mAuth_token = mPreferences.getString("AuthToken", "");
+
+        CreatePollTask pollTask = new CreatePollTask(mThisActivity);
+        pollTask.setMessageLoading("Creating poll...");
+        pollTask.execute(URL);
+    }
+
+    private class CreatePollTask extends UrlJsonAsyncTask {
+        public CreatePollTask(Context context) {
+            super(context);
+        }
+
+        @Override
+        protected JSONObject doInBackground(String... urls) {
+            DefaultHttpClient client = new DefaultHttpClient();
+            HttpPost post = new HttpPost(urls[0]);
+            JSONObject holder = new JSONObject();
+            JSONObject pollObj = new JSONObject();
+            String response;
+            JSONObject json = new JSONObject();
+            try {
+                try {
+                    json.put("utf8", "\u2713");
+                    json.put("authenticity_token", "");
+                    pollObj.put("question", mQuestion_str);
+                    pollObj.put("title_one", mTitle1_str);
+                    pollObj.put("title_two", mTitle2_str);
+                    pollObj.put("auth_token", mAuth_token);
+                    pollObj.put("commit", "submit");
+                    pollObj.put("controller", "polls");
+                    pollObj.put("action", "create");
+                    json.put("poll",pollObj);
+
+                    StringEntity se = new StringEntity(json.toString());
+                    post.setEntity(se);
+                    post.setHeader("Content-Type", "application/json");
+                    post.setHeader("Accept", "application/json");
+
+                    ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                    response = client.execute(post, responseHandler);
+                    json = new JSONObject(response);
+
+                } catch (HttpResponseException e) {
+                    e.printStackTrace();
+                    Log.e("ClientProtocol", "" + e);
+                    json.put("info",
+                            "Email and/or password are invalid. Retry!");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.e("IO", "" + e);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Log.e("JSON", "" + e);
+            }
+
+            return json;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject json) {
+            try {
+                if (json.getBoolean("success")) {
+
+                    Toast.makeText(context, json.getString("info"),
+                            Toast.LENGTH_LONG).show();
+                }
+            } catch (Exception e) {
+                Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG)
+                        .show();
+            } finally {
+                super.onPostExecute(json);
+            }
+        }
+
+    }
+
+
+
 }
