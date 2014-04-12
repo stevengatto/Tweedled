@@ -1,12 +1,14 @@
 package moms.app.android.ui;
 
 import android.app.Activity;
+import android.app.DownloadManager;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import com.wilson.android.library.DrawableManager;
 import moms.app.android.R;
 import moms.app.android.model.Poll;
 
@@ -92,13 +94,14 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
             holder.leftVotesHeart.setVisibility(View.GONE);
             holder.rightVotesHeart.setVisibility(View.GONE);
         }
-
+        DrawableManager downloadManager = new DrawableManager();
         //reset any variables in holder if view can be recycled
         final Poll currentPoll = list.get(position);
         holder.mainTitle.setText(currentPoll.getMainTitle());
         holder.subTitle.setText(currentPoll.getSubTitle());
-        holder.leftImage.setImageResource(currentPoll.getLeftImage());
-        holder.rightImage.setImageResource(currentPoll.getRightImage());
+        downloadManager.fetchDrawableOnThread(currentPoll.getLeftImage(),holder.leftImage);
+        downloadManager.fetchDrawableOnThread(currentPoll.getRightImage(),holder.rightImage);
+
         holder.leftVotes.setText(currentPoll.getLeftVotes().toString());
         holder.rightVotes.setText(currentPoll.getRightVotes().toString());
 

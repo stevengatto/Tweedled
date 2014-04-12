@@ -49,7 +49,7 @@ public class PostPollFragment extends Fragment {
 
     private SharedPreferences mPreferences;
 
-    final String URL = "http://10.0.0.18/polls/new";
+    final String URL = "http://kcl/polls/new";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -121,7 +121,7 @@ public class PostPollFragment extends Fragment {
                 break;
             case 2:
                 try{
-                selectedImage = imageReturnedIntent.getData();  //can be null
+                selectedImage = imageReturnedIntent.getData();  //can be null   
                 }catch (Exception e)
                 {}
                 try{ image = decodeUri(selectedImage); }
@@ -220,8 +220,6 @@ public class PostPollFragment extends Fragment {
             JSONObject pollObj = new JSONObject();
             String response;
             JSONObject json = new JSONObject();
-            String oldString = "\uD800";
-
             try {
                 try {
                     json.put("utf8", "\u2713");

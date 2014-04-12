@@ -9,17 +9,17 @@ public class Poll {
 
     private String mainTitle;
     private String subTitle;
-    private Integer leftImage;
-    private Integer rightImage;
+    private String leftImageURL;
+    private String rightImageURL;
     private Integer leftVotes;
     private Integer rightVotes;
 
-    public Poll(String mainTitle, String subTitle, Integer leftImage,
-                Integer rightImage, Integer leftVotes, Integer rightVotes){
+    public Poll(String mainTitle, String subTitle, String leftImageURL,
+                String rightImageURL, Integer leftVotes, Integer rightVotes){
         this.mainTitle = mainTitle;
         this.subTitle = subTitle;
-        this.leftImage = leftImage;
-        this.rightImage = rightImage;
+        this.leftImageURL = leftImageURL;
+        this.rightImageURL = rightImageURL;
         this.leftVotes = leftVotes;
         this.rightVotes = rightVotes;
     }
@@ -36,20 +36,20 @@ public class Poll {
 
     public void setSubTitle(String subTitle) { this.subTitle = subTitle; }
 
-    public Integer getLeftImage() {
-        return leftImage;
+    public String getLeftImage() {
+        return leftImageURL;
     }
 
-    public void setLeftImage(Integer leftImage) {
-        this.leftImage = leftImage;
+    public void setLeftImage(String leftImage) {
+        this.leftImageURL = leftImage;
     }
 
-    public Integer getRightImage() {
-        return rightImage;
+    public String getRightImage() {
+        return rightImageURL;
     }
 
-    public void setRightImage(Integer rightImage) {
-        this.rightImage = rightImage;
+    public void setRightImage(String rightImage) {
+        this.rightImageURL = rightImage;
     }
 
     public Integer getLeftVotes() {

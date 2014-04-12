@@ -8,7 +8,7 @@
     <string name="user_password">Password</string>
     <string name="user_password_confirmation">Confirm Password</string>
     <string name="auto_login">Auto Login?</string>
-
+    <string name="url">http://10.0.0.8</string>
     <string name="logout">Logout</string>
 
 </resources>
