@@ -10,7 +10,6 @@ import android.widget.*;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.wilson.android.library.DrawableManager;
 import moms.app.android.R;
 import moms.app.android.model.testing.Poll;
 
