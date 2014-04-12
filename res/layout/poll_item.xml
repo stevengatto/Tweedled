@@ -110,7 +110,7 @@
                           android:layout_marginLeft="10dp"
                           android:textSize="15sp"
                           android:textColor="@color/text_color"
-                          android:text="Votes"/>
+                          android:text="Placeholder"/>
 
             </RelativeLayout>
 
@@ -136,7 +136,7 @@
                           android:layout_marginLeft="10dp"
                           android:textSize="15sp"
                           android:textColor="@color/text_color"
-                          android:text="Votes"/>
+                          android:text="Placeholder"/>
 
             </RelativeLayout>
 

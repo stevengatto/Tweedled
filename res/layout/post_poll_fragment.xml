@@ -12,7 +12,8 @@
         <EditText android:id="@+id/et_post_question"
                   android:layout_width="fill_parent"
                   android:layout_height="50dp"
-                  android:hint="Question"/>
+                  android:hint="Question"
+                  android:maxLength="50"/>
 
         <LinearLayout android:id="@+id/layout_poll_post_images"
                       android:orientation="horizontal"
@@ -28,14 +29,14 @@
                 <EditText android:id="@+id/et_post_title1"
                           android:layout_width="fill_parent"
                           android:layout_height="50dp"
-                          android:hint="Title 1"/>
+                          android:hint="Title 1"
+                          android:maxLength="30"/>
 
                 <ImageView android:id="@+id/iv_poll_post_left"
                            android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
                            android:layout_gravity="center"
                            android:clickable="true"
-                           android:scaleType="fitCenter"
                            android:src="@drawable/ic_placeholder"/>
 
                 <Button android:id="@+id/btn_take_photo_1"
@@ -53,14 +54,14 @@
                 <EditText android:id="@+id/et_post_title2"
                           android:layout_width="fill_parent"
                           android:layout_height="50dp"
-                          android:hint="Title 2"/>
+                          android:hint="Title 2"
+                          android:maxLength="30"/>
 
                 <ImageView android:id="@+id/iv_poll_post_right"
                            android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
                            android:layout_gravity="center"
                            android:clickable="true"
-                           android:scaleType="fitCenter"
                            android:src="@drawable/ic_placeholder"/>
 
                 <Button android:id="@+id/btn_take_photo_2"

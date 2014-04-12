@@ -36,19 +36,19 @@ public class Poll {
 
     public void setSubTitle(String subTitle) { this.subTitle = subTitle; }
 
-    public String getLeftImage() {
+    public String getLeftImageUrl() {
         return leftImageURL;
     }
 
-    public void setLeftImage(String leftImage) {
+    public void setLeftImageUrl(String leftImage) {
         this.leftImageURL = leftImage;
     }
 
-    public String getRightImage() {
+    public String getRightImageUrl() {
         return rightImageURL;
     }
 
-    public void setRightImage(String rightImage) {
+    public void setRightImageUrl(String rightImage) {
         this.rightImageURL = rightImage;
     }
 

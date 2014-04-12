@@ -2,7 +2,6 @@ package moms.app.android.ui;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +10,9 @@ import android.widget.*;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 import moms.app.android.R;
 import moms.app.android.model.testing.Poll;
+import moms.app.android.utils.ImageLoadingListener;
 
 import java.util.List;
 
@@ -119,9 +117,9 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
         final Poll currentPoll = list.get(position);
         holder.mainTitle.setText(currentPoll.getMainTitle());
         holder.subTitle.setText(currentPoll.getSubTitle());
-        ImageLoader.getInstance().displayImage(currentPoll.getLeftImage(), holder.leftImage,
+        ImageLoader.getInstance().displayImage(currentPoll.getLeftImageUrl(), holder.leftImage,
                 null, new ImageLoadingListener(holder.leftProgBar));
-        ImageLoader.getInstance().displayImage(currentPoll.getRightImage(), holder.rightImage,
+        ImageLoader.getInstance().displayImage(currentPoll.getRightImageUrl(), holder.rightImage,
                 null, new ImageLoadingListener(holder.rightProgBar));
 
         holder.leftVotes.setText(currentPoll.getLeftVotes().toString());
@@ -148,31 +146,5 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
         RelativeLayout rightVotesHeart;
         ProgressBar leftProgBar;
         ProgressBar rightProgBar;
-    }
-
-
-    //private inner class to represent loading spinner on images in polls
-    private class ImageLoadingListener extends SimpleImageLoadingListener {
-
-        final ProgressBar spinner;
-
-        public ImageLoadingListener(ProgressBar spinner){
-            this.spinner = spinner;
-        }
-
-        @Override
-        public void onLoadingStarted(String imageUri, View view) {
-            spinner.setVisibility(View.VISIBLE);
-        }
-
-        @Override
-        public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-            spinner.setVisibility(View.GONE);
-        }
-
-        @Override
-        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-            spinner.setVisibility(View.GONE);
-        }
     }
 }

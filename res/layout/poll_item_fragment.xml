@@ -36,19 +36,45 @@
                   android:layout_height="wrap_content"
                   android:orientation="horizontal">
 
-        <ImageView
-                android:id="@+id/iv_poll_left"
+        <FrameLayout
                 android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="175dp"
-                android:scaleType="centerCrop"/>
+                android:layout_height="175dp">
 
-        <ImageView
-                android:id="@+id/iv_poll_right"
+
+            <ImageView
+                    android:id="@+id/iv_poll_left"
+                    android:layout_height="fill_parent"
+                    android:layout_width="fill_parent"
+                    android:scaleType="centerCrop"/>
+
+            <ProgressBar android:id="@+id/pb_poll_left"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_gravity="center"
+                         android:visibility="gone"/>
+
+        </FrameLayout>
+
+        <FrameLayout
                 android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="175dp"
-                android:scaleType="centerCrop"/>
+                android:layout_height="175dp">
+
+
+            <ImageView
+                    android:id="@+id/iv_poll_right"
+                    android:layout_height="fill_parent"
+                    android:layout_width="fill_parent"
+                    android:scaleType="centerCrop"/>
+
+            <ProgressBar android:id="@+id/pb_poll_right"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_gravity="center"
+                         android:visibility="gone"/>
+
+        </FrameLayout>
 
     </LinearLayout>
 

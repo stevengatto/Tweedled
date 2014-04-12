@@ -206,11 +206,7 @@ public class PostPollFragment extends Fragment {
         // Find the correct scale value. It should be the power of 2.
         int width_tmp = o.outWidth, height_tmp = o.outHeight;
         int scale = 1;
-        while (true) {
-            if (width_tmp / 2 < REQUIRED_SIZE
-                    || height_tmp / 2 < REQUIRED_SIZE) {
-                break;
-            }
+        while (width_tmp / 2 > REQUIRED_SIZE && height_tmp / 2 > REQUIRED_SIZE) {
             width_tmp /= 2;
             height_tmp /= 2;
             scale *= 2;
@@ -223,7 +219,7 @@ public class PostPollFragment extends Fragment {
     }
 
 
-    //method used to take a bitmap, crop its center, and return that
+    //method used to take a bitmap, crop its center, and return new bitmap
     public Bitmap cropBitmapCenter(Bitmap srcBmp){
 
         Bitmap dstBmp;

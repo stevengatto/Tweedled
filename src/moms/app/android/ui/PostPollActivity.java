@@ -7,7 +7,7 @@ import moms.app.android.R;
 /**
  * Created by Steve on 4/8/14.
  */
-public class PostPollActivity extends Activity {
+public class PostPollActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.post_poll_activity);
