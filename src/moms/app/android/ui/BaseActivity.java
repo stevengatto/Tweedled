@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 import moms.app.android.R;
+import moms.app.android.login.Login;
 
 /**
  * Created by Steve on 4/3/14.
@@ -73,7 +74,7 @@ public class BaseActivity extends Activity {
 
     public void loginClick(MenuItem item){
         //launch login activity
-        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, Login.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);

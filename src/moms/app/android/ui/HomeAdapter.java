@@ -7,6 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.wilson.android.library.DrawableManager;
 import moms.app.android.R;
 import moms.app.android.model.testing.Poll;
@@ -24,8 +27,22 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
     private int resourceId;
     private List<Poll> list;
 
+
     public HomeAdapter(Context context, int resourceId, List<Poll> list){
         super(context, resourceId, list);
+
+        // Create default options which will be used for every
+        //  displayImage(...) call if no options will be passed to this method
+        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+        .cacheInMemory(true)
+        .cacheOnDisc(true)
+        .build();
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
+        .defaultDisplayImageOptions(defaultOptions)
+        .build();
+
+        ImageLoader.getInstance().init(config);
 
         this.context = context;
         this.resourceId = resourceId;
@@ -93,13 +110,13 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
             holder.leftVotesHeart.setVisibility(View.GONE);
             holder.rightVotesHeart.setVisibility(View.GONE);
         }
-        DrawableManager downloadManager = new DrawableManager();
+
         //reset any variables in holder if view can be recycled
         final Poll currentPoll = list.get(position);
         holder.mainTitle.setText(currentPoll.getMainTitle());
         holder.subTitle.setText(currentPoll.getSubTitle());
-        downloadManager.fetchDrawableOnThread(currentPoll.getLeftImage(),holder.leftImage);
-        downloadManager.fetchDrawableOnThread(currentPoll.getRightImage(),holder.rightImage);
+        ImageLoader.getInstance().displayImage(currentPoll.getLeftImage(),holder.leftImage);
+        ImageLoader.getInstance().displayImage(currentPoll.getRightImage(),holder.rightImage);
 
         holder.leftVotes.setText(currentPoll.getLeftVotes().toString());
         holder.rightVotes.setText(currentPoll.getRightVotes().toString());
