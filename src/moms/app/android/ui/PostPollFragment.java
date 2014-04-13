@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -39,16 +41,18 @@ import java.io.IOException;
 public class PostPollFragment extends Fragment {
 
     private static Uri imageUri;
-    EditText question;
-    String mQuestion_str;
-    EditText title1;
-    String mTitle1_str;
-    EditText title2;
-    String mTitle2_str;
-    ImageView photo1;
-    ImageView photo2;
-    Button submitBtn;
-    String mAuth_token;
+    private Bitmap bitmap1;
+    private Bitmap bitmap2;
+    private EditText question;
+    private String mQuestion_str;
+    private EditText title1;
+    private String mTitle1_str;
+    private EditText title2;
+    private String mTitle2_str;
+    private ImageView photo1;
+    private ImageView photo2;
+    private Button submitBtn;
+    private String mAuth_token;
     private Button takePhoto1;
     private Button takePhoto2;
     private static int CHOOSE_PHOTO_1 = 1;
@@ -79,11 +83,9 @@ public class PostPollFragment extends Fragment {
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(),
-                        question.getText()+"\n"
-                                +title1.getText()+"\n"
-                                +title2.getText().toString()
-                        , Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity()
+                        , "First 20 chars of image 1 base 64 encode: \n" + bitmapToBase64(bitmap1).substring(0,20)
+                        , Toast.LENGTH_LONG).show();
             }
         });
 
@@ -152,7 +154,7 @@ public class PostPollFragment extends Fragment {
                 catch (Exception e) { Log.e(null, "Incorrect Uri Exception on Image Select"); }
 
                 if(image != null)
-                    photo1.setImageBitmap(cropBitmapCenter(image));
+                    photo1.setImageBitmap(bitmap1=cropBitmapCenter(image));
                 break;
             case 2:
                 try{
@@ -163,7 +165,7 @@ public class PostPollFragment extends Fragment {
                 catch (Exception e) { Log.e(null, "Incorrect Uri Exception on Image Select"); }
 
                 if(image != null)
-                    photo2.setImageBitmap(cropBitmapCenter(image));
+                    photo2.setImageBitmap(bitmap2=cropBitmapCenter(image));
                 break;
             case 3:
                 if (resultCode == Activity.RESULT_OK) {
@@ -174,7 +176,7 @@ public class PostPollFragment extends Fragment {
                     catch (Exception e) { Log.e(null, "Incorrect Uri Exception on Image Select"); }
 
                     if(image != null)
-                        photo1.setImageBitmap(cropBitmapCenter(image));
+                        photo1.setImageBitmap(bitmap1=cropBitmapCenter(image));
                     break;
                 }
             case 4:
@@ -186,7 +188,7 @@ public class PostPollFragment extends Fragment {
                     catch (Exception e) { Log.e(null, "Incorrect Uri Exception on Image Select"); }
 
                     if(image != null)
-                        photo2.setImageBitmap(cropBitmapCenter(image));
+                        photo2.setImageBitmap(bitmap2=cropBitmapCenter(image));
                     break;
                 }
         }
@@ -244,6 +246,21 @@ public class PostPollFragment extends Fragment {
             );
         }
         return dstBmp;
+    }
+
+    /**
+     * Method used to convery bitmap image to base 64 encoded string for json image uploads
+     * @param bitmap image to be encoded
+     * @return string representation of base 64 encoded bitmap
+     */
+    public String bitmapToBase64(Bitmap bitmap){
+        //convert from bitmap to byte[]
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
+        byte[] byteArrayImage = baos.toByteArray();
+
+        //convert to string and return
+        return Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
     }
 
     public void submit()

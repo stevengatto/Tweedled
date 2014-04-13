@@ -9,7 +9,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.Toast;
 import com.savagelook.android.UrlJsonAsyncTask;
 import moms.app.android.R;
 import moms.app.android.model.testing.Poll;
@@ -25,7 +27,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by Steve on 3/29/14.
@@ -103,9 +104,8 @@ public class HomeFragment extends Fragment {
                 String question = poll_json.getString("question");
                 String subtitle = poll_json.getString("title_one") + " Or " + poll_json.getString("title_two");
                 Poll poll = new Poll(question,subtitle,null,null,null,null);
-                //waiting for api support
-                //poll.setLeftVotes(poll_json.getInt("vote_one"));
-                //poll.setRightVotes(poll_json.getInt("vote_two"));
+                poll.setLeftVotes(poll_json.getInt("vote_one"));
+                poll.setRightVotes(poll_json.getInt("vote_two"));
                 poll.setLeftImageUrl(image_1_url);
                 poll.setRightImageUrl(image_2_url);
                 list.add(poll);

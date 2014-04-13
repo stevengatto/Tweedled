@@ -32,10 +32,12 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
         super(context, resourceId, list);
 
         // Create default options which will be used for every
-        //  displayImage(...) call if no options will be passed to this method
+        //  displayImage() call if no options will be passed to this method
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
         .cacheInMemory(true)
         .cacheOnDisc(true)
+        .showImageForEmptyUri(R.drawable.ic_placeholder)
+        .showImageOnFail(R.drawable.ic_placeholder)
         .build();
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
@@ -90,7 +92,7 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
                 }
             });
 
-            //create holder and  set up references to TextView's
+            //create holder and  set up references to Views
             holder = new PollViewHolder();
             holder.mainTitle = (TextView) currentView.findViewById(R.id.tv_poll_main_title);
             holder.subTitle = (TextView) currentView.findViewById(R.id.tv_poll_sub_title);
@@ -105,7 +107,7 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
             currentView.setTag(holder);
         }
 
-        // get the recycled view (stored in tag)
+        // get the recycled View's references (stored in tag)
         else {
             Log.d(TAG, "View recycled");
             holder = (PollViewHolder)currentView.getTag();
@@ -122,8 +124,19 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
         ImageLoader.getInstance().displayImage(currentPoll.getRightImageUrl(), holder.rightImage,
                 null, new ImageLoadingListener(holder.rightProgBar));
 
-        holder.leftVotes.setText(currentPoll.getLeftVotes().toString());
-        holder.rightVotes.setText(currentPoll.getRightVotes().toString());
+        //set left vote count and check for plural or singular use of word "Vote"
+        Integer leftVoteCount = currentPoll.getLeftVotes();
+        if(leftVoteCount == 1)
+            holder.leftVotes.setText(leftVoteCount.toString() + " Vote");
+        else
+            holder.leftVotes.setText(leftVoteCount.toString() + " Votes");
+
+        //set left vote count and check for plural or singular use of word "Vote"
+        Integer rightVoteCount = currentPoll.getRightVotes();
+        if(rightVoteCount == 1)
+            holder.rightVotes.setText(rightVoteCount.toString() + " Vote");
+        else
+            holder.rightVotes.setText(rightVoteCount.toString() + " Votes");
 
         return currentView;
     }
