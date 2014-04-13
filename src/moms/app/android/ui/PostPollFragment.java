@@ -26,6 +26,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.savagelook.android.UrlJsonAsyncTask;
 import moms.app.android.R;
+import moms.app.android.login.Login;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -294,7 +295,7 @@ public class PostPollFragment extends Fragment {
 //
 //        params.put("c", params2);
         mPreferences = mThisActivity.getSharedPreferences("CurrentUser", mThisActivity.MODE_PRIVATE);
-         mAuth_token = "JuXnWCcAdESNP6aqHySj";//mPreferences.getString("AuthToken", "");
+         mAuth_token = Login.getSharedPreferences().getString("AuthToken","");
 
         CreatePollTask pollTask = new CreatePollTask(mThisActivity);
         pollTask.setMessageLoading("Creating poll...");
@@ -349,8 +350,8 @@ public class PostPollFragment extends Fragment {
                     pollObj.put("commit", "submit");
                     pollObj.put("controller", "polls");
                     pollObj.put("action", "create");
-                    pollObj.put("attachment_1", mBase64Image1);
-                    pollObj.put("attachment_2", mBase64Image2);
+                   // pollObj.put("attachment_1", mBase64Image1);
+                   // pollObj.put("attachment_2", mBase64Image2);
 
                     json.put("poll",pollObj);
 

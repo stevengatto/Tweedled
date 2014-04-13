@@ -91,7 +91,7 @@ public class HomeFragment extends Fragment {
             JSONArray polls_array = json.getJSONArray("polls");
             int poll_count = json.getInt("poll_count");
             Random random = new Random();
-            for(int i = 0; i < poll_count;i++)
+            for(int i = poll_count - 1; i >= 0 ;i--)
             {
 
                 JSONObject poll_json = polls_array.getJSONObject(i);
@@ -103,11 +103,13 @@ public class HomeFragment extends Fragment {
                 String question = poll_json.getString("question");
                 String subtitle = poll_json.getString("title_one") + " Or " + poll_json.getString("title_two");
                 Poll poll = new Poll(question,subtitle,null,null,null,null);
+
                 poll.setLeftVotes(poll_json.getInt("vote_one"));
                 poll.setRightVotes(poll_json.getInt("vote_two"));
                 poll.setLeftImage(image_1_url);
                 poll.setRightImage(image_2_url);
                 poll.setId(poll_json.getInt("id"));
+
                 list.add(poll);
 
             }

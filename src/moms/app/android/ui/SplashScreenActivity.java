@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import moms.app.android.R;
+import moms.app.android.login.Login;
 
 /**
  * Created by Steve on 4/4/14.
@@ -29,7 +30,7 @@ public class SplashScreenActivity extends Activity {
             public void run() {
                 // This method will be executed once the timer is over
                 // Start your app main activity
-                Intent i = new Intent(SplashScreenActivity.this, HomeActivity.class);
+                Intent i = new Intent(SplashScreenActivity.this, Login.class);
                 startActivity(i);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
