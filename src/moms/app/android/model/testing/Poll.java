@@ -6,7 +6,15 @@ package moms.app.android.model.testing;
  * Model class to represent a Poll in the ListView
  */
 public class Poll {
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    private int id;
     private String mainTitle;
     private String subTitle;
     private String leftImageURL;

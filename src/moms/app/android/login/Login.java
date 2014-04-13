@@ -35,8 +35,8 @@ import java.io.IOException;
 public class Login extends Activity {
     private String mUserEmail;
     private String mUserPassword;
-    private SharedPreferences mPreferences;
-    private static final String LOGIN_URL = "http://10.0.0.18/api/v1/sessions";
+    private static SharedPreferences mPreferences;
+    private static final String LOGIN_URL = "http://107.170.50.231/api/v1/sessions";
     //private static final String LOGIN_URL = "http://10.0.0.18/api/v1/sessions";
 
     public void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,10 @@ public class Login extends Activity {
         mPreferences = getSharedPreferences("CurrentUser", MODE_PRIVATE);
 
     }
-
+    public static SharedPreferences getSharedPreferences()
+    {
+        return mPreferences;
+    }
     public void login(View loginButton) {
         EditText userEmailField = (EditText) findViewById(R.id.et_userEmail);
         mUserEmail = userEmailField.getText().toString();
@@ -122,7 +125,7 @@ public class Login extends Activity {
 
                     finish();
                     Intent intent = new Intent(getApplicationContext(),
-                            moms.app.android.ui.PostPollActivity.class);
+                            moms.app.android.ui.HomeActivity.class);
                     startActivity(intent);
                 }
                 Toast.makeText(context, json.getString("info"),

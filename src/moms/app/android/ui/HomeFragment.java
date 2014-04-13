@@ -42,6 +42,7 @@ public class HomeFragment extends Fragment {
     private Activity thisActivity;
     private Drawable mImage1;
     private Drawable mImage2;
+    private String BASE_URL = "http://107.170.50.231";
     private String URL = "http://107.170.50.231/polls";//getString(R.string.url) + "/polls";
     private String IMAGE_URL_PREFIX = "http://107.170.50.231/system/polls/";//getString(R.string.url) + "/system/polls/";
     private String URL_MISSING_IMAGE = "http://107.170.50.231/images/missing.png";//getString(R.string.url) + "/images/missing.png";
@@ -94,21 +95,19 @@ public class HomeFragment extends Fragment {
             {
 
                 JSONObject poll_json = polls_array.getJSONObject(i);
-                String image_1_url = (!poll_json.getString("attachment_1_file_name").equals(""))
-                                    ? IMAGE_URL_PREFIX + poll_json.getString("id") + "/original/" + poll_json.getString("attachment_1_file_name")
-                                    : URL_MISSING_IMAGE;
-                String image_2_url = (!poll_json.getString("attachment_1_file_name").equals(""))
-                        ? IMAGE_URL_PREFIX + poll_json.getString("id") + "/original/" + poll_json.getString("attachment_2_file_name")
-                        : URL_MISSING_IMAGE;
+                String image_1_url = BASE_URL + poll_json.getString("attachment_1_url");
+                String image_2_url = BASE_URL + poll_json.getString("attachment_2_url");
+
 
 
                 String question = poll_json.getString("question");
                 String subtitle = poll_json.getString("title_one") + " Or " + poll_json.getString("title_two");
                 Poll poll = new Poll(question,subtitle,null,null,null,null);
-                poll.setLeftVotes(random.nextInt(10000));
-                poll.setRightVotes(random.nextInt(10000));
+                poll.setLeftVotes(poll_json.getInt("vote_one"));
+                poll.setRightVotes(poll_json.getInt("vote_two"));
                 poll.setLeftImage(image_1_url);
                 poll.setRightImage(image_2_url);
+                poll.setId(poll_json.getInt("id"));
                 list.add(poll);
 
             }

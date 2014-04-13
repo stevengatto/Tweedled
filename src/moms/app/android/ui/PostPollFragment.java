@@ -74,7 +74,7 @@ public class PostPollFragment extends Fragment {
     private String mImage2Path;
     private SharedPreferences mPreferences;
     private JSONObject mPollObject;
-    final String URL = "http://10.0.0.18/polls/new";
+    final String URL = "http://107.170.50.231/polls/new";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -312,7 +312,7 @@ public class PostPollFragment extends Fragment {
 
 
 //            HttpClient client = new DefaultHttpClient();
-//            HttpPost post = new HttpPost("http://10.0.0.18/polls/upload_attachments");
+//            HttpPost post = new HttpPost("http://107.170.50.231/polls/upload_attachments");
 //            MultipartEntityBuilder multipartEntity = MultipartEntityBuilder.create();
 //            multipartEntity.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
 //            multipartEntity.addPart("attachment_1", new FileBody(new File(mImage1Path)));
@@ -353,9 +353,6 @@ public class PostPollFragment extends Fragment {
                     pollObj.put("attachment_2", mBase64Image2);
 
                     json.put("poll",pollObj);
-                    RequestParams params = new RequestParams();
-                    params.put("json", json);
-
 
                     StringEntity se = new StringEntity(json.toString());
                     post.setEntity(se);
@@ -416,7 +413,7 @@ public class PostPollFragment extends Fragment {
                 AsyncHttpClient client = new AsyncHttpClient();
                 client.addHeader("Content-Type", "text/html");
 
-                client.post("http://10.0.0.18/polls/upload_attachments", params, new AsyncHttpResponseHandler() {
+                client.post("http://107.170.50.231/polls/upload_attachments", params, new AsyncHttpResponseHandler() {
                     @Override
                     public void onSuccess(String response) {
                         Log.w("async", "success!!!!");
