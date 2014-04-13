@@ -106,8 +106,8 @@ public class HomeFragment extends Fragment {
 
                 poll.setLeftVotes(poll_json.getInt("vote_one"));
                 poll.setRightVotes(poll_json.getInt("vote_two"));
-                poll.setLeftImage(image_1_url);
-                poll.setRightImage(image_2_url);
+                poll.setLeftImageUrl(image_1_url);
+                poll.setRightImageUrl(image_2_url);
                 poll.setId(poll_json.getInt("id"));
 
                 list.add(poll);

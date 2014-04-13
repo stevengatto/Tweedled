@@ -135,12 +135,12 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
         holder.leftImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "Left Image Click Received", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "Left Image Click Received", Toast.LENGTH_SHORT).show();
                 mVote = 1;
                 VotingTask votingTask = new VotingTask(getContext());
                 //votingTask.setMessageLoading("Casting Vote");
                 votingTask.execute(URL+"/"+currentPoll.getId()+"/vote");
-                holder.leftVotes.setText((currentPoll.getLeftVotes()+1) + "");
+//                holder.leftVotes.setText((currentPoll.getLeftVotes()+1) + "");
                 holder.leftVotesHeart.setVisibility(View.VISIBLE);
                 holder.rightVotesHeart.setVisibility(View.VISIBLE);
             }
@@ -150,12 +150,12 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
         holder.rightImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "Right Image Click Received", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "Right Image Click Received", Toast.LENGTH_SHORT).show();
                 mVote = 2;
                 VotingTask votingTask = new VotingTask(getContext());
                 //votingTask.setMessageLoading("Casting Vote");
                 votingTask.execute(URL+"/"+currentPoll.getId()+"/vote");
-                holder.rightVotes.setText((currentPoll.getRightVotes()+1) + "");
+//                holder.rightVotes.setText((currentPoll.getRightVotes()+1) + "");
                 holder.leftVotesHeart.setVisibility(View.VISIBLE);
                 holder.rightVotesHeart.setVisibility(View.VISIBLE);
             }
@@ -165,8 +165,8 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
 
         holder.mainTitle.setText(currentPoll.getMainTitle());
         holder.subTitle.setText(currentPoll.getSubTitle());
-        ImageLoader.getInstance().displayImage(currentPoll.getLeftImage(),holder.leftImage);
-        ImageLoader.getInstance().displayImage(currentPoll.getRightImage(),holder.rightImage);
+        ImageLoader.getInstance().displayImage(currentPoll.getLeftImageUrl(),holder.leftImage);
+        ImageLoader.getInstance().displayImage(currentPoll.getRightImageUrl(),holder.rightImage);
 
         holder.leftVotes.setText(currentPoll.getLeftVotes().toString());
         holder.rightVotes.setText(currentPoll.getRightVotes().toString());
