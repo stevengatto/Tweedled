@@ -6,34 +6,45 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Base64;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.savagelook.android.UrlJsonAsyncTask;
 import moms.app.android.R;
+import moms.app.android.login.Login;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
+
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
 
 /**
  * Created by Steve on 4/8/14.
@@ -41,18 +52,16 @@ import java.io.IOException;
 public class PostPollFragment extends Fragment {
 
     private static Uri imageUri;
-    private Bitmap bitmap1;
-    private Bitmap bitmap2;
-    private EditText question;
-    private String mQuestion_str;
-    private EditText title1;
-    private String mTitle1_str;
-    private EditText title2;
-    private String mTitle2_str;
-    private ImageView photo1;
-    private ImageView photo2;
-    private Button submitBtn;
-    private String mAuth_token;
+    EditText question;
+    String mQuestion_str;
+    EditText title1;
+    String mTitle1_str;
+    EditText title2;
+    String mTitle2_str;
+    ImageView photo1;
+    ImageView photo2;
+    Button submitBtn;
+    String mAuth_token;
     private Button takePhoto1;
     private Button takePhoto2;
     private static int CHOOSE_PHOTO_1 = 1;
@@ -60,10 +69,13 @@ public class PostPollFragment extends Fragment {
     private static int TAKE_PHOTO_1 = 3;
     private static int TAKE_PHOTO_2 = 4;
     private Activity mThisActivity;
-
+    String mBase64Image1;
+    String mBase64Image2;
+    private String mImage1Path;
+    private String mImage2Path;
     private SharedPreferences mPreferences;
-
-    final String URL = "http://kcl/polls/new";
+    private JSONObject mPollObject;
+    final String URL = "http://107.170.50.231/polls/new";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -83,9 +95,12 @@ public class PostPollFragment extends Fragment {
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity()
-                        , "First 20 chars of image 1 base 64 encode: \n" + bitmapToBase64(bitmap1).substring(0,20)
-                        , Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),
+                        question.getText()+"\n"
+                                +title1.getText()+"\n"
+                                +title2.getText().toString()
+                        , Toast.LENGTH_SHORT).show();
+                submit();
             }
         });
 
@@ -148,24 +163,24 @@ public class PostPollFragment extends Fragment {
             case 1:
                 try {
                     selectedImage = imageReturnedIntent.getData(); //can be null
-                }catch (Exception e)
-                {}
-                try{ image = decodeUri(selectedImage); }
+                    mImage1Path = getRealPathFromURI(selectedImage);
+                    image = decodeUri(selectedImage);
+                }
                 catch (Exception e) { Log.e(null, "Incorrect Uri Exception on Image Select"); }
 
                 if(image != null)
-                    photo1.setImageBitmap(bitmap1=cropBitmapCenter(image));
+                    photo1.setImageBitmap(cropBitmapCenter(image));
                 break;
             case 2:
                 try{
-                selectedImage = imageReturnedIntent.getData();  //can be null   
-                }catch (Exception e)
-                {}
-                try{ image = decodeUri(selectedImage); }
+                    selectedImage = imageReturnedIntent.getData();  //can be null
+                    image = decodeUri(selectedImage);
+                    mImage2Path = getRealPathFromURI(selectedImage);
+                }
                 catch (Exception e) { Log.e(null, "Incorrect Uri Exception on Image Select"); }
 
                 if(image != null)
-                    photo2.setImageBitmap(bitmap2=cropBitmapCenter(image));
+                    photo2.setImageBitmap(cropBitmapCenter(image));
                 break;
             case 3:
                 if (resultCode == Activity.RESULT_OK) {
@@ -176,7 +191,7 @@ public class PostPollFragment extends Fragment {
                     catch (Exception e) { Log.e(null, "Incorrect Uri Exception on Image Select"); }
 
                     if(image != null)
-                        photo1.setImageBitmap(bitmap1=cropBitmapCenter(image));
+                        photo1.setImageBitmap(cropBitmapCenter(image));
                     break;
                 }
             case 4:
@@ -188,11 +203,28 @@ public class PostPollFragment extends Fragment {
                     catch (Exception e) { Log.e(null, "Incorrect Uri Exception on Image Select"); }
 
                     if(image != null)
-                        photo2.setImageBitmap(bitmap2=cropBitmapCenter(image));
+                        photo2.setImageBitmap(cropBitmapCenter(image));
                     break;
                 }
         }
     }
+
+    private String getRealPathFromURI(Uri contentURI) {
+        String result;
+        Cursor cursor = mThisActivity.getContentResolver().query(contentURI, null, null, null, null);
+        if (cursor == null) { // Source is Dropbox or other similar local file path
+            result = contentURI.getPath();
+        } else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            result = cursor.getString(idx);
+            cursor.close();
+        }
+        return result;
+    }
+
+
+
 
     //method to decode Uri to image and scale down to 500 pixels
     private Bitmap decodeUri(Uri selectedImage) throws FileNotFoundException {
@@ -208,7 +240,11 @@ public class PostPollFragment extends Fragment {
         // Find the correct scale value. It should be the power of 2.
         int width_tmp = o.outWidth, height_tmp = o.outHeight;
         int scale = 1;
-        while (width_tmp / 2 > REQUIRED_SIZE && height_tmp / 2 > REQUIRED_SIZE) {
+        while (true) {
+            if (width_tmp / 2 < REQUIRED_SIZE
+                    || height_tmp / 2 < REQUIRED_SIZE) {
+                break;
+            }
             width_tmp /= 2;
             height_tmp /= 2;
             scale *= 2;
@@ -221,7 +257,7 @@ public class PostPollFragment extends Fragment {
     }
 
 
-    //method used to take a bitmap, crop its center, and return new bitmap
+    //method used to take a bitmap, crop its center, and return that
     public Bitmap cropBitmapCenter(Bitmap srcBmp){
 
         Bitmap dstBmp;
@@ -248,36 +284,48 @@ public class PostPollFragment extends Fragment {
         return dstBmp;
     }
 
-    /**
-     * Method used to convery bitmap image to base 64 encoded string for json image uploads
-     * @param bitmap image to be encoded
-     * @return string representation of base 64 encoded bitmap
-     */
-    public String bitmapToBase64(Bitmap bitmap){
-        //convert from bitmap to byte[]
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
-        byte[] byteArrayImage = baos.toByteArray();
-
-        //convert to string and return
-        return Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
-    }
-
     public void submit()
     {
         mQuestion_str = question.getText().toString();
         mTitle1_str = title1.getText().toString();
         mTitle2_str = title2.getText().toString();
-        //e29c93
 
-
+//        params2.put("key","value");
+//        params2.put("key2","value");
+//
+//        params.put("c", params2);
         mPreferences = mThisActivity.getSharedPreferences("CurrentUser", mThisActivity.MODE_PRIVATE);
-        mAuth_token = mPreferences.getString("AuthToken", "");
+         mAuth_token = Login.getSharedPreferences().getString("AuthToken","");
 
         CreatePollTask pollTask = new CreatePollTask(mThisActivity);
         pollTask.setMessageLoading("Creating poll...");
         pollTask.execute(URL);
     }
+
+
+    private void uploadAttachments()
+    {
+        ( new UploadImageTask()).execute();
+
+        //MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+
+
+
+
+//            HttpClient client = new DefaultHttpClient();
+//            HttpPost post = new HttpPost("http://107.170.50.231/polls/upload_attachments");
+//            MultipartEntityBuilder multipartEntity = MultipartEntityBuilder.create();
+//            multipartEntity.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+//            multipartEntity.addPart("attachment_1", new FileBody(new File(mImage1Path)));
+//            multipartEntity.addPart("attachment_2", new FileBody(new File(mImage2Path)));
+//            multipartEntity.addTextBody("auth_token", mAuth_token);
+//            multipartEntity.addTextBody("poll_id", mPollObject.getString("id"));
+//            post.setEntity(multipartEntity.build());
+//            HttpResponse response = client.execute(post);
+//            HttpEntity entity = response.getEntity();
+
+    }
+
 
     private class CreatePollTask extends UrlJsonAsyncTask {
         public CreatePollTask(Context context) {
@@ -288,7 +336,6 @@ public class PostPollFragment extends Fragment {
         protected JSONObject doInBackground(String... urls) {
             DefaultHttpClient client = new DefaultHttpClient();
             HttpPost post = new HttpPost(urls[0]);
-            JSONObject holder = new JSONObject();
             JSONObject pollObj = new JSONObject();
             String response;
             JSONObject json = new JSONObject();
@@ -303,6 +350,9 @@ public class PostPollFragment extends Fragment {
                     pollObj.put("commit", "submit");
                     pollObj.put("controller", "polls");
                     pollObj.put("action", "create");
+                   // pollObj.put("attachment_1", mBase64Image1);
+                   // pollObj.put("attachment_2", mBase64Image2);
+
                     json.put("poll",pollObj);
 
                     StringEntity se = new StringEntity(json.toString());
@@ -335,7 +385,8 @@ public class PostPollFragment extends Fragment {
         protected void onPostExecute(JSONObject json) {
             try {
                 if (json.getBoolean("success")) {
-
+                    mPollObject = json.getJSONObject("poll");
+                    uploadAttachments();
                     Toast.makeText(context, json.getString("info"),
                             Toast.LENGTH_LONG).show();
                 }
@@ -349,6 +400,36 @@ public class PostPollFragment extends Fragment {
 
     }
 
+
+    private class UploadImageTask extends AsyncTask<String,Void,Void> {
+        @Override
+        protected Void doInBackground(String... urls){
+            RequestParams params = new RequestParams();
+            try {
+
+                params.put("attachment_1", new File(mImage1Path), "image/jpg");
+                params.put("attachment_2", new File(mImage2Path), "image/jpg");
+                params.put("poll_id", mPollObject.getString("id"));
+                params.put("auth_token", mAuth_token);
+                AsyncHttpClient client = new AsyncHttpClient();
+                client.addHeader("Content-Type", "text/html");
+
+                client.post("http://107.170.50.231/polls/upload_attachments", params, new AsyncHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(String response) {
+                        Log.w("async", "success!!!!");
+                    }
+                });
+            }
+            catch(Exception e) {
+                Log.e(null, "Failed add inmages");
+            }
+
+            return null;
+        }
+
+
+    }
 
 
 }

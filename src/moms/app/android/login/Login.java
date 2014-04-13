@@ -29,7 +29,7 @@ import java.io.IOException;
 public class Login extends BaseActivity {
     private String mUserEmail;
     private String mUserPassword;
-    private SharedPreferences mPreferences;
+    private static SharedPreferences mPreferences;
     private static final String LOGIN_URL = "http://107.170.50.231/api/v1/sessions";
     //private static final String LOGIN_URL = "http://10.0.0.18/api/v1/sessions";
 
@@ -39,7 +39,10 @@ public class Login extends BaseActivity {
         mPreferences = getSharedPreferences("CurrentUser", MODE_PRIVATE);
 
     }
-
+    public static SharedPreferences getSharedPreferences()
+    {
+        return mPreferences;
+    }
     public void login(View loginButton) {
         EditText userEmailField = (EditText) findViewById(R.id.et_userEmail);
         mUserEmail = userEmailField.getText().toString();
@@ -116,7 +119,7 @@ public class Login extends BaseActivity {
 
                     finish();
                     Intent intent = new Intent(getApplicationContext(),
-                            moms.app.android.ui.PostPollActivity.class);
+                            moms.app.android.ui.HomeActivity.class);
                     startActivity(intent);
                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 }

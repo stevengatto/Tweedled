@@ -4,14 +4,14 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.*;
 import com.savagelook.android.UrlJsonAsyncTask;
 import moms.app.android.R;
 import moms.app.android.model.testing.Poll;
@@ -27,6 +27,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Steve on 3/29/14.
@@ -39,6 +40,9 @@ public class HomeFragment extends Fragment {
     private View layout;
     private ListView listView;
     private Activity thisActivity;
+    private Drawable mImage1;
+    private Drawable mImage2;
+    private String BASE_URL = "http://107.170.50.231";
     private String URL = "http://107.170.50.231/polls";//getString(R.string.url) + "/polls";
     private String IMAGE_URL_PREFIX = "http://107.170.50.231/system/polls/";//getString(R.string.url) + "/system/polls/";
     private String URL_MISSING_IMAGE = "http://107.170.50.231/images/missing.png";//getString(R.string.url) + "/images/missing.png";
@@ -63,8 +67,6 @@ public class HomeFragment extends Fragment {
                 Intent intent = new Intent(thisActivity, PollItemActivity.class);
                 intent.putExtra("mainTitle", list.get(position).getMainTitle());
                 intent.putExtra("subTitle", list.get(position).getSubTitle());
-                intent.putExtra("leftImageUrl", list.get(position).getLeftImageUrl());
-                intent.putExtra("rightImageUrl", list.get(position).getRightImageUrl());
                 intent.putExtra("leftVotes", list.get(position).getLeftVotes());
                 intent.putExtra("rightVotes", list.get(position).getRightVotes());
                 startActivity(intent);
@@ -88,27 +90,28 @@ public class HomeFragment extends Fragment {
         try {
             JSONArray polls_array = json.getJSONArray("polls");
             int poll_count = json.getInt("poll_count");
-
-            for(int i = 0; i < poll_count;i++)
+            Random random = new Random();
+            for(int i = poll_count - 1; i >= 0 ;i--)
             {
 
                 JSONObject poll_json = polls_array.getJSONObject(i);
+                String image_1_url = BASE_URL + poll_json.getString("attachment_1_url");
+                String image_2_url = BASE_URL + poll_json.getString("attachment_2_url");
 
-                String image_1_url = (!poll_json.getString("attachment_1_file_name").equals(""))
-                                    ? IMAGE_URL_PREFIX + poll_json.getString("id") + "/original/" + poll_json.getString("attachment_1_file_name")
-                                    : URL_MISSING_IMAGE;
-                String image_2_url = (!poll_json.getString("attachment_1_file_name").equals(""))
-                        ? IMAGE_URL_PREFIX + poll_json.getString("id") + "/original/" + poll_json.getString("attachment_2_file_name")
-                        : URL_MISSING_IMAGE;
+
 
                 String question = poll_json.getString("question");
                 String subtitle = poll_json.getString("title_one") + " Or " + poll_json.getString("title_two");
                 Poll poll = new Poll(question,subtitle,null,null,null,null);
+
                 poll.setLeftVotes(poll_json.getInt("vote_one"));
                 poll.setRightVotes(poll_json.getInt("vote_two"));
-                poll.setLeftImageUrl(image_1_url);
-                poll.setRightImageUrl(image_2_url);
+                poll.setLeftImage(image_1_url);
+                poll.setRightImage(image_2_url);
+                poll.setId(poll_json.getInt("id"));
+
                 list.add(poll);
+
             }
 
             //set up listView adapter and onItemClick listener
