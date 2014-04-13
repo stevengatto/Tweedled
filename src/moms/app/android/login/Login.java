@@ -1,23 +1,17 @@
 package moms.app.android.login;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.savagelook.android.UrlJsonAsyncTask;
 import moms.app.android.R;
-import moms.app.android.ui.DashboardFragment;
+import moms.app.android.ui.BaseActivity;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
@@ -26,13 +20,13 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
-import moms.app.android.login.Dashboard;
+
 import java.io.IOException;
 
 /**
  * Created by klam on 4/8/14.
  */
-public class Login extends Activity {
+public class Login extends BaseActivity {
     private String mUserEmail;
     private String mUserPassword;
     private SharedPreferences mPreferences;
@@ -124,6 +118,7 @@ public class Login extends Activity {
                     Intent intent = new Intent(getApplicationContext(),
                             moms.app.android.ui.PostPollActivity.class);
                     startActivity(intent);
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 }
                 Toast.makeText(context, json.getString("info"),
                         Toast.LENGTH_LONG).show();

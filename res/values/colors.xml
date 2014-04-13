@@ -5,4 +5,5 @@
     <color name="divider">#20ffffff</color>
     <color name="poll_item_background">#FFFFFF</color>
     <color name="text_color">#606060</color>
+    <color name="bg_peach">#F69E90</color>
 </resources>

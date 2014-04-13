@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.savagelook.android.UrlJsonAsyncTask;
 import moms.app.android.R;
+import moms.app.android.ui.BaseActivity;
 import moms.app.android.ui.LoginFragment;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
@@ -32,7 +33,7 @@ import java.io.IOException;
  * Created by klam on 3/29/14.
  * DashboardFragment View
  */
-public class Dashboard extends Activity {
+public class Dashboard extends BaseActivity {
     private SharedPreferences mPreferences;
     private String mAuth_token = null;
     final String LOGOUT_URL = "http://localhost/api/v1/sessions/?auth_token=";

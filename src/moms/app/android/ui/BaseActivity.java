@@ -3,6 +3,9 @@ package moms.app.android.ui;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -22,10 +25,10 @@ public class BaseActivity extends Activity {
 
         // enable ActionBar app icon to behave as action to toggle nav drawer
         ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(false);
-        actionBar.setHomeButtonEnabled(true);
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.action_bar_bg));
         actionBar.setLogo(R.drawable.action_bar_logo);
         actionBar.setTitle("");
+        actionBar.setHomeButtonEnabled(true);
     }
 
     //Inflate menu from xml
@@ -44,20 +47,14 @@ public class BaseActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.menu_polls:
+            case android.R.id.home:
                 pollClick(item);
                 return true;
             case R.id.menu_login:
                 loginClick(item);
                 return true;
-            case R.id.menu_favorites:
-                favoritesClick(item);
-                return true;
             case R.id.menu_post:
                 postClick(item);
-                return true;
-            case R.id.menu_settings:
-                settingsClick(item);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
