@@ -36,7 +36,7 @@ public class Login extends Activity {
     private String mUserEmail;
     private String mUserPassword;
     private SharedPreferences mPreferences;
-    private static final String LOGIN_URL = "http://107.170.50.231/api/v1/sessions";
+    private static final String LOGIN_URL = "http://10.0.0.18/api/v1/sessions";
     //private static final String LOGIN_URL = "http://10.0.0.18/api/v1/sessions";
 
     public void onCreate(Bundle savedInstanceState) {

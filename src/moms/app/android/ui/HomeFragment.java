@@ -42,9 +42,9 @@ public class HomeFragment extends Fragment {
     private Activity thisActivity;
     private Drawable mImage1;
     private Drawable mImage2;
-    private String URL = "http://10.0.0.18/polls";//getString(R.string.url) + "/polls";
-    private String IMAGE_URL_PREFIX = "http://10.0.0.18/system/polls/";//getString(R.string.url) + "/system/polls/";
-    private String URL_MISSING_IMAGE = "http://10.0.0.18/images/missing.png";//getString(R.string.url) + "/images/missing.png";
+    private String URL = "http://107.170.50.231/polls";//getString(R.string.url) + "/polls";
+    private String IMAGE_URL_PREFIX = "http://107.170.50.231/system/polls/";//getString(R.string.url) + "/system/polls/";
+    private String URL_MISSING_IMAGE = "http://107.170.50.231/images/missing.png";//getString(R.string.url) + "/images/missing.png";
     private JSONObject json = new JSONObject();
 
     @Override
