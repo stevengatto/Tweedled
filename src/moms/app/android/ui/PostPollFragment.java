@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +42,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -76,6 +78,9 @@ public class PostPollFragment extends Fragment {
     private SharedPreferences mPreferences;
     private JSONObject mPollObject;
     final String URL = "http://107.170.50.231/polls/new";
+
+    String encodedImage1;
+    String encodedImage2;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -163,8 +168,16 @@ public class PostPollFragment extends Fragment {
             case 1:
                 try {
                     selectedImage = imageReturnedIntent.getData(); //can be null
-                    mImage1Path = getRealPathFromURI(selectedImage);
+
                     image = decodeUri(selectedImage);
+                   // mImage1Path = getRealPathFromURI(selectedImage);
+
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    image.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
+                    byte[] b = baos.toByteArray();
+
+                    encodedImage1 = Base64.encodeToString(b, Base64.DEFAULT);
+
                 }
                 catch (Exception e) { Log.e(null, "Incorrect Uri Exception on Image Select"); }
 
@@ -175,7 +188,14 @@ public class PostPollFragment extends Fragment {
                 try{
                     selectedImage = imageReturnedIntent.getData();  //can be null
                     image = decodeUri(selectedImage);
-                    mImage2Path = getRealPathFromURI(selectedImage);
+                   // mImage2Path = getRealPathFromURI(selectedImage);
+
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    image.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
+                    byte[] b = baos.toByteArray();
+
+                    encodedImage2 = Base64.encodeToString(b, Base64.DEFAULT);
+
                 }
                 catch (Exception e) { Log.e(null, "Incorrect Uri Exception on Image Select"); }
 
@@ -190,8 +210,14 @@ public class PostPollFragment extends Fragment {
                     try{ image = decodeUri(selectedImage); }
                     catch (Exception e) { Log.e(null, "Incorrect Uri Exception on Image Select"); }
 
-                    if(image != null)
+                    if(image != null) {
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        image.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
+                        byte[] b = baos.toByteArray();
+
+                        encodedImage1 = Base64.encodeToString(b, Base64.DEFAULT);
                         photo1.setImageBitmap(cropBitmapCenter(image));
+                    }
                     break;
                 }
             case 4:
@@ -202,8 +228,15 @@ public class PostPollFragment extends Fragment {
                     try{ image = decodeUri(selectedImage); }
                     catch (Exception e) { Log.e(null, "Incorrect Uri Exception on Image Select"); }
 
-                    if(image != null)
+                    if(image != null){
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        image.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
+                        byte[] b = baos.toByteArray();
+
+                        encodedImage2 = Base64.encodeToString(b, Base64.DEFAULT);
                         photo2.setImageBitmap(cropBitmapCenter(image));
+
+                    }
                     break;
                 }
         }
@@ -347,9 +380,9 @@ public class PostPollFragment extends Fragment {
                     pollObj.put("title_one", mTitle1_str);
                     pollObj.put("title_two", mTitle2_str);
                     pollObj.put("auth_token", mAuth_token);
-                    pollObj.put("commit", "submit");
-                    pollObj.put("controller", "polls");
-                    pollObj.put("action", "create");
+                    pollObj.put("encode1", encodedImage1);
+                    pollObj.put("encode2", encodedImage2);
+
                    // pollObj.put("attachment_1", mBase64Image1);
                    // pollObj.put("attachment_2", mBase64Image2);
 
@@ -385,8 +418,8 @@ public class PostPollFragment extends Fragment {
         protected void onPostExecute(JSONObject json) {
             try {
                 if (json.getBoolean("success")) {
-                    mPollObject = json.getJSONObject("poll");
-                    uploadAttachments();
+                    //mPollObject = json.getJSONObject("poll");
+                    //uploadAttachments();
                     Toast.makeText(context, json.getString("info"),
                             Toast.LENGTH_LONG).show();
                 }
