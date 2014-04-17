@@ -323,10 +323,7 @@ public class PostPollFragment extends Fragment {
         mTitle1_str = title1.getText().toString();
         mTitle2_str = title2.getText().toString();
 
-//        params2.put("key","value");
-//        params2.put("key2","value");
-//
-//        params.put("c", params2);
+
         mPreferences = mThisActivity.getSharedPreferences("CurrentUser", mThisActivity.MODE_PRIVATE);
          mAuth_token = Login.getSharedPreferences().getString("AuthToken","");
 
@@ -336,28 +333,6 @@ public class PostPollFragment extends Fragment {
     }
 
 
-    private void uploadAttachments()
-    {
-        ( new UploadImageTask()).execute();
-
-        //MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-
-
-
-
-//            HttpClient client = new DefaultHttpClient();
-//            HttpPost post = new HttpPost("http://107.170.50.231/polls/upload_attachments");
-//            MultipartEntityBuilder multipartEntity = MultipartEntityBuilder.create();
-//            multipartEntity.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-//            multipartEntity.addPart("attachment_1", new FileBody(new File(mImage1Path)));
-//            multipartEntity.addPart("attachment_2", new FileBody(new File(mImage2Path)));
-//            multipartEntity.addTextBody("auth_token", mAuth_token);
-//            multipartEntity.addTextBody("poll_id", mPollObject.getString("id"));
-//            post.setEntity(multipartEntity.build());
-//            HttpResponse response = client.execute(post);
-//            HttpEntity entity = response.getEntity();
-
-    }
 
 
     private class CreatePollTask extends UrlJsonAsyncTask {
@@ -432,37 +407,5 @@ public class PostPollFragment extends Fragment {
         }
 
     }
-
-
-    private class UploadImageTask extends AsyncTask<String,Void,Void> {
-        @Override
-        protected Void doInBackground(String... urls){
-            RequestParams params = new RequestParams();
-            try {
-
-                params.put("attachment_1", new File(mImage1Path), "image/jpg");
-                params.put("attachment_2", new File(mImage2Path), "image/jpg");
-                params.put("poll_id", mPollObject.getString("id"));
-                params.put("auth_token", mAuth_token);
-                AsyncHttpClient client = new AsyncHttpClient();
-                client.addHeader("Content-Type", "text/html");
-
-                client.post("http://107.170.50.231/polls/upload_attachments", params, new AsyncHttpResponseHandler() {
-                    @Override
-                    public void onSuccess(String response) {
-                        Log.w("async", "success!!!!");
-                    }
-                });
-            }
-            catch(Exception e) {
-                Log.e(null, "Failed add inmages");
-            }
-
-            return null;
-        }
-
-
-    }
-
 
 }
