@@ -325,7 +325,7 @@ public class PostPollFragment extends Fragment {
 
 
         mPreferences = mThisActivity.getSharedPreferences("CurrentUser", mThisActivity.MODE_PRIVATE);
-         mAuth_token = Login.getSharedPreferences().getString("AuthToken","");
+        // mAuth_token = Login.getSharedPreferences().getString("AuthToken","");
 
         CreatePollTask pollTask = new CreatePollTask(mThisActivity);
         pollTask.setMessageLoading("Creating poll...");

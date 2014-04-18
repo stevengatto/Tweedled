@@ -136,8 +136,8 @@ public class VotingTask {
                 if (json.getBoolean("success")) {
                     Toast.makeText(context, json.getString("info"),
                             Toast.LENGTH_LONG).show();
-                 //   mVote1.setText(json.getString("vote_one"));
-                 //   mVote2.setText(json.getString("vote_two"));
+                    mVote1.setText(""+json.getInt("vote_one"));
+                    mVote2.setText(""+json.getInt("vote_two"));
                 }
             } catch (Exception e) {
                 Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG)
