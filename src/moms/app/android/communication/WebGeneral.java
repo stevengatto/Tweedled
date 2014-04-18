@@ -8,17 +8,20 @@ import android.content.SharedPreferences;
 public class WebGeneral {
     public static final String BASE_URL = "http://192.168.1.6";
     public static final String LOGIN_URL = BASE_URL + "/api/v1/sessions";
-    private static SharedPreferences mPreferences;
+    public static final String FETCHING_POLL_URL = BASE_URL + "/polls.json";
 
-    public static SharedPreferences getmPreferences() {
-        return mPreferences;
+    public static String generateVoteURL(int id)
+    {
+        return BASE_URL + "/polls/"+ id +"/vote";
+    }
+    private static SharedPreferences sPreferences = null;
+
+    public static SharedPreferences getsPreferences() {
+        return sPreferences;
     }
 
-    public static void setmPreferences(SharedPreferences mPreferences) {
-        WebGeneral.mPreferences = mPreferences;
+    public static void setsPreferences(SharedPreferences sPreferences) {
+        WebGeneral.sPreferences = sPreferences;
     }
-
-
-
 
 }

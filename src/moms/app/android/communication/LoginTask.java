@@ -29,7 +29,7 @@ public class LoginTask {
 
     public LoginTask(Activity activity){
         mActivity = activity;
-        WebGeneral.setmPreferences(mActivity.getSharedPreferences("CurrentUser", mActivity.MODE_PRIVATE));
+        WebGeneral.setsPreferences(mActivity.getSharedPreferences("CurrentUser", Activity.MODE_PRIVATE));
     }
 
     public void submitRequest(String email, String password)
@@ -94,8 +94,8 @@ public class LoginTask {
         protected void onPostExecute(JSONObject json) {
             try {
                 if (json.getBoolean("success")) {
-                    SharedPreferences.Editor editor = WebGeneral.getmPreferences().edit();
-                    editor.putString("AuthToken", json.getJSONObject("data").getString("auth_token"));
+                    SharedPreferences.Editor editor = WebGeneral.getsPreferences().edit();
+                    editor.putString("auth_token", json.getJSONObject("data").getString("auth_token"));
                     editor.commit();
 
                     Intent intent = new Intent(mActivity.getApplicationContext(),

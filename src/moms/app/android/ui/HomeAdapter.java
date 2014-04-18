@@ -2,7 +2,6 @@ package moms.app.android.ui;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,20 +10,9 @@ import android.widget.*;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.savagelook.android.UrlJsonAsyncTask;
 import moms.app.android.R;
-import moms.app.android.login.Login;
+import moms.app.android.communication.VotingTask;
 import moms.app.android.model.testing.Poll;
-import org.apache.http.client.HttpResponseException;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONException;
-import org.json.JSONObject;
-import moms.app.android.login.Login.*;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -37,8 +25,7 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
     private Context context;
     private int resourceId;
     private List<Poll> list;
-    int mVote;
-    final String URL = "http://107.170.50.231/polls";
+
     public HomeAdapter(Context context, int resourceId, List<Poll> list){
         super(context, resourceId, list);
 
@@ -72,9 +59,7 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             currentView = inflater.inflate(resourceId, parent, false);
 
-            //get references to two images
-            ImageView leftImage = (ImageView) currentView.findViewById(R.id.iv_poll_left);
-            ImageView rightImage = (ImageView) currentView.findViewById(R.id.iv_poll_right);
+
 
             //get references to layouts with heart and vote
             final RelativeLayout leftHeartVote = (RelativeLayout) currentView
@@ -82,33 +67,6 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
             final RelativeLayout rightHeartVote = (RelativeLayout) currentView
                     .findViewById(R.id.poll_right_heart_vote_layout);
 
-            //set click listener for left image
-            leftImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(getContext(), "Left Image Click Received", Toast.LENGTH_SHORT).show();
-                    mVote = 1;
-                    VotingTask votingTask = new VotingTask(getContext());
-                    //votingTask.setMessageLoading("Casting Vote");
-                    votingTask.execute(URL+"/"+currentPoll.getId()+"/vote");
-                    leftHeartVote.setVisibility(View.VISIBLE);
-                    rightHeartVote.setVisibility(View.VISIBLE);
-                }
-            });
-
-            //set click listener for right image
-            rightImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(getContext(), "Right Image Click Received", Toast.LENGTH_SHORT).show();
-                    mVote = 2;
-                    VotingTask votingTask = new VotingTask(getContext());
-                    //votingTask.setMessageLoading("Casting Vote");
-                    votingTask.execute(URL+"/"+currentPoll.getId()+"/vote");
-                    leftHeartVote.setVisibility(View.VISIBLE);
-                    rightHeartVote.setVisibility(View.VISIBLE);
-                }
-            });
 
             //create holder and  set up references to TextView's
             holder = new PollViewHolder();
@@ -120,6 +78,9 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
             holder.rightVotes = (TextView) currentView.findViewById(R.id.tv_poll_right_votes);
             holder.leftVotesHeart = leftHeartVote;
             holder.rightVotesHeart = rightHeartVote;
+            holder.vote1text = (TextView) currentView.findViewById(R.id.tv_poll_left_votes);
+            holder.vote2text = (TextView) currentView.findViewById(R.id.tv_poll_right_votes);
+
             currentView.setTag(holder);
         }
 
@@ -130,36 +91,10 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
             holder.leftVotesHeart.setVisibility(View.GONE);
             holder.rightVotesHeart.setVisibility(View.GONE);
         }
-
-        //set click listener for left image
-        holder.leftImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Toast.makeText(getContext(), "Left Image Click Received", Toast.LENGTH_SHORT).show();
-                mVote = 1;
-                VotingTask votingTask = new VotingTask(getContext());
-                //votingTask.setMessageLoading("Casting Vote");
-                votingTask.execute(URL+"/"+currentPoll.getId()+"/vote");
-//                holder.leftVotes.setText((currentPoll.getLeftVotes()+1) + "");
-                holder.leftVotesHeart.setVisibility(View.VISIBLE);
-                holder.rightVotesHeart.setVisibility(View.VISIBLE);
-            }
-        });
-
-        //set click listener for right image
-        holder.rightImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Toast.makeText(getContext(), "Right Image Click Received", Toast.LENGTH_SHORT).show();
-                mVote = 2;
-                VotingTask votingTask = new VotingTask(getContext());
-                //votingTask.setMessageLoading("Casting Vote");
-                votingTask.execute(URL+"/"+currentPoll.getId()+"/vote");
-//                holder.rightVotes.setText((currentPoll.getRightVotes()+1) + "");
-                holder.leftVotesHeart.setVisibility(View.VISIBLE);
-                holder.rightVotesHeart.setVisibility(View.VISIBLE);
-            }
-        });
+        //setting listeners for voting
+        VotingTask votingTask = new VotingTask(this.context, holder.leftImage, holder.rightImage, holder.leftVotesHeart,
+                holder.rightVotesHeart, holder.vote1text, holder.vote2text,currentPoll);
+        votingTask.setOnClickListenerForImages();
 
         //reset any variables in holder if view can be recycled
 
@@ -173,74 +108,6 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
 
         return currentView;
     }
-
-    private class VotingTask  extends AsyncTask<String, Void, JSONObject> {
-        public VotingTask(Context context) {
-
-        }
-
-        @Override
-        protected JSONObject doInBackground(String... urls) {
-            DefaultHttpClient client = new DefaultHttpClient();
-            HttpPost post = new HttpPost(urls[0]);
-            String response;
-            JSONObject json = null;
-            try {
-                try {
-                    post.setHeader("Accept", "application/json");
-
-                    ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                    json = new JSONObject();
-                    json.put("_method","post");
-                    json.put("authenticity","");
-                    json.put("auth_token", Login.getSharedPreferences().getString("AuthToken",""));
-                    if(mVote == 1)
-                        json.put("type","one");
-                    else
-                        json.put("type","two");
-                    StringEntity se = new StringEntity(json.toString());
-                    post.setEntity(se);
-                    post.setHeader("Accept", "application/json");
-                    post.setHeader("Content-Type", "application/json");
-                    response = client.execute(post, responseHandler);
-                    json = new JSONObject(response);
-
-                } catch (HttpResponseException e) {
-                    e.printStackTrace();
-                    Log.e("ClientProtocol", "" + e);
-                    json.put("info",
-                            "Failed to Cast Vote. Retry!");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Log.e("IO", "" + e);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                Log.e("JSON", "" + e);
-            }
-
-            return json;
-        }
-
-        @Override
-        protected void onPostExecute(JSONObject json) {
-            try {
-                if (json.getBoolean("success")) {
-                    Toast.makeText(context, json.getString("info"),
-                            Toast.LENGTH_LONG).show();
-                }
-            } catch (Exception e) {
-                Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG)
-                        .show();
-            } finally {
-                super.onPostExecute(json);
-            }
-        }
-
-    }
-
-
-
 
     @Override
     public boolean isEnabled(int position)
@@ -258,5 +125,7 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
         TextView rightVotes;
         RelativeLayout leftVotesHeart;
         RelativeLayout rightVotesHeart;
+        TextView vote1text;
+        TextView vote2text;
     }
 }
