@@ -206,20 +206,6 @@ public class PostPollFragment extends Fragment {
         }
     }
 
-//    private String getRealPathFromURI(Uri contentURI) {
-//        String result;
-//        Cursor cursor = mThisActivity.getContentResolver().query(contentURI, null, null, null, null);
-//        if (cursor == null) { // Source is Dropbox or other similar local file path
-//            result = contentURI.getPath();
-//        } else {
-//            cursor.moveToFirst();
-//            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-//            result = cursor.getString(idx);
-//            cursor.close();
-//        }
-//        return result;
-//    }
-
     private String bitmapToBase64String(Bitmap bm){
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
