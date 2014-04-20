@@ -237,7 +237,7 @@ public class PostPollFragment extends Fragment {
         BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(selectedImage), null, o);
 
         // The new size we want to scale to
-        final int REQUIRED_SIZE = 100;
+        final int REQUIRED_SIZE = 500;
 
         // Find the correct scale value. It should be the power of 2.
         int width_tmp = o.outWidth, height_tmp = o.outHeight;
