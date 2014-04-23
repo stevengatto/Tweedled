@@ -12,7 +12,6 @@ import moms.app.android.ui.HomeAdapter;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
@@ -22,15 +21,16 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+
 
 /**
  * Created by klam on 4/17/14.
+ * Class for fetching polls
  */
 public class FetchingPollTask {
 
     private Activity mActivity;
-    JSONObject json = new JSONObject();
+    JSONObject respond = new JSONObject();
     private List<Poll> list = new ArrayList<Poll>();
     private ListView mListView;
 
@@ -52,9 +52,9 @@ public class FetchingPollTask {
     private void createListView()
     {
         try {
-            JSONArray polls_array = json.getJSONArray("polls");
-            int poll_count = json.getInt("poll_count");
-            Random random = new Random();
+            JSONArray polls_array = respond.getJSONArray("polls");
+            int poll_count = respond.getInt("poll_count");
+
             for(int i = poll_count - 1; i >= 0 ;i--)
             {
 
@@ -84,11 +84,24 @@ public class FetchingPollTask {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return;
+
     }
 
 
+    public void onPostExecuteAction(JSONObject respond)
+    {
+        try {
+            if (respond.getBoolean("success")) {
 
+                Toast.makeText(mActivity, respond.getString("info"),
+                        Toast.LENGTH_LONG).show();
+                createListView();
+            }
+        } catch (Exception e) {
+            Toast.makeText(mActivity, e.getMessage(), Toast.LENGTH_LONG)
+                    .show();
+        }
+    }
 
 
     private class FetchingPollAsyncTask extends UrlJsonAsyncTask {
@@ -107,13 +120,13 @@ public class FetchingPollTask {
                 try {
                     ResponseHandler<String> responseHandler = new BasicResponseHandler();
                     response = client.execute(get, responseHandler);
-                    json.put("success",false);
-                    json = new JSONObject(response);
+                    respond.put("success", false);
+                    respond = new JSONObject(response);
 
                 } catch (HttpResponseException e) {
                     e.printStackTrace();
                     Log.e("ClientProtocol", "" + e);
-                    json.put("info",
+                    respond.put("info",
                             "Failed fetching polls. Retry!");
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -124,24 +137,14 @@ public class FetchingPollTask {
                 Log.e("JSON", "" + e);
             }
 
-            return json;
+            return respond;
         }
 
         @Override
-        protected void onPostExecute(JSONObject json) {
-            try {
-                if (json.getBoolean("success")) {
+        protected void onPostExecute(JSONObject respond) {
+                onPostExecuteAction(respond);
+                super.onPostExecute(respond);
 
-                    Toast.makeText(context, json.getString("info"),
-                            Toast.LENGTH_LONG).show();
-                    createListView();
-                }
-            } catch (Exception e) {
-                Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG)
-                        .show();
-            } finally {
-                super.onPostExecute(json);
-            }
         }
 
     }

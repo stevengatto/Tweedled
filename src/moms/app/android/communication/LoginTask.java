@@ -20,12 +20,13 @@ import java.io.IOException;
 
 /**
  * Created by klam on 4/16/14.
+ * login task
  */
-public class LoginTask {
+public class LoginTask implements TaskInterface{
     private String mUserEmail;
     private String mUserPassword;
     private Activity mActivity;
-
+    private JSONObject respond = new JSONObject();
 
     public LoginTask(Activity activity){
         mActivity = activity;
@@ -42,6 +43,25 @@ public class LoginTask {
         loginTask.execute(WebGeneral.LOGIN_URL);
     }
 
+    public void onPostExecuteAction(JSONObject respond) {
+        try {
+            if (respond.getBoolean("success")) {
+                SharedPreferences.Editor editor = WebGeneral.getsPreferences().edit();
+                editor.putString("auth_token", respond.getJSONObject("data").getString("auth_token"));
+                editor.commit();
+
+                Intent intent = new Intent(mActivity.getApplicationContext(),
+                        moms.app.android.ui.HomeActivity.class);
+
+                mActivity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                mActivity.startActivity(intent);
+            }
+            Toast.makeText(mActivity, respond.getString("info"), Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            Toast.makeText(mActivity, e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
     private class LoginAsyncTask extends UrlJsonAsyncTask {
         public LoginAsyncTask(Context context) {
             super(context);
@@ -54,13 +74,13 @@ public class LoginTask {
             JSONObject holder = new JSONObject();
             JSONObject userObj = new JSONObject();
             String response;
-            JSONObject json = new JSONObject();
+            respond = new JSONObject();
 
 
             try {
                 try {
-                    json.put("success", false);
-                    json.put("info", "Something went wrong. Retry!");
+                    respond.put("success", false);
+                    respond.put("info", "Something went wrong. Retry!");
                     userObj.put("email", mUserEmail);
                     userObj.put("password", mUserPassword);
                     holder.put("user", userObj);
@@ -71,12 +91,12 @@ public class LoginTask {
 
                     ResponseHandler<String> responseHandler = new BasicResponseHandler();
                     response = client.execute(post, responseHandler);
-                    json = new JSONObject(response);
+                    respond = new JSONObject(response);
 
                 } catch (HttpResponseException e) {
                     e.printStackTrace();
                     Log.e("ClientProtocol", "" + e);
-                    json.put("info",
+                    respond.put("info",
                             "Email and/or password are invalid. Retry!");
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -87,30 +107,14 @@ public class LoginTask {
                 Log.e("JSON", "" + e);
             }
 
-            return json;
+            return respond;
         }
 
         @Override
-        protected void onPostExecute(JSONObject json) {
-            try {
-                if (json.getBoolean("success")) {
-                    SharedPreferences.Editor editor = WebGeneral.getsPreferences().edit();
-                    editor.putString("auth_token", json.getJSONObject("data").getString("auth_token"));
-                    editor.commit();
+        protected void onPostExecute(JSONObject respond) {
+                onPostExecuteAction(respond);
+                super.onPostExecute(respond);
 
-                    Intent intent = new Intent(mActivity.getApplicationContext(),
-                            moms.app.android.ui.HomeActivity.class);
-
-                    mActivity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-
-                    mActivity.startActivity(intent);
-                }
-                Toast.makeText(context, json.getString("info"),Toast.LENGTH_LONG).show();
-            } catch (Exception e) {
-                Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
-            } finally {
-                super.onPostExecute(json);
-            }
         }
 
     }

@@ -22,8 +22,9 @@ import java.io.IOException;
 
 /**
  * Created by klam on 4/17/14.
+ * class for voting web calls
  */
-public class VotingTask {
+public class VotingTask implements TaskInterface{
     private Context mContext;
     ImageView mLeftImage;
     ImageView mRightImage;
@@ -32,7 +33,7 @@ public class VotingTask {
     TextView mVote1;
     TextView mVote2;
     Poll mPoll;
-    JSONObject json = new JSONObject();
+    JSONObject respond = new JSONObject();
     public VotingTask(Context context, ImageView leftImage, ImageView rightImage, RelativeLayout leftVotesHeart,
                       RelativeLayout rightVotesHeart,TextView vote1, TextView vote2, Poll poll)
     {
@@ -54,7 +55,7 @@ public class VotingTask {
             public void onClick(View view) {
 //                Toast.makeText(getContext(), "Left Image Click Received", Toast.LENGTH_SHORT).show();
                 try {
-                    json.put("type", "one");
+                    respond.put("type", "one");
                 }catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("JSON", "" + e);
@@ -70,7 +71,7 @@ public class VotingTask {
             @Override
             public void onClick(View view) {
                 try {
-                    json.put("type", "two");
+                    respond.put("type", "two");
                 }catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("JSON", "" + e);
@@ -82,12 +83,26 @@ public class VotingTask {
             }
         });
 
-
-
-
-
-
     }
+
+    public void onPostExecuteAction(JSONObject respond)
+    {
+        try {
+            if (respond.getBoolean("success")) {
+                Toast.makeText(mContext, respond.getString("info"),
+                        Toast.LENGTH_LONG).show();
+                //Log.e("PostExecute", ""+ respond.getInt("vote_one") + respond.getInt("vote_two"));
+                mVote1.setText("" + respond.getInt("vote_one"));
+                mVote2.setText(""+respond.getInt("vote_two"));
+            }
+        } catch (Exception e) {
+            Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_LONG)
+                    .show();
+        }
+    }
+
+
+
     private class VotingAsyncTask  extends UrlJsonAsyncTask {
         public VotingAsyncTask(Context context) {
             super(context);
@@ -103,20 +118,20 @@ public class VotingTask {
                     post.setHeader("Accept", "application/json");
 
                     ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                    json.put("_method","post");
-                    json.put("authenticity","");
-                    json.put("auth_token", WebGeneral.getsPreferences().getString("auth_token", ""));
-                    StringEntity se = new StringEntity(json.toString());
+                    respond.put("_method", "post");
+                    respond.put("authenticity", "");
+                    respond.put("auth_token", WebGeneral.getsPreferences().getString("auth_token", ""));
+                    StringEntity se = new StringEntity(respond.toString());
                     post.setEntity(se);
                     post.setHeader("Accept", "application/json");
                     post.setHeader("Content-Type", "application/json");
                     response = client.execute(post, responseHandler);
-                    json = new JSONObject(response);
+                    respond = new JSONObject(response);
 
                 } catch (HttpResponseException e) {
                     e.printStackTrace();
                     Log.e("ClientProtocol", "" + e + " " + urls[0]);
-                    json.put("info",
+                    respond.put("info",
                             "Failed to Cast Vote. Retry!");
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -127,24 +142,13 @@ public class VotingTask {
                 Log.e("JSON", "" + e);
             }
 
-            return json;
+            return respond;
         }
 
         @Override
-        protected void onPostExecute(JSONObject json) {
-            try {
-                if (json.getBoolean("success")) {
-                    Toast.makeText(context, json.getString("info"),
-                            Toast.LENGTH_LONG).show();
-                    mVote1.setText(""+json.getInt("vote_one"));
-                    mVote2.setText(""+json.getInt("vote_two"));
-                }
-            } catch (Exception e) {
-                Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG)
-                        .show();
-            } finally {
-                super.onPostExecute(json);
-            }
+        protected void onPostExecute(JSONObject respond) {
+            onPostExecuteAction(respond);
+            super.onPostExecute(respond);
         }
 
     }

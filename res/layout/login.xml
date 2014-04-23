@@ -38,13 +38,13 @@
                 android:layout_height="wrap_content"
                 android:text="@string/auto_login"
                 android:padding="15dp"/>
-        <TextView android:id="@+id/tv_register"
+        <Button android:id="@+id/tv_register"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:layout_weight="1"
                   android:hint="@string/user_password"
                   android:text="@string/register"
-                  android:paddingBottom="15dp"
+                  android:onClick="register"
                   android:textSize="20dp"
                   android:clickable="true"/>
         <Button

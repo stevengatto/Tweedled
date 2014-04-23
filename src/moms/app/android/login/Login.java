@@ -1,10 +1,9 @@
 package moms.app.android.login;
 
 
+import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -13,10 +12,7 @@ import moms.app.android.R;
 import moms.app.android.communication.LoginTask;
 import moms.app.android.ui.BaseActivity;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.IOException;
 
 /**
  * Created by klam on 4/8/14.
@@ -24,14 +20,20 @@ import java.io.IOException;
 public class Login extends BaseActivity {
     private String mUserEmail;
     private String mUserPassword;
-
+    private Activity mActivity;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-
+        mActivity = this;
     }
-
+    public void register(View loginButton)
+    {
+        Intent intent = new Intent(mActivity.getApplicationContext(),
+                moms.app.android.login.Register.class);
+        mActivity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        mActivity.startActivity(intent);
+    }
     public void login(View loginButton) {
         EditText userEmailField = (EditText) findViewById(R.id.et_userEmail);
         mUserEmail = userEmailField.getText().toString();

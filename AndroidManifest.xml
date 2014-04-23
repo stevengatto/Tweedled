@@ -37,5 +37,6 @@
                   android:screenOrientation="portrait"/>
         <activity android:name=".login.Dashboard"
                   android:screenOrientation="portrait"/>
+        <activity android:name=".login.Register"/>
     </application>
 </manifest>

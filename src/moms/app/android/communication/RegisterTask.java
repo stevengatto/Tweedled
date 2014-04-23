@@ -1,19 +1,13 @@
-package moms.app.android.ui;
+package moms.app.android.communication;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.Toast;
 import com.savagelook.android.UrlJsonAsyncTask;
-import moms.app.android.R;
+import moms.app.android.ui.HomeActivity;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
@@ -24,56 +18,36 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.math.RoundingMode;
-import java.net.MulticastSocket;
 
 /**
- * Created by klam on 3/29/14.
+ * Created by klam on 4/23/14.
  */
-public class RegisterFragment extends Fragment {
-
-    private Activity mActivity;
-    private View mlayout;
-
+public class RegisterTask implements TaskInterface{
     private String mUserEmail;
     private String mUserPassword;
-    private SharedPreferences mPreferences;
-    private static final String REG_URL = "http://107.170.50.231/api/v1/sessions";
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    private Activity mActivity;
+    public RegisterTask(Activity activity)
     {
-        mActivity = getActivity();
-        mlayout = inflater.inflate(R.layout.register_fragment, container, false);
+        this.mActivity = activity;
+        WebGeneral.setsPreferences(mActivity.getSharedPreferences("CurrentUser", Activity.MODE_PRIVATE));
 
-        return mlayout;
+    }
+    public void onPostExecuteAction(JSONObject respond)
+    {
+
     }
 
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mActivity = getActivity();
-        mPreferences = mActivity.getSharedPreferences("CurrentUser", mActivity.MODE_PRIVATE);
+    public void submitRequest(String email, String password)
+    {
+        mUserEmail = email;
+        mUserPassword = password;
+        RegisterAsyncTask registerTask = new RegisterAsyncTask(mActivity);
+        registerTask.setMessageLoading("Registering new account...");
+        registerTask.execute(WebGeneral.REGISTER_URL);
     }
+    private class RegisterAsyncTask extends UrlJsonAsyncTask {
 
-    public void registerNewAccount(View registerButton) {
-        EditText userEmailField = (EditText) mActivity.findViewById(R.id.et_userEmail);
-        mUserEmail = userEmailField.getText().toString();
-        EditText userPasswordField = (EditText) mActivity.findViewById(R.id.et_userPassword);
-        mUserPassword = userPasswordField.getText().toString();
-        if (mUserEmail.length() == 0 || mUserPassword.length() == 0) {
-            // input fields are empty
-            Toast.makeText(mActivity, "Please complete all the fields",
-                    Toast.LENGTH_LONG).show();
-        } else {
-            RegisterTask regTask = new RegisterTask(mActivity);
-            regTask.setMessageLoading("Registering...");
-            regTask.execute(REG_URL);
-        }
-    }
-
-
-    private class RegisterTask extends UrlJsonAsyncTask {
-        public RegisterTask(Context context) {
+        public RegisterAsyncTask(Context context) {
             super(context);
         }
 
@@ -83,13 +57,13 @@ public class RegisterFragment extends Fragment {
             HttpPost post = new HttpPost(urls[0]);
             JSONObject holder = new JSONObject();
             JSONObject userObj = new JSONObject();
-            String response;
+            String response = null;
             JSONObject json = new JSONObject();
 
             try {
                 try {
                     json.put("success", false);
-                    json.put("info", "Something went wrong. Retry!");
+                    json.put("info", "Failed to create account. Retry!");
                     userObj.put("email", mUserEmail);
                     userObj.put("password", mUserPassword);
                     holder.put("user", userObj);
@@ -105,8 +79,6 @@ public class RegisterFragment extends Fragment {
                 } catch (HttpResponseException e) {
                     e.printStackTrace();
                     Log.e("ClientProtocol", "" + e);
-                    json.put("info",
-                            "Email and/or password are invalid. Retry!");
                 } catch (IOException e) {
                     e.printStackTrace();
                     Log.e("IO", "" + e);
@@ -123,16 +95,14 @@ public class RegisterFragment extends Fragment {
         protected void onPostExecute(JSONObject json) {
             try {
                 if (json.getBoolean("success")) {
-                    SharedPreferences.Editor editor = mPreferences.edit();
+                    SharedPreferences.Editor editor = WebGeneral.getsPreferences().edit();
                     editor.putString("AuthToken", json.getJSONObject("data")
                             .getString("auth_token"));
                     editor.commit();
 
-                    mActivity.finish();
-                    Intent intent = new Intent(mActivity,
-                            moms.app.android.ui.PostPollActivity.class);
-                    startActivity(intent);
-                    mActivity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                    Intent intent = new Intent(mActivity.getApplicationContext(),
+                            HomeActivity.class);
+                    mActivity.startActivity(intent);
                 }
                 Toast.makeText(context, json.getString("info"),
                         Toast.LENGTH_LONG).show();
@@ -143,6 +113,5 @@ public class RegisterFragment extends Fragment {
                 super.onPostExecute(json);
             }
         }
-
     }
 }
