@@ -3,7 +3,9 @@ package moms.app.android.ui;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,23 +13,33 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
-
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
+import com.savagelook.android.UrlJsonAsyncTask;
 import moms.app.android.R;
 import moms.app.android.communication.CreatePollTask;
+import moms.app.android.communication.LoginTask;
 import moms.app.android.communication.WebGeneral;
-
+import org.apache.http.client.HttpResponseException;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-
+import java.io.IOException;
 
 
 /**
@@ -54,8 +66,8 @@ public class PostPollFragment extends Fragment {
     private static int TAKE_PHOTO_2 = 4;
     private Activity mThisActivity;
 
-    private String mEncodedImage1;
-    private String mEncodedImage2;
+    String encodedImage1;
+    String encodedImage2;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -129,14 +141,6 @@ public class PostPollFragment extends Fragment {
         return layout;
     }
 
-    public String encodeImage(Bitmap image)
-    {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
-        byte[] b = baos.toByteArray();
-        return Base64.encodeToString(b, Base64.DEFAULT);
-    }
-
     //handle result from the gallery activity selecting image
     public void onActivityResult(int requestCode, int resultCode,
                                     Intent imageReturnedIntent) {
@@ -146,7 +150,6 @@ public class PostPollFragment extends Fragment {
         Bitmap image = null;
 
         //will throw out of memory error if photo is too large
-        selectedImage = null;
         switch(requestCode) {
             case 1:
                 try {
@@ -155,10 +158,10 @@ public class PostPollFragment extends Fragment {
                 }
                 catch (Exception e) { Log.e(null, "Incorrect Uri Exception on Image Select"); }
 
-                if(image != null) {
-                    mEncodedImage1 = encodeImage(image);
-                    photo1.setImageBitmap(cropBitmapCenter(image));
-                }
+                if(image != null)
+                    image = cropBitmapCenter(image);
+                    encodedImage1 = bitmapToBase64String(image);
+                    photo1.setImageBitmap(image);
                 break;
             case 2:
                 try{
@@ -168,8 +171,9 @@ public class PostPollFragment extends Fragment {
                 catch (Exception e) { Log.e(null, "Incorrect Uri Exception on Image Select"); }
 
                 if(image != null)
-                    mEncodedImage2 = encodeImage(image);
-                    photo2.setImageBitmap(cropBitmapCenter(image));
+                    image = cropBitmapCenter(image);
+                    encodedImage2 = bitmapToBase64String(image);
+                    photo2.setImageBitmap(image);
                 break;
             case 3:
                 if (resultCode == Activity.RESULT_OK) {
@@ -178,10 +182,9 @@ public class PostPollFragment extends Fragment {
 
                     try{ image = decodeUri(selectedImage); }
                     catch (Exception e) { Log.e(null, "Incorrect Uri Exception on Image Select"); }
+
                     if(image != null) {
-
-
-                        mEncodedImage1 = encodeImage(image);
+                        encodedImage1 = bitmapToBase64String(image);
                         photo1.setImageBitmap(cropBitmapCenter(image));
                     }
                     break;
@@ -195,30 +198,20 @@ public class PostPollFragment extends Fragment {
                     catch (Exception e) { Log.e(null, "Incorrect Uri Exception on Image Select"); }
 
                     if(image != null){
-                        mEncodedImage2 = encodeImage(image);
+                        encodedImage2 = bitmapToBase64String(image);
                         photo2.setImageBitmap(cropBitmapCenter(image));
-
                     }
                     break;
                 }
         }
     }
 
-    private String getRealPathFromURI(Uri contentURI) {
-        String result;
-        Cursor cursor = mThisActivity.getContentResolver().query(contentURI, null, null, null, null);
-        if (cursor == null) { // Source is Dropbox or other similar local file path
-            result = contentURI.getPath();
-        } else {
-            cursor.moveToFirst();
-            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-            result = cursor.getString(idx);
-            cursor.close();
-        }
-        return result;
+    private String bitmapToBase64String(Bitmap bm){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.JPEG, 10, baos); //bm is the bitmap object
+        byte[] b = baos.toByteArray();
+        return Base64.encodeToString(b, Base64.DEFAULT);
     }
-
-
 
 
     //method to decode Uri to image and scale down to 500 pixels
@@ -284,10 +277,12 @@ public class PostPollFragment extends Fragment {
         mQuestion_str = question.getText().toString();
         mTitle1_str = title1.getText().toString();
         mTitle2_str = title2.getText().toString();
-        mAuth_token = WebGeneral.getsPreferences().getString("auth_token","");
 
-        CreatePollTask pollTask = new CreatePollTask(mThisActivity);
-        pollTask.submitRequest(mQuestion_str,mTitle1_str,mTitle2_str,mAuth_token,mEncodedImage1,mEncodedImage2);
+        mAuth_token = WebGeneral.getsPreferences().getString("AuthToken", "");
+
+        CreatePollTask pollTask = new CreatePollTask(mThisActivity, mQuestion_str,
+                mTitle1_str, mTitle2_str, encodedImage1, encodedImage2);
+        pollTask.setMessageLoading("Creating poll...");
+        pollTask.execute(WebGeneral.POSTING_POLL_URL);
     }
-
 }
