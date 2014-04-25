@@ -3,10 +3,7 @@ package moms.app.android.ui;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -22,24 +19,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-import com.savagelook.android.UrlJsonAsyncTask;
 import moms.app.android.R;
 import moms.app.android.communication.CreatePollTask;
-import moms.app.android.communication.LoginTask;
 import moms.app.android.communication.WebGeneral;
-import org.apache.http.client.HttpResponseException;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 
 
 /**
@@ -66,8 +52,8 @@ public class PostPollFragment extends Fragment {
     private static int TAKE_PHOTO_2 = 4;
     private Activity mThisActivity;
 
-    String encodedImage1;
-    String encodedImage2;
+    String mEncodedImage1;
+    String mEncodedImage2;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -160,7 +146,7 @@ public class PostPollFragment extends Fragment {
 
                 if(image != null)
                     image = cropBitmapCenter(image);
-                    encodedImage1 = bitmapToBase64String(image);
+                    mEncodedImage1 = bitmapToBase64String(image);
                     photo1.setImageBitmap(image);
                 break;
             case 2:
@@ -172,7 +158,7 @@ public class PostPollFragment extends Fragment {
 
                 if(image != null)
                     image = cropBitmapCenter(image);
-                    encodedImage2 = bitmapToBase64String(image);
+                    mEncodedImage2 = bitmapToBase64String(image);
                     photo2.setImageBitmap(image);
                 break;
             case 3:
@@ -184,7 +170,7 @@ public class PostPollFragment extends Fragment {
                     catch (Exception e) { Log.e(null, "Incorrect Uri Exception on Image Select"); }
 
                     if(image != null) {
-                        encodedImage1 = bitmapToBase64String(image);
+                        mEncodedImage1 = bitmapToBase64String(image);
                         photo1.setImageBitmap(cropBitmapCenter(image));
                     }
                     break;
@@ -198,7 +184,7 @@ public class PostPollFragment extends Fragment {
                     catch (Exception e) { Log.e(null, "Incorrect Uri Exception on Image Select"); }
 
                     if(image != null){
-                        encodedImage2 = bitmapToBase64String(image);
+                        mEncodedImage2 = bitmapToBase64String(image);
                         photo2.setImageBitmap(cropBitmapCenter(image));
                     }
                     break;
@@ -277,12 +263,9 @@ public class PostPollFragment extends Fragment {
         mQuestion_str = question.getText().toString();
         mTitle1_str = title1.getText().toString();
         mTitle2_str = title2.getText().toString();
+        mAuth_token = WebGeneral.getsPreferences().getString("auth_token","");
 
-        mAuth_token = WebGeneral.getsPreferences().getString("AuthToken", "");
-
-        CreatePollTask pollTask = new CreatePollTask(mThisActivity, mQuestion_str,
-                mTitle1_str, mTitle2_str, encodedImage1, encodedImage2);
-        pollTask.setMessageLoading("Creating poll...");
-        pollTask.execute(WebGeneral.POSTING_POLL_URL);
+        CreatePollTask pollTask = new CreatePollTask(mThisActivity);
+        pollTask.submitRequest(mQuestion_str, mTitle1_str, mTitle2_str, mAuth_token, mEncodedImage1, mEncodedImage2);
     }
 }

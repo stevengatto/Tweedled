@@ -7,9 +7,10 @@ import android.content.SharedPreferences;
  */
 public class WebGeneral {
     public static final String BASE_URL = "http://107.170.50.231/";
-    public static final String LOGIN_URL = BASE_URL + "/api/v1/sessions";
-    public static final String FETCHING_POLL_URL = BASE_URL + "/polls.json";
-    public static final String POSTING_POLL_URL = BASE_URL + "/polls/new";
+    public static final String LOGIN_URL = BASE_URL + "api/v1/sessions";
+    public static final String FETCHING_POLL_URL = BASE_URL + "polls.json";
+    public static final String CREATING_NEW_POLL_URL = BASE_URL + "polls/new";
+    public static final String REGISTER_URL = BASE_URL + "api/v1/registrations";
 
     public static String generateVoteURL(int id)
     {
