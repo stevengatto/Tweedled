@@ -13,12 +13,7 @@
                  android:theme="@style/CustomTheme">
         <activity android:name=".ui.SplashScreenActivity"
                   android:theme="@android:style/Theme.NoTitleBar"
-                  android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
+                  android:screenOrientation="portrait"/>
         <activity android:name=".ui.HomeActivity"
                   android:screenOrientation="portrait"/>
         <activity android:name=".ui.BaseActivity"
@@ -37,6 +32,14 @@
                   android:screenOrientation="portrait"/>
         <activity android:name=".login.Dashboard"
                   android:screenOrientation="portrait"/>
-        <activity android:name=".login.Register"/>
+        <activity android:name=".login.Register"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".ui.ImageSearchActivity"
+                  android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
     </application>
 </manifest>

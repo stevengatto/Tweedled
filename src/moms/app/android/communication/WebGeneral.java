@@ -11,11 +11,19 @@ public class WebGeneral {
     public static final String FETCHING_POLL_URL = BASE_URL + "polls.json";
     public static final String CREATING_NEW_POLL_URL = BASE_URL + "polls/new";
     public static final String REGISTER_URL = BASE_URL + "api/v1/registrations";
+    public static final String IMAGE_SEARCH_BASE_URL = "https://ajax.googleapis.com/ajax/services/search/images?" +
+            "v=1.0&as_filetype=jpg&rsz=8";
 
     public static String generateVoteURL(int id)
     {
         return BASE_URL + "/polls/"+ id +"/vote";
     }
+
+    public static String generateSearchURL(String query)
+    {
+        return IMAGE_SEARCH_BASE_URL + "&q=" + query.replace(" ", "520");
+    }
+
     private static SharedPreferences sPreferences = null;
 
     public static SharedPreferences getsPreferences() {

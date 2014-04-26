@@ -12,7 +12,10 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import moms.app.android.R;
 import moms.app.android.communication.VotingTask;
+import moms.app.android.login.Login;
 import moms.app.android.model.testing.Poll;
+import moms.app.android.utils.ImageLoadingListener;
+
 import java.util.List;
 
 /**
@@ -74,6 +77,8 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
             holder.subTitle = (TextView) currentView.findViewById(R.id.tv_poll_sub_title);
             holder.leftImage = (ImageView) currentView.findViewById(R.id.iv_poll_left);
             holder.rightImage = (ImageView) currentView.findViewById(R.id.iv_poll_right);
+            holder.leftProgressBar = (ProgressBar) currentView.findViewById(R.id.pb_poll_left);
+            holder.rightProgressBar = (ProgressBar) currentView.findViewById(R.id.pb_poll_right);
             holder.leftVotes = (TextView) currentView.findViewById(R.id.tv_poll_left_votes);
             holder.rightVotes = (TextView) currentView.findViewById(R.id.tv_poll_right_votes);
             holder.leftVotesHeart = leftHeartVote;
@@ -100,9 +105,10 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
 
         holder.mainTitle.setText(currentPoll.getMainTitle());
         holder.subTitle.setText(currentPoll.getSubTitle());
-        ImageLoader.getInstance().displayImage(currentPoll.getLeftImageUrl(),holder.leftImage);
-        ImageLoader.getInstance().displayImage(currentPoll.getRightImageUrl(),holder.rightImage);
-
+        ImageLoader.getInstance().displayImage(currentPoll.getLeftImageUrl(),holder.leftImage,
+                new ImageLoadingListener(holder.leftProgressBar));
+        ImageLoader.getInstance().displayImage(currentPoll.getRightImageUrl(),holder.rightImage,
+                new ImageLoadingListener(holder.rightProgressBar));
         holder.leftVotes.setText(currentPoll.getLeftVotes().toString());
         holder.rightVotes.setText(currentPoll.getRightVotes().toString());
 
@@ -121,6 +127,8 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
         TextView subTitle;
         ImageView leftImage;
         ImageView rightImage;
+        ProgressBar leftProgressBar;
+        ProgressBar rightProgressBar;
         TextView leftVotes;
         TextView rightVotes;
         RelativeLayout leftVotesHeart;
