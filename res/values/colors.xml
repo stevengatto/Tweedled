@@ -6,4 +6,6 @@
     <color name="poll_item_background">#FFFFFF</color>
     <color name="text_color">#606060</color>
     <color name="bg_peach">#F69E90</color>
+    <color name="bg_button">#F69E90</color>
+    <color name="text_button">#FFFFFF</color>
 </resources>

@@ -15,4 +15,9 @@ public class ImageResult {
     public String getThumbUrl() { return ThumbUrl; }
 
     public void setThumbUrl(String thumbUrl) { ThumbUrl = thumbUrl; }
+
+    @Override
+    public String toString(){
+        return "URL: " + this.Url + "\n" +  "TbUrl: " + this.ThumbUrl + "\n";
+    }
 }

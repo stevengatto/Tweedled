@@ -8,11 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import moms.app.android.R;
 import moms.app.android.model.testing.ImageResult;
+import moms.app.android.utils.ImageLoadingListener;
 
 import java.util.List;
 
@@ -65,6 +67,7 @@ public class ImageSearchAdapter extends ArrayAdapter<ImageResult> {
             //create holder and  set up references to TextView's
             holder = new ImageSearchViewHolder();
             holder.imageView = (ImageView) currentView.findViewById(R.id.iv_image_search);
+            holder.progressBar = (ProgressBar) currentView.findViewById(R.id.pb_image_search);
 
             currentView.setTag(holder);
         }
@@ -75,7 +78,8 @@ public class ImageSearchAdapter extends ArrayAdapter<ImageResult> {
             holder = (ImageSearchViewHolder)currentView.getTag();
         }
 
-        ImageLoader.getInstance().displayImage(currentResult.getUrl(),holder.imageView);
+        ImageLoader.getInstance().displayImage(currentResult.getThumbUrl(),holder.imageView,
+                new ImageLoadingListener(holder.progressBar));
 
         return currentView;
     }
@@ -83,5 +87,6 @@ public class ImageSearchAdapter extends ArrayAdapter<ImageResult> {
     //holder class to store references to gridView sub views
     private class ImageSearchViewHolder {
         ImageView imageView;
+        ProgressBar progressBar;
     }
 }

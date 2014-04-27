@@ -46,6 +46,8 @@ public class PostPollFragment extends Fragment {
     String mAuth_token;
     private Button takePhoto1;
     private Button takePhoto2;
+    private Button googlePhoto1;
+    private Button googlePhoto2;
     private static int CHOOSE_PHOTO_1 = 1;
     private static int CHOOSE_PHOTO_2 = 2;
     private static int TAKE_PHOTO_1 = 3;
@@ -67,17 +69,14 @@ public class PostPollFragment extends Fragment {
         photo2 = (ImageView) layout.findViewById(R.id.iv_poll_post_right);
         takePhoto1 = (Button) layout.findViewById(R.id.btn_take_photo_1);
         takePhoto2 = (Button) layout.findViewById(R.id.btn_take_photo_2);
+        googlePhoto1 = (Button) layout.findViewById(R.id.btn_google_photo_1);
+        googlePhoto2 = (Button) layout.findViewById(R.id.btn_google_photo_2);
         submitBtn = (Button) layout.findViewById(R.id.btn_post_submit);
         mThisActivity = getActivity();
 
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(),
-                        question.getText()+"\n"
-                                +title1.getText()+"\n"
-                                +title2.getText().toString()
-                        , Toast.LENGTH_SHORT).show();
                 submit();
             }
         });
@@ -121,6 +120,22 @@ public class PostPollFragment extends Fragment {
                         Uri.fromFile(photo));
                 imageUri = Uri.fromFile(photo);
                 startActivityForResult(intent, TAKE_PHOTO_2);
+            }
+        });
+
+        googlePhoto1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mThisActivity, ImageSearchActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        googlePhoto2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mThisActivity, ImageSearchActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -265,7 +280,34 @@ public class PostPollFragment extends Fragment {
         mTitle2_str = title2.getText().toString();
         mAuth_token = WebGeneral.getsPreferences().getString("auth_token","");
 
-        CreatePollTask pollTask = new CreatePollTask(mThisActivity);
-        pollTask.submitRequest(mQuestion_str, mTitle1_str, mTitle2_str, mAuth_token, mEncodedImage1, mEncodedImage2);
+        boolean questionEmpty = mQuestion_str.isEmpty();
+        boolean title1Empty = mTitle1_str.isEmpty();
+        boolean title2Empty = mTitle2_str.isEmpty();
+
+        /* *
+        NOTE: NEED TO LIMIT THE AMOUNT OF TEXT FOR:
+        QUESTION: EQUAL TO THE SIZE OF A TWITTER MESSAGE
+        TITLES: YOUR CALL
+         */
+
+
+        if(!questionEmpty && !title1Empty && !title2Empty) {
+            CreatePollTask pollTask = new CreatePollTask(mThisActivity);
+            pollTask.submitRequest(mQuestion_str, mTitle1_str, mTitle2_str, mAuth_token, mEncodedImage1, mEncodedImage2);
+        } else {
+            if(questionEmpty)
+                question.setHintTextColor(getResources().getColor(R.color.bg_peach));
+            else
+                question.setHintTextColor(getResources().getColor(android.R.color.darker_gray));
+            if(title1Empty)
+                title1.setHintTextColor(getResources().getColor(R.color.bg_peach));
+            else
+                title1.setHintTextColor(getResources().getColor(android.R.color.darker_gray));
+            if(title2Empty)
+                title2.setHintTextColor(getResources().getColor(R.color.bg_peach));
+            else
+                title2.setHintTextColor(getResources().getColor(android.R.color.darker_gray));
+            Toast.makeText(mThisActivity, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+        }
     }
 }

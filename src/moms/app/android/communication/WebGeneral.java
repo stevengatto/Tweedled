@@ -19,9 +19,13 @@ public class WebGeneral {
         return BASE_URL + "/polls/"+ id +"/vote";
     }
 
-    public static String generateSearchURL(String query)
+    public static String encodeString(String query)
     {
-        return IMAGE_SEARCH_BASE_URL + "&q=" + query.replace(" ", "520");
+        if(query.matches("^[A-Za-z0-9 ]*$")){
+            return query.replace(" ","%20");
+        }
+        else
+            return null;
     }
 
     private static SharedPreferences sPreferences = null;

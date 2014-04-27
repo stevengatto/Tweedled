@@ -31,64 +31,98 @@ public class ImageSearchTask {
     private JSONObject respond = new JSONObject();
     private List<ImageResult> list;
     private GridView mGridView;
+    private String query;
+    private final int TOTAL_IMAGES = 63;
+    private boolean adapterSet = false;
 
     public ImageSearchTask(Activity activity, GridView gridView)
     {
         this.mActivity = activity;
         mGridView = gridView;
+        list = new ArrayList<ImageResult>();
     }
 
     public void submitRequest(String query)
     {
+        //encode query
+        this.query = WebGeneral.encodeString(query);
+
+        if(this.query == null){
+            Toast.makeText(mActivity, "Please use only letters, numbers, and spaces", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        Log.d(null, this.query);
+
         ImageSearchAsyncTask imageTask = new ImageSearchAsyncTask(mActivity);
-        imageTask.setMessageLoading("Fetching Images...");
-        imageTask.execute(WebGeneral.IMAGE_SEARCH_BASE_URL + "&q=" + query.replace(" ", "%20"));
+        imageTask.execute(WebGeneral.IMAGE_SEARCH_BASE_URL + "&q=" + this.query);
+    }
+
+    public void submitRequestFromInt(int start)
+    {
+        ImageSearchAsyncTask imageTask = new ImageSearchAsyncTask(mActivity);
+        imageTask.execute(WebGeneral.IMAGE_SEARCH_BASE_URL + "&q=" + query
+                + "&start=" + Integer.toString(start));
     }
 
     private void createGridView()
     {
-        list = new ArrayList<ImageResult>();
-
-        try {
-            //pull results array from google api response
-            JSONArray results_array = respond.getJSONObject("responseData").getJSONArray("results");
-
-            //remove thumbnail url and full image url from response data
-            for(int i = 0; i < results_array.length(); i++)
-            {
-                JSONObject result_json = results_array.getJSONObject(i);
-
-                ImageResult imageResult = new ImageResult();
-                imageResult.setThumbUrl(result_json.getString("tbUrl"));
-//                Log.d(null, "Thumb url: " + result_json.getString("tbUrl"));
-                imageResult.setUrl(result_json.getString("url"));
-//                Log.d(null, "Url: " + result_json.getString("url"));
-                list.add(imageResult);
-            }
-
+        if(list.size() >= TOTAL_IMAGES && adapterSet == false){
             //set up gridView adapter
-            ImageSearchAdapter adapter = new ImageSearchAdapter(mActivity, R.layout.image_search_item, list);
-            mGridView.setAdapter(adapter);
-
-        } catch (JSONException e) {
-            Log.d(null, "No array found");
+            setCurrentListToAdapter();
+            return;
         }
 
+        //keep making web calls with new start if we have not downloaded 100 images yet
+        if(list.size() < TOTAL_IMAGES)
+        {
+            try {
+                //pull results array from google api response
+                JSONArray results_array = respond.getJSONObject("responseData").getJSONArray("results");
+
+                Log.d(null, "************Array Length: " + results_array.length());
+                //remove thumbnail url and full image url from response data
+                for(int i = 0; i < results_array.length(); i++)
+                {
+                    if(list.size() < TOTAL_IMAGES){
+                        JSONObject result_json = results_array.getJSONObject(i);
+
+                        ImageResult imageResult = new ImageResult();
+                        imageResult.setThumbUrl(result_json.getString("tbUrl"));
+                        imageResult.setUrl(result_json.getString("url"));
+                        list.add(imageResult);
+                        Log.d(null, "Image " + list.size() + " added to list as " + result_json.getString("title"));
+                    }
+                }
+                submitRequestFromInt(list.size());
+
+            } catch (JSONException e) {
+                Log.d(null, "No array found");
+            }
+        }
+}
+    
+    public void setCurrentListToAdapter(){
+        Log.d(null, "SECOND IF EXECUTES!!!!!!!!!!!");
+        ImageSearchAdapter adapter = new ImageSearchAdapter(mActivity, R.layout.image_search_item, list);
+        mGridView.setAdapter(adapter);
+        adapterSet = true;
     }
+
 
     public void onPostExecuteAction(JSONObject respond)
     {
         try {
-            if (respond.getString("responseDetails").equals("null")) {
 
-                Toast.makeText(mActivity, "Successful Image Query",
-                        Toast.LENGTH_LONG).show();
+            //if no error, spawn new web call
+            if (respond.getInt("responseStatus") == 200 ) {
                 createGridView();
             }
+
+            //if error occurs, set current list of images to grid view
             else
-                Toast.makeText(mActivity, respond.getString("responseDetails"),
-                        Toast.LENGTH_LONG).show();
-            createGridView();
+                setCurrentListToAdapter();
+
         } catch (Exception e) {
             Toast.makeText(mActivity, e.getMessage(), Toast.LENGTH_LONG)
                     .show();
@@ -99,6 +133,12 @@ public class ImageSearchTask {
 
         public ImageSearchAsyncTask(Context context){
             super(context);
+        }
+
+        //override on pre execute so that progress dialog doesn't show up recursively
+        @Override
+        protected void onPreExecute() {
+            Log.d(null, "New Web Call Spawned, imageCount = " + list.size() + "\n");
         }
 
         @Override

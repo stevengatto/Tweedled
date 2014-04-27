@@ -10,6 +10,8 @@
               android:layout_width="match_parent"
               android:layout_height="50dp"
               android:textSize="18sp"
+              android:maxLines="1"
+              android:maxLength="30"
               android:hint="Enter search query here"/>
 
     <Button android:id="@+id/btn_image_search"
@@ -22,6 +24,8 @@
             android:id="@+id/image_search_grid_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:numColumns="auto_fit"/>
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:numColumns="3"/>
 
 </LinearLayout>
