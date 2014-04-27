@@ -96,7 +96,7 @@ public class RegisterTask implements TaskInterface{
             try {
                 if (json.getBoolean("success")) {
                     SharedPreferences.Editor editor = WebGeneral.getsPreferences().edit();
-                    editor.putString("AuthToken", json.getJSONObject("data")
+                    editor.putString("auth_token", json.getJSONObject("data")
                             .getString("auth_token"));
                     editor.commit();
 
