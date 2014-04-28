@@ -306,7 +306,14 @@ public class PostPollFragment extends Fragment {
         mQuestion_str = question.getText().toString();
         mTitle1_str = title1.getText().toString();
         mTitle2_str = title2.getText().toString();
+
+        //prompt user to login if they havent
+        try{
         mAuth_token = WebGeneral.getsPreferences().getString("auth_token","");
+        } catch (NullPointerException e) {
+            Toast.makeText(mActivity, "You must be logged in to create a poll", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         boolean questionEmpty = mQuestion_str.isEmpty();
         boolean title1Empty = mTitle1_str.isEmpty();
