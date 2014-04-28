@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -65,6 +66,7 @@ public class ImageSearchFragment extends Fragment {
 
     public void fetchImages(String query){
         ImageSearchTask imageSearchTask = new ImageSearchTask(getActivity(), gridView);
+        getActivity().setProgressBarIndeterminateVisibility(true);
         imageSearchTask.submitRequest(query);
     }
 

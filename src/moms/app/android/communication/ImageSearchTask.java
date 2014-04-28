@@ -107,6 +107,7 @@ public class ImageSearchTask {
         ImageSearchAdapter adapter = new ImageSearchAdapter(mActivity, R.layout.image_search_item, list);
         mGridView.setAdapter(adapter);
         adapterSet = true;
+        mActivity.setProgressBarIndeterminateVisibility(false);
     }
 
 

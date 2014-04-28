@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.Toast;
 import moms.app.android.R;
 import moms.app.android.login.Login;
@@ -22,6 +23,9 @@ public class BaseActivity extends Activity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //enable indefinite progress bar in action bar (can be turned on and off)
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
         // enable ActionBar app icon to behave as action to toggle nav drawer
         ActionBar actionBar = getActionBar();
