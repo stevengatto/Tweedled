@@ -61,8 +61,8 @@ public class PostPollFragment extends Fragment {
     String mEncodedImage2;
     String mImageUrl1;
     String mImageUrl2;
-    boolean isPictureOneUrl;
-    boolean isPictureTwoUrl;
+    Boolean isPictureOneUrl;
+    Boolean isPictureTwoUrl;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -166,12 +166,15 @@ public class PostPollFragment extends Fragment {
                 }
                 catch (Exception e) { Log.e(null, "Incorrect Uri Exception on Image Select"); }
 
-                if(image != null)
+                if(image != null){
                     image = cropBitmapCenter(image);
                     mEncodedImage1 = bitmapToBase64String(image);
                     photo1.setImageBitmap(image);
                     isPictureOneUrl = false;
+                    mImageUrl1 = null;
+                }
                 break;
+
             case 2:
                 try{
                     selectedImage = imageReturnedIntent.getData();  //can be null
@@ -179,12 +182,15 @@ public class PostPollFragment extends Fragment {
                 }
                 catch (Exception e) { Log.e(null, "Incorrect Uri Exception on Image Select"); }
 
-                if(image != null)
+                if(image != null){
                     image = cropBitmapCenter(image);
                     mEncodedImage2 = bitmapToBase64String(image);
                     photo2.setImageBitmap(image);
                     isPictureTwoUrl = false;
+                    mImageUrl2 = null;
+                }
                 break;
+
             case 3:
                 if (resultCode == Activity.RESULT_OK) {
                     selectedImage = imageUri;
@@ -197,9 +203,11 @@ public class PostPollFragment extends Fragment {
                         mEncodedImage1 = bitmapToBase64String(image);
                         photo1.setImageBitmap(cropBitmapCenter(image));
                         isPictureOneUrl = false;
+                        mImageUrl1 = null;
                     }
-                    break;
                 }
+                break;
+
             case 4:
                 if (resultCode == Activity.RESULT_OK) {
                     selectedImage = imageUri;
@@ -212,26 +220,28 @@ public class PostPollFragment extends Fragment {
                         mEncodedImage2 = bitmapToBase64String(image);
                         photo2.setImageBitmap(cropBitmapCenter(image));
                         isPictureTwoUrl = false;
+                        mImageUrl2 = null;
                     }
-                    break;
                 }
+                break;
+
             case 5:
                 if(resultCode == Activity.RESULT_OK){
                     mImageUrl1 = imageReturnedIntent.getStringExtra("url");
                     ImageLoader.getInstance().displayImage(mImageUrl1, photo1);
                     isPictureOneUrl = true;
                     mEncodedImage1 = null;
-                    break;
                 }
+                break;
+
             case 6:
                 if(resultCode == Activity.RESULT_OK){
                     mImageUrl2 = imageReturnedIntent.getStringExtra("url");
                     ImageLoader.getInstance().displayImage(mImageUrl2, photo2);
                     isPictureTwoUrl = true;
                     mEncodedImage2 = null;
-
-                    break;
                 }
+                break;
         }
     }
 
@@ -307,7 +317,7 @@ public class PostPollFragment extends Fragment {
         mTitle1_str = title1.getText().toString();
         mTitle2_str = title2.getText().toString();
 
-        //prompt user to login if they haven't
+        //first check if user has logged in by catching null pointer on getPreferences
         try{
         mAuth_token = WebGeneral.getsPreferences().getString("auth_token","");
         } catch (NullPointerException e) {
@@ -319,31 +329,37 @@ public class PostPollFragment extends Fragment {
         boolean title1Empty = mTitle1_str.isEmpty();
         boolean title2Empty = mTitle2_str.isEmpty();
 
-        /* *
-        NOTE: NEED TO LIMIT THE AMOUNT OF TEXT FOR:
-        QUESTION: EQUAL TO THE SIZE OF A TWITTER MESSAGE
-        TITLES: YOUR CALL
-         */
-
-
+        //then check that all fields have content
         if(!questionEmpty && !title1Empty && !title2Empty) {
-            CreatePollTask pollTask = new CreatePollTask(mActivity);
-            pollTask.submitRequest(mQuestion_str, mTitle1_str, mTitle2_str, mAuth_token
-                    , mEncodedImage1, mEncodedImage2, isPictureOneUrl, isPictureTwoUrl, mImageUrl1, mImageUrl2);
-        } else {
-            if(questionEmpty)
-                question.setHintTextColor(getResources().getColor(R.color.bg_peach));
-            else
-                question.setHintTextColor(getResources().getColor(android.R.color.darker_gray));
-            if(title1Empty)
-                title1.setHintTextColor(getResources().getColor(R.color.bg_peach));
-            else
-                title1.setHintTextColor(getResources().getColor(android.R.color.darker_gray));
-            if(title2Empty)
-                title2.setHintTextColor(getResources().getColor(R.color.bg_peach));
-            else
-                title2.setHintTextColor(getResources().getColor(android.R.color.darker_gray));
-            Toast.makeText(mActivity, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+
+            //if a URL or encoded image has been supplied for image one
+            if((isPictureOneUrl!=null) && ((isPictureOneUrl && mImageUrl1!=null)
+                    || (!isPictureOneUrl && mEncodedImage1!= null))){
+
+                //if a URL or encoded image has been supplied for image two allow submit
+                if((isPictureTwoUrl!=null) && ((isPictureTwoUrl && mImageUrl2!=null)
+                        || (!isPictureTwoUrl && mEncodedImage2!= null))){
+                    CreatePollTask pollTask = new CreatePollTask(mActivity);
+                    pollTask.submitRequest(mQuestion_str, mTitle1_str, mTitle2_str, mAuth_token, mEncodedImage1,
+                            mEncodedImage2, isPictureOneUrl, isPictureTwoUrl, mImageUrl1, mImageUrl2);
+                    return; //return so following lines don't execute
+                }
+            }
         }
+
+        //otherwise tell user to fill in all fields
+        if(questionEmpty)
+            question.setHintTextColor(getResources().getColor(R.color.bg_peach));
+        else
+            question.setHintTextColor(getResources().getColor(android.R.color.darker_gray));
+        if(title1Empty)
+            title1.setHintTextColor(getResources().getColor(R.color.bg_peach));
+        else
+            title1.setHintTextColor(getResources().getColor(android.R.color.darker_gray));
+        if(title2Empty)
+            title2.setHintTextColor(getResources().getColor(R.color.bg_peach));
+        else
+            title2.setHintTextColor(getResources().getColor(android.R.color.darker_gray));
+        Toast.makeText(mActivity, "Please fill in all fields", Toast.LENGTH_SHORT).show();
     }
 }
