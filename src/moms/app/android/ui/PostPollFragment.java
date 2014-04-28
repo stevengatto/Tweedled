@@ -220,6 +220,7 @@ public class PostPollFragment extends Fragment {
                     mImageUrl1 = imageReturnedIntent.getStringExtra("url");
                     ImageLoader.getInstance().displayImage(mImageUrl1, photo1);
                     isPictureOneUrl = true;
+                    mEncodedImage1 = null;
                     break;
                 }
             case 6:
@@ -227,6 +228,8 @@ public class PostPollFragment extends Fragment {
                     mImageUrl2 = imageReturnedIntent.getStringExtra("url");
                     ImageLoader.getInstance().displayImage(mImageUrl2, photo2);
                     isPictureTwoUrl = true;
+                    mEncodedImage2 = null;
+
                     break;
                 }
         }
@@ -318,7 +321,8 @@ public class PostPollFragment extends Fragment {
 
         if(!questionEmpty && !title1Empty && !title2Empty) {
             CreatePollTask pollTask = new CreatePollTask(mActivity);
-            pollTask.submitRequest(mQuestion_str, mTitle1_str, mTitle2_str, mAuth_token, mEncodedImage1, mEncodedImage2);
+            pollTask.submitRequest(mQuestion_str, mTitle1_str, mTitle2_str, mAuth_token
+                    , mEncodedImage1, mEncodedImage2, isPictureOneUrl, isPictureTwoUrl, mImageUrl1, mImageUrl2);
         } else {
             if(questionEmpty)
                 question.setHintTextColor(getResources().getColor(R.color.bg_peach));

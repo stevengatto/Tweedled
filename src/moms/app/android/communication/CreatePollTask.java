@@ -29,7 +29,10 @@ public class CreatePollTask implements TaskInterface{
     private String mEncodedImage1;
     private String mEncodedImage2;
     private Activity mActivity;
-
+    String picture1Url;
+    String picture2Url;
+    boolean isPicture1Url;
+    boolean isPicture2Url;
     public CreatePollTask(Activity activity)
     {
         this.mActivity = activity;
@@ -37,7 +40,7 @@ public class CreatePollTask implements TaskInterface{
     }
 
     public void submitRequest(String question, String title1, String title2, String auth_token
-            , String encodedImage1, String encodedImage2, boolean isPicture1Url,boolean isPicture2Url, )
+            , String encodedImage1, String encodedImage2, boolean isPicture1Url,boolean isPicture2Url, String picutre1Url, String picture2Url)
     {
         this.mQuestion = question;
         this.mTitle1 = title1;
@@ -45,6 +48,10 @@ public class CreatePollTask implements TaskInterface{
         this.mAuth_token = auth_token;
         this.mEncodedImage1 = encodedImage1;
         this.mEncodedImage2 = encodedImage2;
+        this.isPicture1Url = isPicture1Url;
+        this.isPicture2Url = isPicture2Url;
+        this.picture1Url = picutre1Url;
+        this.picture2Url = picture2Url;
 
         CreatePollAsyncTask pollTask = new CreatePollAsyncTask(mActivity);
         pollTask.setMessageLoading("Creating poll...");
@@ -86,7 +93,10 @@ public class CreatePollTask implements TaskInterface{
                     pollObj.put("auth_token", mAuth_token);
                     pollObj.put("encode1", mEncodedImage1);
                     pollObj.put("encode2", mEncodedImage2);
-
+                    pollObj.put("is_picture1_url", isPicture1Url);
+                    pollObj.put("is_picture2_url", isPicture2Url);
+                    pollObj.put("picture1_url", picture1Url);
+                    pollObj.put("picture2_url", picture2Url);
                     json.put("poll",pollObj);
 
                     StringEntity se = new StringEntity(json.toString());

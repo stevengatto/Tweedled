@@ -68,8 +68,17 @@ public class FetchingPollTask {
 
                 poll.setLeftVotes(poll_json.getInt("vote_one"));
                 poll.setRightVotes(poll_json.getInt("vote_two"));
-                poll.setLeftImageUrl(image_1_url);
-                poll.setRightImageUrl(image_2_url);
+
+                if(poll_json.getBoolean("is_picture1_url"))
+                    poll.setLeftImageUrl(poll_json.getString("attachment_1_url"));
+                else
+                    poll.setLeftImageUrl(image_1_url);
+
+                if(poll_json.getBoolean("is_picture2_url"))
+                    poll.setRightImageUrl(poll_json.getString("attachment_2_url"));
+                else
+                    poll.setRightImageUrl(image_2_url);
+
                 poll.setId(poll_json.getInt("id"));
 
                 list.add(poll);
