@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import moms.app.android.R;
 import moms.app.android.communication.CreatePollTask;
 import moms.app.android.communication.WebGeneral;
@@ -52,10 +53,16 @@ public class PostPollFragment extends Fragment {
     private static int CHOOSE_PHOTO_2 = 2;
     private static int TAKE_PHOTO_1 = 3;
     private static int TAKE_PHOTO_2 = 4;
-    private Activity mThisActivity;
+    private static int GOOGLE_PHOTO_1 = 5;
+    private static int GOOGLE_PHOTO_2 = 6;
+    private Activity mActivity;
 
     String mEncodedImage1;
     String mEncodedImage2;
+    String mImageUrl1;
+    String mImageUrl2;
+    boolean isPictureOneUrl;
+    boolean isPictureTwoUrl;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -72,7 +79,7 @@ public class PostPollFragment extends Fragment {
         googlePhoto1 = (Button) layout.findViewById(R.id.btn_google_photo_1);
         googlePhoto2 = (Button) layout.findViewById(R.id.btn_google_photo_2);
         submitBtn = (Button) layout.findViewById(R.id.btn_post_submit);
-        mThisActivity = getActivity();
+        mActivity = getActivity();
 
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,23 +133,23 @@ public class PostPollFragment extends Fragment {
         googlePhoto1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mThisActivity, ImageSearchActivity.class);
-                startActivity(intent);
+                Intent intent = new Intent(mActivity, ImageSearchActivity.class);
+                startActivityForResult(intent, GOOGLE_PHOTO_1);
             }
         });
 
         googlePhoto2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mThisActivity, ImageSearchActivity.class);
-                startActivity(intent);
+                Intent intent = new Intent(mActivity, ImageSearchActivity.class);
+                startActivityForResult(intent, GOOGLE_PHOTO_2);
             }
         });
 
         return layout;
     }
 
-    //handle result from the gallery activity selecting image
+    //handle result from the gallery, camera, or google search activity
     public void onActivityResult(int requestCode, int resultCode,
                                     Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
@@ -163,6 +170,7 @@ public class PostPollFragment extends Fragment {
                     image = cropBitmapCenter(image);
                     mEncodedImage1 = bitmapToBase64String(image);
                     photo1.setImageBitmap(image);
+                    isPictureOneUrl = false;
                 break;
             case 2:
                 try{
@@ -175,6 +183,7 @@ public class PostPollFragment extends Fragment {
                     image = cropBitmapCenter(image);
                     mEncodedImage2 = bitmapToBase64String(image);
                     photo2.setImageBitmap(image);
+                    isPictureTwoUrl = false;
                 break;
             case 3:
                 if (resultCode == Activity.RESULT_OK) {
@@ -187,6 +196,7 @@ public class PostPollFragment extends Fragment {
                     if(image != null) {
                         mEncodedImage1 = bitmapToBase64String(image);
                         photo1.setImageBitmap(cropBitmapCenter(image));
+                        isPictureOneUrl = false;
                     }
                     break;
                 }
@@ -201,7 +211,22 @@ public class PostPollFragment extends Fragment {
                     if(image != null){
                         mEncodedImage2 = bitmapToBase64String(image);
                         photo2.setImageBitmap(cropBitmapCenter(image));
+                        isPictureTwoUrl = false;
                     }
+                    break;
+                }
+            case 5:
+                if(resultCode == Activity.RESULT_OK){
+                    mImageUrl1 = imageReturnedIntent.getStringExtra("url");
+                    ImageLoader.getInstance().displayImage(mImageUrl1, photo1);
+                    isPictureOneUrl = true;
+                    break;
+                }
+            case 6:
+                if(resultCode == Activity.RESULT_OK){
+                    mImageUrl2 = imageReturnedIntent.getStringExtra("url");
+                    ImageLoader.getInstance().displayImage(mImageUrl2, photo2);
+                    isPictureTwoUrl = true;
                     break;
                 }
         }
@@ -292,7 +317,7 @@ public class PostPollFragment extends Fragment {
 
 
         if(!questionEmpty && !title1Empty && !title2Empty) {
-            CreatePollTask pollTask = new CreatePollTask(mThisActivity);
+            CreatePollTask pollTask = new CreatePollTask(mActivity);
             pollTask.submitRequest(mQuestion_str, mTitle1_str, mTitle2_str, mAuth_token, mEncodedImage1, mEncodedImage2);
         } else {
             if(questionEmpty)
@@ -307,7 +332,7 @@ public class PostPollFragment extends Fragment {
                 title2.setHintTextColor(getResources().getColor(R.color.bg_peach));
             else
                 title2.setHintTextColor(getResources().getColor(android.R.color.darker_gray));
-            Toast.makeText(mThisActivity, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, "Please fill in all fields", Toast.LENGTH_SHORT).show();
         }
     }
 }

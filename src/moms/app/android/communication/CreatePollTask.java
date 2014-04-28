@@ -36,7 +36,8 @@ public class CreatePollTask implements TaskInterface{
 
     }
 
-    public void submitRequest(String question, String title1, String title2, String auth_token, String encodedImage1, String encodedImage2)
+    public void submitRequest(String question, String title1, String title2, String auth_token
+            , String encodedImage1, String encodedImage2, boolean isPicture1Url,boolean isPicture2Url, )
     {
         this.mQuestion = question;
         this.mTitle1 = title1;
