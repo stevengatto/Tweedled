@@ -15,5 +15,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/but_logout"
             android:onClick="logout"
-            android:text="@string/logout"/>
+            android:text="@string/logout"
+            android:background="@color/bg_button"
+            android:textColor="@color/text_button"/>
 </LinearLayout>

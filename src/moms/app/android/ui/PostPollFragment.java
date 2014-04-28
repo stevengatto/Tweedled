@@ -307,7 +307,7 @@ public class PostPollFragment extends Fragment {
         mTitle1_str = title1.getText().toString();
         mTitle2_str = title2.getText().toString();
 
-        //prompt user to login if they havent
+        //prompt user to login if they haven't
         try{
         mAuth_token = WebGeneral.getsPreferences().getString("auth_token","");
         } catch (NullPointerException e) {

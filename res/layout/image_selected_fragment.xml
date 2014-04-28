@@ -35,13 +35,19 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:hint="Deny"/>
+                    android:hint="Deny"
+                    android:background="@color/bg_button"
+                    android:textColor="@color/text_button"
+                    android:layout_margin="5dp"/>
 
             <Button android:id="@+id/image_selected_select"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:hint="Select"/>
+                    android:hint="Select"
+                    android:background="@color/bg_button"
+                    android:textColor="@color/text_button"
+                    android:layout_margin="5dp"/>
 
         </LinearLayout>
 
