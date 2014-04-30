@@ -40,7 +40,10 @@
         <activity android:name=".login.Register"
                   android:screenOrientation="portrait"/>
         <activity android:name=".ui.ImageSearchActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name=".ui.ImageSelectedActivity"/>
+                  android:screenOrientation="portrait"
+                  android:parentActivityName=".ui.PostPollActivity"/>
+        <activity android:name=".ui.ImageSelectedActivity"
+                  android:screenOrientation="portrait"
+                  android:parentActivityName=".ui.ImageSearchActivity"/>
     </application>
 </manifest>
