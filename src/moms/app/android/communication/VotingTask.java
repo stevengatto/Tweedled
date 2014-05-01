@@ -45,7 +45,6 @@ public class VotingTask implements TaskInterface{
         this.mVote1 = vote1;
         this.mVote2 = vote2;
         this.mPoll = poll;
-
     }
 
     public void setOnClickListenerForImages()
@@ -88,16 +87,14 @@ public class VotingTask implements TaskInterface{
     public void onPostExecuteAction(JSONObject respond)
     {
         try {
+            Toast.makeText(mContext, respond.getString("info"), Toast.LENGTH_LONG).show();
             if (respond.getBoolean("success")) {
-                Toast.makeText(mContext, respond.getString("info"),
-                        Toast.LENGTH_LONG).show();
                 //Log.e("PostExecute", ""+ respond.getInt("vote_one") + respond.getInt("vote_two"));
                 mVote1.setText("" + respond.getInt("vote_one"));
                 mVote2.setText(""+respond.getInt("vote_two"));
             }
         } catch (Exception e) {
-            Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_LONG)
-                    .show();
+//            Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -107,6 +104,10 @@ public class VotingTask implements TaskInterface{
         public VotingAsyncTask(Context context) {
             super(context);
         }
+
+        //override on pre execute so that progress dialog doesn't show up recursively
+        @Override
+        protected void onPreExecute() { }
 
         @Override
         protected JSONObject doInBackground(String... urls) {
@@ -121,6 +122,7 @@ public class VotingTask implements TaskInterface{
                     respond.put("_method", "post");
                     respond.put("authenticity", "");
                     respond.put("auth_token", WebGeneral.getsPreferences().getString("auth_token", ""));
+
                     StringEntity se = new StringEntity(respond.toString());
                     post.setEntity(se);
                     post.setHeader("Accept", "application/json");
@@ -131,11 +133,14 @@ public class VotingTask implements TaskInterface{
                 } catch (HttpResponseException e) {
                     e.printStackTrace();
                     Log.e("ClientProtocol", "" + e + " " + urls[0]);
-                    respond.put("info",
-                            "Failed to Cast Vote. Retry!");
+                    respond.put("info", "Failed to Cast Vote. Retry!");
                 } catch (IOException e) {
                     e.printStackTrace();
                     Log.e("IO", "" + e);
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                    respond.put("info", "You must be logged in to vote.");
+                    return respond;
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

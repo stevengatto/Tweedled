@@ -76,6 +76,9 @@ public class ImageSearchAdapter extends ArrayAdapter<ImageResult> {
         else {
             Log.d(TAG, "View recycled");
             holder = (ImageSearchViewHolder)currentView.getTag();
+
+            //clear old picture from view so there is no lag
+            holder.imageView.setImageDrawable(null);
         }
 
         ImageLoader.getInstance().displayImage(currentResult.getThumbUrl(),holder.imageView,

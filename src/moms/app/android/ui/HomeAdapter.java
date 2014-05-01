@@ -93,6 +93,11 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
         else {
             Log.d(TAG, "View recycled");
             holder = (PollViewHolder)currentView.getTag();
+
+            //clear old pictures from view so there is no lag
+            holder.leftImage.setImageDrawable(null);
+            holder.rightImage.setImageDrawable(null);
+
             holder.leftVotesHeart.setVisibility(View.GONE);
             holder.rightVotesHeart.setVisibility(View.GONE);
         }
