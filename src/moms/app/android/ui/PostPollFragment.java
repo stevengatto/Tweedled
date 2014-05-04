@@ -320,6 +320,7 @@ public class PostPollFragment extends Fragment {
         mQuestion_str = question.getText().toString();
         mTitle1_str = title1.getText().toString();
         mTitle2_str = title2.getText().toString();
+        mDescription_str = description.getText().toString();
 
         //first check if user has logged in by catching null pointer on getPreferences
         try{
@@ -332,9 +333,10 @@ public class PostPollFragment extends Fragment {
         boolean questionEmpty = mQuestion_str.isEmpty();
         boolean title1Empty = mTitle1_str.isEmpty();
         boolean title2Empty = mTitle2_str.isEmpty();
-        mDescription_str = description.getText().toString();
+        boolean descriptionEmpty = mDescription_str.isEmpty();
+
         //then check that all fields have content
-        if(!questionEmpty && !title1Empty && !title2Empty) {
+        if(!questionEmpty && !title1Empty && !title2Empty && !descriptionEmpty) {
 
             //if a URL or encoded image has been supplied for image one
             if((isPictureOneUrl!=null) && ((isPictureOneUrl && mImageUrl1!=null)
@@ -364,6 +366,10 @@ public class PostPollFragment extends Fragment {
             title2.setHintTextColor(getResources().getColor(R.color.bg_peach));
         else
             title2.setHintTextColor(getResources().getColor(android.R.color.darker_gray));
+        if(descriptionEmpty)
+            description.setHintTextColor(getResources().getColor(R.color.bg_peach));
+        else
+            description.setHintTextColor(getResources().getColor(android.R.color.darker_gray));
         Toast.makeText(mActivity, "Please fill in all fields", Toast.LENGTH_SHORT).show();
     }
 }
