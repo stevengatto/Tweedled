@@ -1,4 +1,4 @@
-package moms.app.android.ui;
+package moms.app.android.outdated;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.savagelook.android.UrlJsonAsyncTask;
 import moms.app.android.R;
+import moms.app.android.ui.DashboardFragment;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;

@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 import com.savagelook.android.UrlJsonAsyncTask;
-import moms.app.android.ui.HomeActivity;
+import moms.app.android.outdated.HomeActivity;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;

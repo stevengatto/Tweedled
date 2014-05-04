@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.savagelook.android.UrlJsonAsyncTask;
 import moms.app.android.R;
+import moms.app.android.outdated.PostPollActivity;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
@@ -24,8 +25,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.math.RoundingMode;
-import java.net.MulticastSocket;
 
 /**
  * Created by klam on 3/29/14.
@@ -130,7 +129,7 @@ public class RegisterFragment extends Fragment {
 
                     mActivity.finish();
                     Intent intent = new Intent(mActivity,
-                            moms.app.android.ui.PostPollActivity.class);
+                            PostPollActivity.class);
                     startActivity(intent);
                     mActivity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 }

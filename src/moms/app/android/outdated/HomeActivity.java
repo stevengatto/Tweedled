@@ -1,7 +1,8 @@
-package moms.app.android.ui;
+package moms.app.android.outdated;
 
 import android.os.Bundle;
 import moms.app.android.R;
+import moms.app.android.ui.BaseActivity;
 
 public class HomeActivity extends BaseActivity {
 

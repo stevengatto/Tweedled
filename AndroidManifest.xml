@@ -19,7 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.HomeActivity"
+        <activity android:name=".outdated.HomeActivity"
                   android:screenOrientation="portrait"/>
         <activity android:name=".ui.BaseActivity"
                   android:screenOrientation="portrait"/>
@@ -29,9 +29,9 @@
                   android:screenOrientation="portrait"/>
         <activity android:name=".ui.DashboardActivity"
                   android:screenOrientation="portrait"/>
-        <activity android:name=".ui.LoginActivity"
+        <activity android:name=".outdated.LoginActivity"
                   android:screenOrientation="portrait"/>
-        <activity android:name=".ui.PostPollActivity"
+        <activity android:name=".outdated.PostPollActivity"
                   android:screenOrientation="portrait"/>
         <activity android:name=".login.Login"
                   android:screenOrientation="portrait"/>
@@ -41,7 +41,7 @@
                   android:screenOrientation="portrait"/>
         <activity android:name=".ui.ImageSearchActivity"
                   android:screenOrientation="portrait"
-                  android:parentActivityName=".ui.PostPollActivity"/>
+                  android:parentActivityName=".outdated.PostPollActivity"/>
         <activity android:name=".ui.ImageSelectedActivity"
                   android:screenOrientation="portrait"
                   android:parentActivityName=".ui.ImageSearchActivity"/>

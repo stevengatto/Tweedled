@@ -1,8 +1,9 @@
-package moms.app.android.ui;
+package moms.app.android.outdated;
 
 import android.app.Activity;
 import android.os.Bundle;
 import moms.app.android.R;
+import moms.app.android.ui.BaseActivity;
 
 /**
  * Created by Steve on 4/8/14.

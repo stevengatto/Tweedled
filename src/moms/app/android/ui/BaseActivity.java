@@ -3,9 +3,6 @@ package moms.app.android.ui;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.ColorFilter;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,6 +13,8 @@ import android.widget.Toast;
 import moms.app.android.R;
 import moms.app.android.communication.WebGeneral;
 import moms.app.android.login.Login;
+import moms.app.android.outdated.HomeActivity;
+import moms.app.android.outdated.PostPollActivity;
 
 /**
  * Created by Steve on 4/3/14.

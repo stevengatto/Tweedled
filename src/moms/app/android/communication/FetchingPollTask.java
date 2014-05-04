@@ -8,7 +8,7 @@ import android.widget.Toast;
 import com.savagelook.android.UrlJsonAsyncTask;
 import moms.app.android.R;
 import moms.app.android.model.testing.Poll;
-import moms.app.android.ui.HomeAdapter;
+import moms.app.android.outdated.HomeAdapter;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;

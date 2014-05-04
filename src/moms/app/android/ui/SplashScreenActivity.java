@@ -31,6 +31,7 @@ public class SplashScreenActivity extends Activity {
                 // This method will be executed once the timer is over
                 // Start your app main activity
                 Intent i = new Intent(SplashScreenActivity.this, Login.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(i);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 

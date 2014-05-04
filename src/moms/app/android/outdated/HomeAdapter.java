@@ -1,4 +1,4 @@
-package moms.app.android.ui;
+package moms.app.android.outdated;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,7 +12,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import moms.app.android.R;
 import moms.app.android.communication.VotingTask;
-import moms.app.android.login.Login;
 import moms.app.android.model.testing.Poll;
 import moms.app.android.utils.ImageLoadingListener;
 
