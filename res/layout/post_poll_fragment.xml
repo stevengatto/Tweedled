@@ -91,14 +91,22 @@
                         android:background="@color/bg_button"
                         android:textColor="@color/text_button"
                         android:layout_margin="5dp"/>
+
             </LinearLayout>
+
 
         </LinearLayout>
 
+
+        <EditText android:id="@+id/et_poll_description"
+                    android:layout_width="fill_parent"
+                    android:hint="Description"
+                  android:layout_height="50dp"
+                  android:layout_below="@id/layout_poll_post_images"/>
         <Button android:id="@+id/btn_post_submit"
                 android:layout_width="fill_parent"
                 android:layout_height="50dp"
-                android:layout_below="@id/layout_poll_post_images"
+                android:layout_below="@+id/et_poll_description"
                 android:hint="Submit"
                 android:background="@color/bg_button"
                 android:textColor="@color/text_button"
