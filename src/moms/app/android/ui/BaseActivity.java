@@ -35,6 +35,9 @@ public class BaseActivity extends Activity {
         actionBar.setLogo(R.drawable.action_bar_logo);
         actionBar.setTitle("");
         actionBar.setHomeButtonEnabled(true);
+
+        // Specify that tabs should be displayed in the action bar.
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
     }
 
     //Inflate menu from xml
