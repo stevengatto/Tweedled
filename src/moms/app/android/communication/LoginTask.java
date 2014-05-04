@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 import com.savagelook.android.UrlJsonAsyncTask;
+import moms.app.android.ui.TabsActivity;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
@@ -50,9 +51,7 @@ public class LoginTask implements TaskInterface{
                 editor.putString("auth_token", respond.getJSONObject("data").getString("auth_token"));
                 editor.commit();
 
-                Intent intent = new Intent(mActivity.getApplicationContext(),
-                        moms.app.android.ui.HomeActivity.class);
-
+                Intent intent = new Intent(mActivity.getApplicationContext(), TabsActivity.class);
                 mActivity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 mActivity.startActivity(intent);
             }
