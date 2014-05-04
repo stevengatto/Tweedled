@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.widget.Toast;
 import moms.app.android.R;
+import moms.app.android.communication.WebGeneral;
 import moms.app.android.login.Login;
 
 /**
@@ -75,6 +76,15 @@ public class BaseActivity extends Activity {
     }
 
     public void loginClick(MenuItem item){
+        //check if user is logged in
+        try {
+            if (!WebGeneral.getsPreferences().getString("auth_token", "").isEmpty()){
+                Toast.makeText(this, "You are already logged in", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+        catch (NullPointerException e) {}
+
         //launch login activity
         Intent intent = new Intent(this, Login.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

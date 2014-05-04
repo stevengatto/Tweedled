@@ -63,8 +63,9 @@ public class FetchingPollTask {
                 String image_2_url = WebGeneral.BASE_URL + poll_json.getString("attachment_2_url");
 
                 String question = poll_json.getString("question");
-                String subtitle = poll_json.getString("title_one") + " Or " + poll_json.getString("title_two");
-                Poll poll = new Poll(question,subtitle,null,null,null,null);
+                String subTitleLeft = poll_json.getString("title_one");
+                String subTitleRight = poll_json.getString("title_two");
+                Poll poll = new Poll(question,subTitleLeft,subTitleRight,null,null,null,null);
 
                 poll.setLeftVotes(poll_json.getInt("vote_one"));
                 poll.setRightVotes(poll_json.getInt("vote_two"));

@@ -74,7 +74,8 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
             //create holder and  set up references to TextView's
             holder = new PollViewHolder();
             holder.mainTitle = (TextView) currentView.findViewById(R.id.tv_poll_main_title);
-            holder.subTitle = (TextView) currentView.findViewById(R.id.tv_poll_sub_title);
+            holder.subTitleLeft = (TextView) currentView.findViewById(R.id.tv_poll_sub_title_left);
+            holder.subTitleRight = (TextView) currentView.findViewById(R.id.tv_poll_sub_title_right);
             holder.leftImage = (ImageView) currentView.findViewById(R.id.iv_poll_left);
             holder.rightImage = (ImageView) currentView.findViewById(R.id.iv_poll_right);
             holder.leftProgressBar = (ProgressBar) currentView.findViewById(R.id.pb_poll_left);
@@ -109,7 +110,8 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
         //reset any variables in holder if view can be recycled
 
         holder.mainTitle.setText(currentPoll.getMainTitle());
-        holder.subTitle.setText(currentPoll.getSubTitle());
+        holder.subTitleLeft.setText(currentPoll.getSubTitleLeft());
+        holder.subTitleRight.setText(currentPoll.getSubTitleRight());
         ImageLoader.getInstance().displayImage(currentPoll.getLeftImageUrl(),holder.leftImage,
                 new ImageLoadingListener(holder.leftProgressBar));
         ImageLoader.getInstance().displayImage(currentPoll.getRightImageUrl(),holder.rightImage,
@@ -129,7 +131,8 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
     //holder class to store references to listView sub views
     private class PollViewHolder {
         TextView mainTitle;
-        TextView subTitle;
+        TextView subTitleLeft;
+        TextView subTitleRight;
         ImageView leftImage;
         ImageView rightImage;
         ProgressBar leftProgressBar;

@@ -27,13 +27,6 @@ public class Login extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //check if user is logged in
-        try {
-            if (WebGeneral.getsPreferences().getString("auth_token", "").length() > 0)
-                mActivity.finish();
-        }
-        catch (NullPointerException e) {}
-
         // enable ActionBar app icon to behave as action to toggle nav drawer
         ActionBar actionBar = getActionBar();
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.action_bar_bg));
