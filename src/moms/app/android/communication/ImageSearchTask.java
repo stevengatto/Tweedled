@@ -127,6 +127,7 @@ public class ImageSearchTask {
         } catch (Exception e) {
             Toast.makeText(mActivity, e.getMessage(), Toast.LENGTH_LONG)
                     .show();
+            mActivity.setProgressBarIndeterminateVisibility(false);
         }
     }
 

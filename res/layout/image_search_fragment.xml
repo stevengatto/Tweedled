@@ -6,21 +6,29 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <EditText android:id="@+id/tv_image_search"
-              android:layout_width="match_parent"
-              android:layout_height="50dp"
-              android:textSize="18sp"
-              android:maxLines="1"
-              android:maxLength="30"
-              android:hint="Enter search query here"/>
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="50dp"
+                  android:orientation="horizontal"
+                  android:padding="2dp">
 
-    <Button android:id="@+id/btn_image_search"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:hint="Search"
-            android:background="@color/bg_button"
-            android:textColor="@color/text_button"/>
+        <EditText android:id="@+id/tv_image_search"
+                  android:layout_width="0dp"
+                  android:layout_weight="6"
+                  android:layout_height="match_parent"
+                  android:textSize="18sp"
+                  android:layout_marginRight="2dp"
+                  android:maxLines="1"
+                  android:maxLength="30"
+                  android:hint="Google image search"/>
+
+        <ImageButton android:id="@+id/btn_image_search"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_search"
+                android:background="@android:color/transparent"/>
+
+    </LinearLayout>
 
     <GridView
             android:id="@+id/image_search_grid_view"

@@ -1,6 +1,7 @@
 package moms.app.android.login;
 
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 
 import moms.app.android.R;
 import moms.app.android.communication.LoginTask;
+import moms.app.android.communication.WebGeneral;
 import moms.app.android.ui.BaseActivity;
 
 
@@ -17,13 +19,28 @@ import moms.app.android.ui.BaseActivity;
 /**
  * Created by klam on 4/8/14.
  */
-public class Login extends BaseActivity {
+public class Login extends Activity {
     private String mUserEmail;
     private String mUserPassword;
     private Activity mActivity;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //check if user is logged in
+        try {
+            if (WebGeneral.getsPreferences().getString("auth_token", "").length() > 0)
+                mActivity.finish();
+        }
+        catch (NullPointerException e) {}
+
+        // enable ActionBar app icon to behave as action to toggle nav drawer
+        ActionBar actionBar = getActionBar();
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.action_bar_bg));
+        actionBar.setLogo(R.drawable.action_bar_logo);
+        actionBar.setTitle("");
+        actionBar.setHomeButtonEnabled(true);
+
         setContentView(R.layout.login);
         mActivity = this;
     }

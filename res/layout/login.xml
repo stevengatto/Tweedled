@@ -4,62 +4,65 @@
             android:layout_height="match_parent"
             android:background="@color/poll_item_background">
 
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center"
-            android:padding="30dp">
+    <FrameLayout android:layout_width="match_parent"
+                 android:layout_height="match_parent">
 
-        <EditText
-                android:id="@+id/et_userEmail"
+        <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="@string/user_email"
-                android:inputType="textEmailAddress" >
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:padding="30dp">
 
-            <requestFocus />
-        </EditText>
+            <EditText
+                    android:id="@+id/et_userEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="@string/user_email"
+                    android:inputType="textEmailAddress" >
+            </EditText>
 
-        <EditText
-                android:id="@+id/et_userPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="@string/user_password"
-                android:inputType="textPassword"/>
+            <EditText
+                    android:id="@+id/et_userPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="@string/user_password"
+                    android:inputType="textPassword"/>
 
-        <CheckBox
-                android:id="@+id/cb_autoLogin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/auto_login"
-                android:padding="15dp"/>
-        <Button android:id="@+id/tv_register"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:layout_weight="1"
-                  android:hint="@string/user_password"
-                  android:text="@string/register"
-                  android:onClick="register"
-                  android:textSize="20dp"
-                  android:clickable="true"
-                  android:background="@color/bg_button"
-                  android:textColor="@color/text_button"
-                  android:layout_margin="5dp"/>
-        <Button
-                android:id="@+id/but_loginButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="login"
-                android:text="@string/login"
-                android:background="@color/bg_button"
-                android:textColor="@color/text_button"
-                android:layout_margin="5dp"/>
-    </LinearLayout>
+            <CheckBox
+                    android:id="@+id/cb_autoLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/auto_login"
+                    android:padding="15dp"/>
+            <Button android:id="@+id/tv_register"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/user_password"
+                    android:text="@string/register"
+                    android:onClick="register"
+                    android:textSize="20dp"
+                    android:clickable="true"
+                    android:background="@color/bg_button"
+                    android:textColor="@color/text_button"
+                    android:layout_margin="5dp"/>
+            <Button
+                    android:id="@+id/but_loginButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="login"
+                    android:text="@string/login"
+                    android:background="@color/bg_button"
+                    android:textColor="@color/text_button"
+                    android:layout_margin="5dp"/>
+        </LinearLayout>
+
+    </FrameLayout>
 
 </ScrollView>

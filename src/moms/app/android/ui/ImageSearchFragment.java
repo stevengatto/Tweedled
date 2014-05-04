@@ -10,10 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.GridView;
+import android.widget.*;
 import moms.app.android.R;
 import moms.app.android.communication.ImageSearchTask;
 import moms.app.android.model.testing.ImageResult;
@@ -31,7 +28,7 @@ public class ImageSearchFragment extends Fragment {
         mActivity = getActivity();
 
         final View view = inflater.inflate(R.layout.image_search_fragment, container, false);
-        final Button searchBtn = (Button) view.findViewById(R.id.btn_image_search);
+        final ImageButton searchBtn = (ImageButton) view.findViewById(R.id.btn_image_search);
         final EditText editText = (EditText) view.findViewById(R.id.tv_image_search);
         gridView = (GridView) view.findViewById(R.id.image_search_grid_view);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
