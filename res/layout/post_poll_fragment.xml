@@ -3,115 +3,148 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="fill_parent"
+            android:background="@color/poll_list_background"
+            android:padding="10dp">
 
-    <RelativeLayout android:id="@+id/post_poll_parent"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="fill_parent"
+                  android:orientation="vertical">
 
-        <EditText android:id="@+id/et_post_question"
-                  android:layout_width="fill_parent"
-                  android:layout_height="50dp"
-                  android:hint="Question"
-                  android:maxLength="50"/>
+        <FrameLayout android:layout_width="match_parent"
+                     android:layout_height="wrap_content">
 
-        <LinearLayout android:id="@+id/layout_poll_post_images"
-                      android:orientation="horizontal"
-                      android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_below="@id/et_post_question">
+            <RelativeLayout android:id="@+id/post_poll_parent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/poll_item_background">
 
-            <LinearLayout android:layout_width="0dp"
-                          android:layout_height="wrap_content"
-                          android:layout_weight="1"
-                          android:orientation="vertical">
-
-                <EditText android:id="@+id/et_post_title1"
+                <EditText android:id="@+id/et_post_question"
                           android:layout_width="fill_parent"
                           android:layout_height="50dp"
-                          android:hint="Title 1"
-                          android:maxLength="30"/>
+                          android:hint="Question"
+                          android:gravity="center"
+                          android:fontFamily="sans-serif-thin"
+                          android:textStyle="italic"
+                          android:background="@android:color/transparent"
+                          android:maxLength="50"/>
 
-                <ImageView android:id="@+id/iv_poll_post_left"
-                           android:layout_width="175dp"
-                           android:layout_height="175dp"
-                           android:layout_gravity="center"
-                           android:clickable="true"
-                           android:scaleType="centerCrop"
-                           android:src="@drawable/ic_placeholder"/>
+                <LinearLayout android:id="@+id/layout_poll_post_images"
+                              android:orientation="horizontal"
+                              android:layout_width="fill_parent"
+                              android:layout_height="wrap_content"
+                              android:layout_below="@id/et_post_question">
 
-                <Button android:id="@+id/btn_take_photo_1"
-                        android:layout_width="fill_parent"
-                        android:layout_height="50dp"
-                        android:text="Take Photo 1"
-                        android:background="@color/bg_button"
-                        android:textColor="@color/text_button"
-                        android:layout_margin="5dp"/>
+                    <LinearLayout android:layout_width="0dp"
+                                  android:layout_height="wrap_content"
+                                  android:layout_weight="1"
+                                  android:orientation="vertical">
 
-                <Button android:id="@+id/btn_google_photo_1"
-                        android:layout_width="fill_parent"
-                        android:layout_height="50dp"
-                        android:text="Google Photo 1"
-                        android:background="@color/bg_button"
-                        android:textColor="@color/text_button"
-                        android:layout_margin="5dp"/>
-            </LinearLayout>
+                        <EditText android:id="@+id/et_post_title1"
+                                  android:layout_width="fill_parent"
+                                  android:layout_height="50dp"
+                                  android:hint="Title 1"
+                                  android:gravity="center"
+                                  android:fontFamily="sans-serif-thin"
+                                  android:textStyle="normal|bold"
+                                  android:background="@android:color/transparent"
+                                  android:maxLength="30"/>
 
-            <LinearLayout android:layout_width="0dp"
-                          android:layout_height="wrap_content"
-                          android:layout_weight="1"
-                          android:orientation="vertical">
+                        <ImageView android:id="@+id/iv_poll_post_left"
+                                   android:layout_width="175dp"
+                                   android:layout_height="175dp"
+                                   android:layout_gravity="center"
+                                   android:clickable="true"
+                                   android:scaleType="centerCrop"
+                                   android:src="@drawable/ic_placeholder"/>
 
-                <EditText android:id="@+id/et_post_title2"
+                        <Button android:id="@+id/btn_take_photo_1"
+                                android:layout_width="fill_parent"
+                                android:layout_height="50dp"
+                                android:text="Take Photo 1"
+                                android:background="@color/bg_button"
+                                android:textColor="@color/text_button"
+                                android:layout_margin="5dp"/>
+
+                        <Button android:id="@+id/btn_google_photo_1"
+                                android:layout_width="fill_parent"
+                                android:layout_height="50dp"
+                                android:text="Google Photo 1"
+                                android:background="@color/bg_button"
+                                android:textColor="@color/text_button"
+                                android:layout_margin="5dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout android:layout_width="0dp"
+                                  android:layout_height="wrap_content"
+                                  android:layout_weight="1"
+                                  android:orientation="vertical">
+
+                        <EditText android:id="@+id/et_post_title2"
+                                  android:layout_width="fill_parent"
+                                  android:layout_height="50dp"
+                                  android:hint="Title 2"
+                                  android:gravity="center"
+                                  android:fontFamily="sans-serif-thin"
+                                  android:textStyle="normal|bold"
+                                  android:background="@android:color/transparent"
+                                  android:maxLength="30"/>
+
+                        <ImageView android:id="@+id/iv_poll_post_right"
+                                   android:layout_width="175dp"
+                                   android:layout_height="175dp"
+                                   android:layout_gravity="center"
+                                   android:clickable="true"
+                                   android:scaleType="centerCrop"
+                                   android:src="@drawable/ic_placeholder"/>
+
+                        <Button android:id="@+id/btn_take_photo_2"
+                                android:layout_width="fill_parent"
+                                android:layout_height="50dp"
+                                android:text="Take Photo 2"
+                                android:background="@color/bg_button"
+                                android:textColor="@color/text_button"
+                                android:layout_margin="5dp"/>
+
+                        <Button android:id="@+id/btn_google_photo_2"
+                                android:layout_width="fill_parent"
+                                android:layout_height="50dp"
+                                android:text="Google Photo 2"
+                                android:background="@color/bg_button"
+                                android:textColor="@color/text_button"
+                                android:layout_margin="5dp"/>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+                <EditText android:id="@+id/et_poll_description"
                           android:layout_width="fill_parent"
+                          android:hint="Description"
                           android:layout_height="50dp"
-                          android:hint="Title 2"
-                          android:maxLength="30"/>
+                          android:layout_marginLeft="6dp"
+                          android:layout_marginRight="6dp"
+                          android:maxLength="140"
+                          android:fontFamily="sans-serif-thin"
+                          android:textStyle="normal|bold"
+                          android:background="@android:color/transparent"
+                          android:layout_below="@id/layout_poll_post_images"/>
 
-                <ImageView android:id="@+id/iv_poll_post_right"
-                           android:layout_width="175dp"
-                           android:layout_height="175dp"
-                           android:layout_gravity="center"
-                           android:clickable="true"
-                           android:scaleType="centerCrop"
-                           android:src="@drawable/ic_placeholder"/>
+            </RelativeLayout>
 
-                <Button android:id="@+id/btn_take_photo_2"
-                        android:layout_width="fill_parent"
-                        android:layout_height="50dp"
-                        android:text="Take Photo 2"
-                        android:background="@color/bg_button"
-                        android:textColor="@color/text_button"
-                        android:layout_margin="5dp"/>
+        </FrameLayout>
 
-                <Button android:id="@+id/btn_google_photo_2"
-                        android:layout_width="fill_parent"
-                        android:layout_height="50dp"
-                        android:text="Google Photo 2"
-                        android:background="@color/bg_button"
-                        android:textColor="@color/text_button"
-                        android:layout_margin="5dp"/>
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-
-        <EditText android:id="@+id/et_poll_description"
-                    android:layout_width="fill_parent"
-                    android:hint="Description"
-                  android:layout_height="50dp"
-                  android:layout_below="@id/layout_poll_post_images"/>
         <Button android:id="@+id/btn_post_submit"
                 android:layout_width="fill_parent"
                 android:layout_height="50dp"
-                android:layout_below="@+id/et_poll_description"
+                android:layout_gravity="bottom"
                 android:hint="Create Poll"
                 android:background="@color/bg_button"
                 android:textColor="@color/text_button"
-                android:layout_margin="5dp"/>
+                android:layout_marginTop="10dp"/>
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </ScrollView>
