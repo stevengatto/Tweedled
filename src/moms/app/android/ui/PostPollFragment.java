@@ -64,6 +64,9 @@ public class PostPollFragment extends Fragment {
     Boolean isPictureOneUrl;
     Boolean isPictureTwoUrl;
 
+    EditText description;
+    String mDescription_str;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -79,6 +82,7 @@ public class PostPollFragment extends Fragment {
         googlePhoto1 = (Button) layout.findViewById(R.id.btn_google_photo_1);
         googlePhoto2 = (Button) layout.findViewById(R.id.btn_google_photo_2);
         submitBtn = (Button) layout.findViewById(R.id.btn_post_submit);
+        description = (EditText) layout.findViewById(R.id.et_poll_description);
         mActivity = getActivity();
 
         submitBtn.setOnClickListener(new View.OnClickListener() {
@@ -328,7 +332,7 @@ public class PostPollFragment extends Fragment {
         boolean questionEmpty = mQuestion_str.isEmpty();
         boolean title1Empty = mTitle1_str.isEmpty();
         boolean title2Empty = mTitle2_str.isEmpty();
-
+        mDescription_str = description.getText().toString();
         //then check that all fields have content
         if(!questionEmpty && !title1Empty && !title2Empty) {
 
@@ -341,7 +345,7 @@ public class PostPollFragment extends Fragment {
                         || (!isPictureTwoUrl && mEncodedImage2!= null))){
                     CreatePollTask pollTask = new CreatePollTask(mActivity);
                     pollTask.submitRequest(mQuestion_str, mTitle1_str, mTitle2_str, mAuth_token, mEncodedImage1,
-                            mEncodedImage2, isPictureOneUrl, isPictureTwoUrl, mImageUrl1, mImageUrl2);
+                            mEncodedImage2, isPictureOneUrl, isPictureTwoUrl, mImageUrl1, mImageUrl2, mDescription_str);
                     return; //return so following lines don't execute
                 }
             }
