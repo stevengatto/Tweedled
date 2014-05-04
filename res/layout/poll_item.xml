@@ -28,7 +28,8 @@
 
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="wrap_content"
-                      android:orientation="horizontal">
+                      android:orientation="horizontal"
+                      android:layout_marginBottom="10dp">
 
             <TextView android:id="@+id/tv_poll_sub_title_left"
                       android:layout_width="0dp"
@@ -39,8 +40,7 @@
                       android:fontFamily="sans-serif-thin"
                       android:textStyle="normal|bold"
                       android:textColor="@color/text_color"
-                      android:textSize="18sp"
-                      android:layout_marginBottom="10dp"/>
+                      android:textSize="18sp"/>
 
             <TextView android:layout_width="0dp"
                       android:layout_weight="1"
@@ -48,12 +48,9 @@
                       android:gravity="center"
                       android:layout_gravity="center_vertical"
                       android:fontFamily="sans-serif-thin"
-                      android:textStyle="normal|bold|italic"
+                      android:textStyle="normal|bold"
                       android:textColor="@color/text_color"
                       android:textSize="18sp"
-                      android:layout_marginBottom="10dp"
-                      android:layout_marginLeft="10dp"
-                      android:layout_marginRight="10dp"
                       android:text="OR"/>
 
             <TextView android:id="@+id/tv_poll_sub_title_right"
@@ -65,8 +62,7 @@
                       android:fontFamily="sans-serif-thin"
                       android:textStyle="normal|bold"
                       android:textColor="@color/text_color"
-                      android:textSize="18sp"
-                      android:layout_marginBottom="10dp"/>
+                      android:textSize="18sp"/>
 
         </LinearLayout>
 
