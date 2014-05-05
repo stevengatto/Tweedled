@@ -11,11 +11,10 @@ import moms.app.android.R;
 /**
  * Created by Steve on 4/26/14.
  */
-public class ImageSearchActivity extends Activity {
+public class ImageSearchActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.image_search_activity);
     }

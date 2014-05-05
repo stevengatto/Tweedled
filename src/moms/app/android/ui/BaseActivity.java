@@ -16,9 +16,9 @@ public class BaseActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //enable indefinite progress bar in action bar (can be turned on and off)
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        setProgressBarIndeterminateVisibility(false);
+//        //enable indefinite progress bar in action bar (can be turned on and off)
+//        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+//        setProgressBarIndeterminateVisibility(false);
 
         // enable ActionBar app icon to behave as action to toggle nav drawer
         ActionBar actionBar = getActionBar();
