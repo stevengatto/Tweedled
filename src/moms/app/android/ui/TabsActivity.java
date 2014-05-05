@@ -1,9 +1,7 @@
 package moms.app.android.ui;
 
-import android.app.ActionBar;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.FragmentTransaction;
+import android.app.*;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 import moms.app.android.R;
 
@@ -60,6 +59,12 @@ public class TabsActivity extends FragmentActivity {
 
                         @Override
                         public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+                            //hide soft keyboard
+                            Activity currentActivity = TabsActivity.this;
+                            InputMethodManager inputManager = (InputMethodManager) currentActivity
+                                    .getSystemService(Context.INPUT_METHOD_SERVICE);
+                            inputManager.hideSoftInputFromWindow(currentActivity.getCurrentFocus().getWindowToken(),
+                                    InputMethodManager.HIDE_NOT_ALWAYS);
                             return;
                         }
 

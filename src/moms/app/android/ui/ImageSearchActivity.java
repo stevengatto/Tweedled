@@ -16,11 +16,7 @@ public class ImageSearchActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.action_bar_bg));
-        actionBar.setLogo(R.drawable.action_bar_logo);
-        actionBar.setTitle("");
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.image_search_activity);
     }
 }

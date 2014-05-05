@@ -9,14 +9,10 @@ import moms.app.android.R;
 /**
  * Created by Steve on 4/27/14.
  */
-public class ImageSelectedActivity extends Activity {
+public class ImageSelectedActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.action_bar_bg));
-        actionBar.setLogo(R.drawable.action_bar_logo);
-        actionBar.setTitle("");
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.image_selected_activty);
     }
 }

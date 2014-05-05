@@ -38,7 +38,8 @@
         <activity android:name=".login.Dashboard"
                   android:screenOrientation="portrait"/>
         <activity android:name=".login.Register"
-                  android:screenOrientation="portrait"/>
+                  android:screenOrientation="portrait"
+                  android:parentActivityName=".login.Login"/>
         <activity android:name=".ui.ImageSearchActivity"
                   android:screenOrientation="portrait"
                   android:parentActivityName=".outdated.PostPollActivity"/>

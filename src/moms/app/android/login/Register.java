@@ -20,6 +20,7 @@ public class Register extends Activity {
     String mUserPasswordConfirmation;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.register);
     }
 
@@ -51,6 +52,11 @@ public class Register extends Activity {
                 || mUserPasswordConfirmation.length() == 0) {
             // input fields are empty
             Toast.makeText(this, "Please complete all the fields",
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+        else if(mUserPassword.length() < 8) {
+            Toast.makeText(this, "Password must contain at least 8 characters",
                     Toast.LENGTH_LONG).show();
             return;
         }
