@@ -43,7 +43,7 @@
                         <EditText android:id="@+id/et_post_title1"
                                   android:layout_width="fill_parent"
                                   android:layout_height="50dp"
-                                  android:hint="Title 1"
+                                  android:hint="Title One"
                                   android:gravity="center"
                                   android:fontFamily="sans-serif-thin"
                                   android:textStyle="normal|bold"
@@ -57,22 +57,6 @@
                                    android:clickable="true"
                                    android:scaleType="centerCrop"
                                    android:src="@drawable/ic_placeholder"/>
-
-                        <Button android:id="@+id/btn_take_photo_1"
-                                android:layout_width="fill_parent"
-                                android:layout_height="50dp"
-                                android:text="Take Photo 1"
-                                android:background="@color/bg_button"
-                                android:textColor="@color/text_button"
-                                android:layout_margin="5dp"/>
-
-                        <Button android:id="@+id/btn_google_photo_1"
-                                android:layout_width="fill_parent"
-                                android:layout_height="50dp"
-                                android:text="Google Photo 1"
-                                android:background="@color/bg_button"
-                                android:textColor="@color/text_button"
-                                android:layout_margin="5dp"/>
                     </LinearLayout>
 
                     <LinearLayout android:layout_width="0dp"
@@ -83,7 +67,7 @@
                         <EditText android:id="@+id/et_post_title2"
                                   android:layout_width="fill_parent"
                                   android:layout_height="50dp"
-                                  android:hint="Title 2"
+                                  android:hint="Title Two"
                                   android:gravity="center"
                                   android:fontFamily="sans-serif-thin"
                                   android:textStyle="normal|bold"
@@ -97,22 +81,6 @@
                                    android:clickable="true"
                                    android:scaleType="centerCrop"
                                    android:src="@drawable/ic_placeholder"/>
-
-                        <Button android:id="@+id/btn_take_photo_2"
-                                android:layout_width="fill_parent"
-                                android:layout_height="50dp"
-                                android:text="Take Photo 2"
-                                android:background="@color/bg_button"
-                                android:textColor="@color/text_button"
-                                android:layout_margin="5dp"/>
-
-                        <Button android:id="@+id/btn_google_photo_2"
-                                android:layout_width="fill_parent"
-                                android:layout_height="50dp"
-                                android:text="Google Photo 2"
-                                android:background="@color/bg_button"
-                                android:textColor="@color/text_button"
-                                android:layout_margin="5dp"/>
 
                     </LinearLayout>
 
@@ -141,9 +109,10 @@
                 android:layout_height="50dp"
                 android:layout_gravity="bottom"
                 android:hint="Create Poll"
+                android:textColorHint="@color/text_button"
                 android:background="@color/bg_button"
-                android:textColor="@color/text_button"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                />
 
     </LinearLayout>
 

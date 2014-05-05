@@ -5,16 +5,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.Window;
-import android.widget.Toast;
 import moms.app.android.R;
-import moms.app.android.communication.WebGeneral;
-import moms.app.android.login.Login;
-import moms.app.android.outdated.HomeActivity;
-import moms.app.android.outdated.PostPollActivity;
 
 /**
  * Created by Steve on 4/3/14.
@@ -34,77 +26,6 @@ public class BaseActivity extends Activity {
         actionBar.setLogo(R.drawable.action_bar_logo);
         actionBar.setTitle("");
         actionBar.setHomeButtonEnabled(true);
-    }
-
-    //Inflate menu from xml
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu items for use in the action bar
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.activity_menu, menu);
-        return true;
-    }
-
-    /**
-     * Handles click events of items in menu
-     */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                pollClick(item);
-                return true;
-            case R.id.menu_login:
-                loginClick(item);
-                return true;
-            case R.id.menu_post:
-                postClick(item);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    public void pollClick(MenuItem item){
-        //launch home activity
-        Intent intent = new Intent(this, HomeActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-    }
-
-    public void loginClick(MenuItem item){
-        //check if user is logged in
-        try {
-            if (!WebGeneral.getsPreferences().getString("auth_token", "").isEmpty()){
-                Toast.makeText(this, "You are already logged in", Toast.LENGTH_SHORT).show();
-                return;
-            }
-        }
-        catch (NullPointerException e) {}
-
-        //launch login activity
-        Intent intent = new Intent(this, Login.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-    }
-
-    public void favoritesClick(MenuItem item){
-        Toast.makeText(getApplicationContext(), "Favorites button pressed", Toast.LENGTH_SHORT).show();
-    }
-
-    public void postClick(MenuItem item){
-        //launch post activity
-        Intent intent = new Intent(this, PostPollActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-    }
-
-    public void settingsClick(MenuItem item){
-        Toast.makeText(getApplicationContext(), "Settings button pressed", Toast.LENGTH_SHORT).show();
     }
 
     /**

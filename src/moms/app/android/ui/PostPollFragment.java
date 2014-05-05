@@ -2,6 +2,9 @@ package moms.app.android.ui;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -77,10 +80,6 @@ public class PostPollFragment extends Fragment {
         title2 = (EditText) layout.findViewById(R.id.et_post_title2);
         photo1 = (ImageView) layout.findViewById(R.id.iv_poll_post_left);
         photo2 = (ImageView) layout.findViewById(R.id.iv_poll_post_right);
-        takePhoto1 = (Button) layout.findViewById(R.id.btn_take_photo_1);
-        takePhoto2 = (Button) layout.findViewById(R.id.btn_take_photo_2);
-        googlePhoto1 = (Button) layout.findViewById(R.id.btn_google_photo_1);
-        googlePhoto2 = (Button) layout.findViewById(R.id.btn_google_photo_2);
         submitBtn = (Button) layout.findViewById(R.id.btn_post_submit);
         description = (EditText) layout.findViewById(R.id.et_poll_description);
         mActivity = getActivity();
@@ -92,65 +91,102 @@ public class PostPollFragment extends Fragment {
             }
         });
 
+        //create dialog when image is clicked and launch appropriate activity
         photo1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("image/*");
-                startActivityForResult(intent, CHOOSE_PHOTO_1);
+                final String[] choices = {"Choose from gallery", "Take a picture", "Search Google Images"};
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Choose a Photo")
+                        .setItems(choices, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which){
+                                    case 0:
+                                        selectActivityForResult(CHOOSE_PHOTO_1);
+                                        break;
+                                    case 1:
+                                        selectActivityForResult(TAKE_PHOTO_1);
+                                        break;
+                                    case 2:
+                                        selectActivityForResult(GOOGLE_PHOTO_1);
+                                        break;
+                                }
+                            }
+                        });
+                builder.create().show();
             }
         });
 
+        //create dialog when image is clicked and launch appropriate activity
         photo2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("image/*");
-                startActivityForResult(intent, CHOOSE_PHOTO_2);
-            }
-        });
-
-        takePhoto1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                File photo = new File(Environment.getExternalStorageDirectory(),  "Pic.jpg");
-                intent.putExtra(MediaStore.EXTRA_OUTPUT,
-                        Uri.fromFile(photo));
-                imageUri = Uri.fromFile(photo);
-                startActivityForResult(intent, TAKE_PHOTO_1);
-            }
-        });
-
-        takePhoto2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                File photo = new File(Environment.getExternalStorageDirectory(),  "Pic.jpg");
-                intent.putExtra(MediaStore.EXTRA_OUTPUT,
-                        Uri.fromFile(photo));
-                imageUri = Uri.fromFile(photo);
-                startActivityForResult(intent, TAKE_PHOTO_2);
-            }
-        });
-
-        googlePhoto1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mActivity, ImageSearchActivity.class);
-                startActivityForResult(intent, GOOGLE_PHOTO_1);
-            }
-        });
-
-        googlePhoto2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mActivity, ImageSearchActivity.class);
-                startActivityForResult(intent, GOOGLE_PHOTO_2);
+                final String[] choices = {"Choose from gallery", "Take a picture", "Search Google Images"};
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Choose a Photo")
+                        .setItems(choices, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which){
+                                    case 0:
+                                        selectActivityForResult(CHOOSE_PHOTO_2);
+                                        break;
+                                    case 1:
+                                        selectActivityForResult(TAKE_PHOTO_2);
+                                        break;
+                                    case 2:
+                                        selectActivityForResult(GOOGLE_PHOTO_2);
+                                        break;
+                                }                            }
+                        });
+                builder.create().show();
             }
         });
 
         return layout;
+    }
+
+    public void selectActivityForResult(int id){
+        Intent intent;
+        File photo;
+        switch(id) {
+            case 1:
+                intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(intent, CHOOSE_PHOTO_1);
+                break;
+
+            case 2:
+                intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(intent, CHOOSE_PHOTO_2);
+                break;
+
+            case 3:
+                intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                photo = new File(Environment.getExternalStorageDirectory(),  "Pic.jpg");
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photo));
+                imageUri = Uri.fromFile(photo);
+                startActivityForResult(intent, TAKE_PHOTO_1);
+                break;
+
+            case 4:
+                intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                photo = new File(Environment.getExternalStorageDirectory(),  "Pic.jpg");
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photo));
+                imageUri = Uri.fromFile(photo);
+                startActivityForResult(intent, TAKE_PHOTO_2);
+                break;
+
+            case 5:
+                intent = new Intent(mActivity, ImageSearchActivity.class);
+                startActivityForResult(intent, GOOGLE_PHOTO_1);
+                break;
+
+            case 6:
+                intent = new Intent(mActivity, ImageSearchActivity.class);
+                startActivityForResult(intent, GOOGLE_PHOTO_2);
+                break;
+        }
     }
 
     //handle result from the gallery, camera, or google search activity
