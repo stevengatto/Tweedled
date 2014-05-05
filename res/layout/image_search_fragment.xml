@@ -19,7 +19,11 @@
                   android:layout_marginRight="2dp"
                   android:maxLines="1"
                   android:maxLength="30"
-                  android:hint="Google image search"/>
+                  android:background="@drawable/imagesearchbox"
+                  android:layout_margin="5dp"
+                  android:hint="Google image search"
+                  android:paddingLeft="8dp"
+                android:textAlignment="textStart"/>
 
         <ImageButton android:id="@+id/btn_image_search"
                 android:layout_width="0dp"

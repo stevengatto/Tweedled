@@ -20,9 +20,9 @@
                        android:scaleType="centerCrop"/>
 
             <ProgressBar android:id="@+id/pb_image_selected"
-                         android:layout_width="200dp"
-                         android:layout_height="200dp"
-                         android:layout_gravity="center_horizontal"/>
+                         android:layout_width="100dp"
+                         android:layout_height="100dp"
+                         android:layout_gravity="center"/>
 
         </FrameLayout>
 
@@ -35,18 +35,18 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:hint="Deny"
                     android:background="@color/bg_button"
-                    android:textColor="@color/text_button"
+                    android:textColorHint="@android:color/white"
+                    android:hint="Deny"
                     android:layout_margin="5dp"/>
 
             <Button android:id="@+id/image_selected_select"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:hint="Select"
                     android:background="@color/bg_button"
-                    android:textColor="@color/text_button"
+                    android:textColorHint="@android:color/white"
+                    android:hint="Select"
                     android:layout_margin="5dp"/>
 
         </LinearLayout>
