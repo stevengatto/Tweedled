@@ -55,7 +55,8 @@ public class LoginTask implements TaskInterface{
                 mActivity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 mActivity.startActivity(intent);
             }
-            Toast.makeText(mActivity, respond.getString("info"), Toast.LENGTH_LONG).show();
+            else
+              Toast.makeText(mActivity, respond.getString("info"), Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             Toast.makeText(mActivity, e.getMessage(), Toast.LENGTH_LONG).show();
         }

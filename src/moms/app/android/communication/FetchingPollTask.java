@@ -103,8 +103,8 @@ public class FetchingPollTask {
         try {
             if (respond.getBoolean("success")) {
 
-                Toast.makeText(mActivity, respond.getString("info"),
-                        Toast.LENGTH_LONG).show();
+//                Toast.makeText(mActivity, respond.getString("info"),
+//                        Toast.LENGTH_LONG).show();
                 createListView();
             }
         } catch (Exception e) {
