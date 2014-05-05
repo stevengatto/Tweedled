@@ -1,18 +1,13 @@
 package moms.app.android.model.testing;
 
+import com.savagelook.android.Lazy;
+
 /**
  * Created by Steve on 3/30/14.
  *
  * Model class to represent a Poll in the ListView
  */
 public class Poll {
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     private int id;
     private String mainTitle;
@@ -22,9 +17,11 @@ public class Poll {
     private String rightImageURL;
     private Integer leftVotes;
     private Integer rightVotes;
+    private String description;
 
-    public Poll(String mainTitle, String subTitleLeft, String subTitleRight, String leftImageURL,
-                String rightImageURL, Integer leftVotes, Integer rightVotes){
+    public Poll(Integer id, String mainTitle, String subTitleLeft, String subTitleRight, String leftImageURL,
+                String rightImageURL, Integer leftVotes, Integer rightVotes, String description){
+        this.id = id;
         this.mainTitle = mainTitle;
         this.subTitleLeft = subTitleLeft;
         this.subTitleRight = subTitleRight;
@@ -32,6 +29,15 @@ public class Poll {
         this.rightImageURL = rightImageURL;
         this.leftVotes = leftVotes;
         this.rightVotes = rightVotes;
+        this.description = description;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getMainTitle() {
@@ -81,4 +87,8 @@ public class Poll {
     public void setRightVotes(Integer rightVotes) {
         this.rightVotes = rightVotes;
     }
+
+    public String getDescription() { return description; }
+
+    public void setDescription(String description) { this.description = description; }
 }

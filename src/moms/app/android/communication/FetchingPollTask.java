@@ -8,7 +8,7 @@ import android.widget.Toast;
 import com.savagelook.android.UrlJsonAsyncTask;
 import moms.app.android.R;
 import moms.app.android.model.testing.Poll;
-import moms.app.android.outdated.HomeAdapter;
+import moms.app.android.ui.HomeAdapter;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
@@ -57,18 +57,20 @@ public class FetchingPollTask {
 
             for(int i = poll_count - 1; i >= 0 ;i--)
             {
-
                 JSONObject poll_json = polls_array.getJSONObject(i);
                 String image_1_url = WebGeneral.BASE_URL + poll_json.getString("attachment_1_url");
                 String image_2_url = WebGeneral.BASE_URL + poll_json.getString("attachment_2_url");
 
+                int id = poll_json.getInt("id");
                 String question = poll_json.getString("question");
                 String subTitleLeft = poll_json.getString("title_one");
                 String subTitleRight = poll_json.getString("title_two");
-                Poll poll = new Poll(question,subTitleLeft,subTitleRight,null,null,null,null);
+                String description = poll_json.getString("description");
+                Poll poll = new Poll(id, question,subTitleLeft,subTitleRight,null,null,null,null,null);
 
                 poll.setLeftVotes(poll_json.getInt("vote_one"));
                 poll.setRightVotes(poll_json.getInt("vote_two"));
+                poll.setDescription(description);
 
                 if(poll_json.getBoolean("is_picture1_url"))
                     poll.setLeftImageUrl(poll_json.getString("attachment_1_url"));
@@ -80,10 +82,7 @@ public class FetchingPollTask {
                 else
                     poll.setRightImageUrl(image_2_url);
 
-                poll.setId(poll_json.getInt("id"));
-
                 list.add(poll);
-
             }
 
             //set up listView adapter and onItemClick listener
