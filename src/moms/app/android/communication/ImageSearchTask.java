@@ -3,7 +3,9 @@ package moms.app.android.communication;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
 import android.widget.GridView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.savagelook.android.UrlJsonAsyncTask;
 import moms.app.android.R;
@@ -31,14 +33,16 @@ public class ImageSearchTask {
     private JSONObject respond = new JSONObject();
     private List<ImageResult> list;
     private GridView mGridView;
+    private ProgressBar mProgressBar;
     private String query;
     private final int TOTAL_IMAGES = 63;
     private boolean adapterSet = false;
 
-    public ImageSearchTask(Activity activity, GridView gridView)
+    public ImageSearchTask(Activity activity, GridView gridView, ProgressBar progressBar)
     {
         this.mActivity = activity;
         mGridView = gridView;
+        mProgressBar = progressBar;
         list = new ArrayList<ImageResult>();
     }
 
@@ -103,11 +107,11 @@ public class ImageSearchTask {
 }
     
     public void setCurrentListToAdapter(){
-        Log.d(null, "SECOND IF EXECUTES!!!!!!!!!!!");
+        mProgressBar.setVisibility(View.GONE);
         ImageSearchAdapter adapter = new ImageSearchAdapter(mActivity, R.layout.image_search_item, list);
         mGridView.setAdapter(adapter);
         adapterSet = true;
-        mActivity.setProgressBarIndeterminateVisibility(false);
+//        mActivity.setProgressBarIndeterminateVisibility(false);
     }
 
 

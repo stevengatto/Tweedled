@@ -23,23 +23,34 @@
                   android:layout_margin="5dp"
                   android:hint="Google image search"
                   android:paddingLeft="8dp"
-                android:textAlignment="textStart"/>
+                  android:textAlignment="textStart"/>
 
         <ImageButton android:id="@+id/btn_image_search"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_search"
-                android:background="@android:color/transparent"/>
+                     android:layout_width="0dp"
+                     android:layout_weight="1"
+                     android:layout_height="match_parent"
+                     android:src="@drawable/ic_search"
+                     android:background="@android:color/transparent"/>
 
     </LinearLayout>
 
-    <GridView
-            android:id="@+id/image_search_grid_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:numColumns="3"/>
+    <FrameLayout android:layout_width="match_parent"
+                 android:layout_height="match_parent">
+
+        <GridView
+                android:id="@+id/image_search_grid_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:numColumns="3"/>
+
+        <ProgressBar android:id="@+id/pb_grid_view"
+                     android:layout_width="100dp"
+                     android:layout_height="100dp"
+                     android:layout_gravity="center"
+                     android:visibility="gone"/>
+
+    </FrameLayout>
 
 </LinearLayout>

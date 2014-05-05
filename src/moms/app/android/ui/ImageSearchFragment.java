@@ -22,6 +22,7 @@ public class ImageSearchFragment extends Fragment {
 
     private Activity mActivity;
     private GridView gridView;
+    private ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -30,6 +31,7 @@ public class ImageSearchFragment extends Fragment {
         final View view = inflater.inflate(R.layout.image_search_fragment, container, false);
         final ImageButton searchBtn = (ImageButton) view.findViewById(R.id.btn_image_search);
         final EditText editText = (EditText) view.findViewById(R.id.tv_image_search);
+        progressBar = (ProgressBar) view.findViewById(R.id.pb_grid_view);
         gridView = (GridView) view.findViewById(R.id.image_search_grid_view);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -62,8 +64,9 @@ public class ImageSearchFragment extends Fragment {
     }
 
     public void fetchImages(String query){
-        ImageSearchTask imageSearchTask = new ImageSearchTask(getActivity(), gridView);
-        getActivity().setProgressBarIndeterminateVisibility(true);
+        ImageSearchTask imageSearchTask = new ImageSearchTask(getActivity(), gridView, progressBar);
+//        getActivity().setProgressBarIndeterminateVisibility(true);
+        progressBar.setVisibility(View.VISIBLE);
         imageSearchTask.submitRequest(query);
     }
 
