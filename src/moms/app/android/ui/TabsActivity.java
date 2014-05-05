@@ -3,6 +3,7 @@ package moms.app.android.ui;
 import android.app.*;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -15,12 +16,16 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
+import com.savagelook.android.Lazy;
 import moms.app.android.R;
+import moms.app.android.communication.WebGeneral;
+import moms.app.android.login.Login;
 
 /**
  * Created by Steve on 5/4/14.
  */
 public class TabsActivity extends FragmentActivity {
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -79,25 +84,34 @@ public class TabsActivity extends FragmentActivity {
         }
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu items for use in the action bar
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.activity_menu, menu);
-//        return super.onCreateOptionsMenu(menu);
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle presses on the action bar items
-//        switch (item.getItemId()) {
-//            case R.id.menu_refresh:
-//                Toast.makeText(TabsActivity.this, "Refresh Pressed", Toast.LENGTH_LONG).show();
-//                return true;
-//            default:
-//                return true;
-//        }
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.activity_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.menu_login:
+                try {
+                    if(!WebGeneral.getsPreferences().getString("auth_token", "").isEmpty()){
+                        Toast.makeText(TabsActivity.this, "You are already logged in", Toast.LENGTH_LONG).show();
+                        return false;
+                    }
+                } catch (NullPointerException e) {
+                    Intent i = new Intent(TabsActivity.this, Login.class);
+                    startActivity(i);
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                    return true;
+                }
+            default:
+                return false;
+        }
+    }
 
     private class TabsPagerAdapter extends FragmentPagerAdapter {
         public TabsPagerAdapter(FragmentManager fm) {

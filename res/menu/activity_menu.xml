@@ -2,9 +2,9 @@
 
 <menu   xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/menu_refresh"
-          android:icon="@drawable/ic_refresh"
-          android:title="Refresh"
-          android:showAsAction="always"/>
+    <item android:id="@+id/menu_login"
+          android:icon="@drawable/ic_login"
+          android:title="Login"
+          android:showAsAction="never"/>
 
 </menu>

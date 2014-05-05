@@ -1,8 +1,10 @@
 package moms.app.android.login;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 import moms.app.android.R;
@@ -39,6 +41,13 @@ public class Register extends Activity {
     }
 
     public void registerNewAccount(View button) {
+        //hide soft keyboard
+        Activity currentActivity = Register.this;
+        InputMethodManager inputManager = (InputMethodManager) currentActivity
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(currentActivity.getCurrentFocus().getWindowToken(),
+                InputMethodManager.HIDE_NOT_ALWAYS);
+
         EditText userEmailField = (EditText) findViewById(R.id.et_register_email);
         mUserEmail = userEmailField.getText().toString();
         EditText userPasswordField = (EditText) findViewById(R.id.et_register_password);
