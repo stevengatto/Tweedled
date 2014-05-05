@@ -20,8 +20,8 @@
                   android:layout_width="fill_parent"
                   android:layout_height="wrap_content"
                   android:gravity="center"
-                  android:fontFamily="sans-serif-thin"
-                  android:textStyle="italic"
+                  android:fontFamily="sans-serif"
+                  android:textStyle="bold"
                   android:textSize="24sp"
                   android:textColor="@color/text_color"
                   android:text="Main title"/>
@@ -35,7 +35,7 @@
                       android:layout_width="0dp"
                       android:layout_weight="4"
                       android:layout_height="wrap_content"
-                      android:gravity="right"
+                      android:gravity="center"
                       android:layout_gravity="center_vertical"
                       android:fontFamily="sans-serif-thin"
                       android:textStyle="normal|bold"
@@ -57,7 +57,7 @@
                       android:layout_width="0dp"
                       android:layout_weight="4"
                       android:layout_height="wrap_content"
-                      android:gravity="left"
+                      android:gravity="center"
                       android:layout_gravity="center_vertical"
                       android:fontFamily="sans-serif-thin"
                       android:textStyle="normal|bold"
@@ -113,7 +113,6 @@
 
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="wrap_content"
-                      android:layout_marginTop="10dp"
                       android:layout_marginBottom="10dp"
                       android:orientation="horizontal">
 
@@ -121,6 +120,7 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
                             android:visibility="gone">
 
                 <ImageView android:id="@+id/poll_heart_left"
@@ -147,6 +147,7 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
                             android:visibility="gone">
 
                 <ImageView android:id="@+id/poll_heart_right"

@@ -9,6 +9,9 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -75,6 +78,26 @@ public class TabsActivity extends FragmentActivity {
                     }));
         }
     }
+
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu items for use in the action bar
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.activity_menu, menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle presses on the action bar items
+//        switch (item.getItemId()) {
+//            case R.id.menu_refresh:
+//                Toast.makeText(TabsActivity.this, "Refresh Pressed", Toast.LENGTH_LONG).show();
+//                return true;
+//            default:
+//                return true;
+//        }
+//    }
 
     private class TabsPagerAdapter extends FragmentPagerAdapter {
         public TabsPagerAdapter(FragmentManager fm) {
