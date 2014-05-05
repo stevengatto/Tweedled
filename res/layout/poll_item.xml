@@ -123,6 +123,7 @@
                       android:layout_gravity="center_vertical"
                       android:layout_marginLeft="6dp"
                       android:maxLines="1"
+                      android:textColorLink="@android:color/holo_blue_dark"
                       android:fontFamily="sans-serif-thin"
                       android:textStyle="normal|bold"
                       android:textColor="@color/text_color"
