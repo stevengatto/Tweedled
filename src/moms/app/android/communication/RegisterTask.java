@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.Toast;
 import com.savagelook.android.UrlJsonAsyncTask;
 import moms.app.android.outdated.HomeActivity;
+import moms.app.android.ui.TabsActivity;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
@@ -101,7 +102,8 @@ public class RegisterTask implements TaskInterface{
                     editor.commit();
 
                     Intent intent = new Intent(mActivity.getApplicationContext(),
-                            HomeActivity.class);
+                            TabsActivity.class);
+                    mActivity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                     mActivity.startActivity(intent);
                 }
                 Toast.makeText(context, json.getString("info"),

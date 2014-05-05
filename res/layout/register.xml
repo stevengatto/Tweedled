@@ -5,51 +5,51 @@
             android:layout_height="match_parent"
             android:background="#ffffff">
 
-    <FrameLayout android:layout_width="match_parent"
-                 android:layout_height="match_parent">
+<FrameLayout android:layout_width="match_parent"
+             android:layout_height="match_parent">
 
-        <LinearLayout android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:orientation="vertical"
-                      android:padding="15dp"
-                      android:layout_gravity="center">
-            <EditText android:id="@+id/et_register_email"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_weight="1"
-                      android:ems="10"
-                      android:hint="@string/user_email"
-                      android:inputType="textEmailAddress">
-                <requestFocus android:layout_width="wrap_content"/>
-            </EditText>
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  android:padding="15dp"
+                  android:layout_gravity="center">
+        <EditText android:id="@+id/et_register_email"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1"
+                  android:ems="10"
+                  android:hint="@string/user_email"
+                  android:inputType="textEmailAddress">
+            <requestFocus android:layout_width="wrap_content"/>
+        </EditText>
 
-            <EditText android:id="@+id/et_register_password"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_weight="1"
-                      android:ems="10"
-                      android:hint="@string/user_password"
-                      android:inputType="textPassword"/>
+        <EditText android:id="@+id/et_register_password"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1"
+                  android:ems="10"
+                  android:hint="@string/user_password"
+                  android:inputType="textPassword"/>
 
-            <EditText android:id="@+id/et_register_passwordConfirmation"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_weight="1"
-                      android:ems="10"
-                      android:hint="@string/user_password_confirmation"
-                      android:inputType="textPassword"/>
+        <EditText android:id="@+id/et_register_passwordConfirmation"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1"
+                  android:ems="10"
+                  android:hint="@string/user_password_confirmation"
+                  android:inputType="textPassword"/>
 
-            <Button android:id="@+id/but_registerButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:onClick="registerNewAccount"
-                    android:text="@string/register"
-                    android:background="@color/bg_button"
-                    android:textColor="@color/text_button"
-                    android:layout_margin="5dp"/>
-        </LinearLayout>
+        <Button android:id="@+id/but_registerButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="registerNewAccount"
+                android:text="@string/register"
+                android:background="@color/bg_button"
+                android:textColor="@color/text_button"
+                android:layout_margin="5dp"/>
+    </LinearLayout>
 
-    </FrameLayout>
+</FrameLayout>
 
 </ScrollView>
