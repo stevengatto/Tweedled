@@ -15,6 +15,8 @@ public class WebGeneral {
     public static final String IMAGE_SEARCH_BASE_URL = "https://ajax.googleapis.com/ajax/services/search/images?" +
             "v=1.0&as_filetype=jpg&rsz=8";
 
+    public static String generateCreatingCommentURL(int poll_id){ return BASE_URL + "/polls/" + poll_id + "/comments"; }
+
     public static String generateVoteURL(int id)
     {
         return BASE_URL + "/polls/"+ id +"/vote";
