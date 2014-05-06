@@ -10,7 +10,7 @@ public class PollItemActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.poll_item_activity);
-
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         // Enable application home button
 //        ActionBar bar = getActionBar();
 //        bar.setHomeButtonEnabled(true);

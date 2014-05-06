@@ -33,7 +33,7 @@ public class TabsActivity extends FragmentActivity {
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.tabs_activity);
 
-        setProgressBarIndeterminateVisibility(false);
+        getActionBar().setHomeButtonEnabled(true);
 
         // enable ActionBar app icon to behave as action to toggle nav drawer
         final ActionBar actionBar = getActionBar();
@@ -108,6 +108,11 @@ public class TabsActivity extends FragmentActivity {
                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                     return true;
                 }
+            case android.R.id.home:
+                Intent i = new Intent(TabsActivity.this, TabsActivity.class);
+                startActivity(i);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                return true;
             default:
                 return false;
         }

@@ -4,7 +4,11 @@
               android:orientation="vertical"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:background="@android:color/transparent">
+              android:background="@android:color/transparent"
+              android:paddingLeft="4dp"
+              android:paddingRight="4dp"
+              android:paddingTop="2dp"
+              android:paddingBottom="2dp">
 
     <TextView android:id="@+id/tv_comment_username"
               android:layout_width="fill_parent"
@@ -16,7 +20,7 @@
               android:textStyle="italic"
               android:textColor="@color/text_color"
               android:textSize="18dp"
-              android:background="@android:color/transparent"
+              android:background="@android:color/white"
               android:text="Username"/>
 
     <TextView android:id="@+id/tv_comment_body"
@@ -27,7 +31,7 @@
               android:fontFamily="sans-serif-thin"
               android:textStyle="bold|normal"
               android:textColor="@color/text_color"
-              android:background="@android:color/transparent"
+              android:background="@android:color/white"
               android:textSize="14dp"/>
 
 </LinearLayout>

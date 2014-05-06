@@ -1,144 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:background="@color/poll_list_background">
 
-<!--TODO:Modify so on small phones list view is still visible-->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/custom_poll_item_fragment"
-              android:orientation="vertical"
-              android:layout_margin="15dp"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:paddingTop="10dp"
-              android:background="#EFEFEF">
-
-    <TextView android:id="@+id/tv_poll_main_title"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:gravity="center"
-              android:fontFamily="sans-serif-thin"
-              android:textStyle="italic"
-              android:textColor="@color/text_color"
-              android:textSize="35sp"
-              android:text="Main title"/>
-
-    <TextView android:id="@+id/tv_poll_sub_title"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:gravity="center"
-              android:fontFamily="sans-serif-thin"
-              android:textStyle="normal|bold"
-              android:textColor="@color/text_color"
-              android:textSize="30sp"
-              android:layout_marginBottom="10dp"
-              android:text="Subtitle"/>
-
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
+    <LinearLayout android:id="@+id/comment_box_with_btn"
+                  android:layout_width="match_parent"
+                  android:layout_height="50dp"
+                  android:layout_alignParentBottom="true"
                   android:orientation="horizontal">
 
-        <FrameLayout
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="175dp">
+        <EditText android:id="@+id/et_comment"
+                  android:layout_width="0dp"
+                  android:layout_height="match_parent"
+                  android:layout_weight="10"
+                  android:textSize="18sp"
+                  android:layout_marginRight="2dp"
+                  android:maxLines="4"
+                  android:maxLength="140"
+                  android:background="@drawable/imagesearchbox"
+                  android:layout_margin="5dp"
+                  android:hint="Comment"
+                  android:paddingLeft="8dp"
+                  android:textAlignment="textStart"
+                  android:layout_gravity="center"/>
 
+        <ImageButton android:id="@+id/btn_post_comment"
+                     android:layout_width="0dp"
+                     android:layout_height="match_parent"
+                     android:layout_weight="2"
+                     android:src="@drawable/comment_post"
+                     android:scaleType="fitCenter"
+                     android:background="@android:color/transparent"
+                     android:layout_gravity="center"/>
 
-            <ImageView
-                    android:id="@+id/iv_poll_left"
-                    android:layout_height="fill_parent"
-                    android:layout_width="fill_parent"
-                    android:scaleType="centerCrop"/>
-
-            <ProgressBar android:id="@+id/pb_poll_left"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:layout_gravity="center"
-                         android:visibility="gone"/>
-
-        </FrameLayout>
-
-        <FrameLayout
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="175dp">
-
-
-            <ImageView
-                    android:id="@+id/iv_poll_right"
-                    android:layout_height="fill_parent"
-                    android:layout_width="fill_parent"
-                    android:scaleType="centerCrop"/>
-
-            <ProgressBar android:id="@+id/pb_poll_right"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:layout_gravity="center"
-                         android:visibility="gone"/>
-
-        </FrameLayout>
 
     </LinearLayout>
 
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:layout_marginTop="10dp"
-                  android:layout_marginBottom="10dp"
-                  android:orientation="horizontal">
 
-        <RelativeLayout android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content">
 
-            <ImageView android:id="@+id/poll_heart_left"
-                       android:layout_width="30dp"
-                       android:layout_height="30dp"
-                       android:layout_marginLeft="15dp"
-                       android:src="@drawable/ic_heart"/>
-
-            <TextView android:id="@+id/tv_poll_left_votes"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:layout_toRightOf="@id/poll_heart_left"
-                      android:fontFamily="sans-serif-thin"
-                      android:textStyle="normal|bold"
-                      android:layout_centerVertical="true"
-                      android:textColor="@color/text_color"
-                      android:layout_marginLeft="10dp"
-                      android:textSize="20sp"
-                      android:text="Votes"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content">
-
-            <ImageView android:id="@+id/poll_heart_right"
-                       android:layout_width="30dp"
-                       android:layout_height="30dp"
-                       android:layout_marginLeft="15dp"
-                       android:src="@drawable/ic_heart"/>
-
-            <TextView android:id="@+id/tv_poll_right_votes"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:layout_toRightOf="@id/poll_heart_right"
-                      android:fontFamily="sans-serif-thin"
-                      android:textStyle="normal|bold"
-                      android:layout_centerVertical="true"
-                      android:layout_marginLeft="10dp"
-                      android:textColor="@color/text_color"
-                      android:textSize="20sp"
-                      android:text="Votes"/>
-
-        </RelativeLayout>
-
-    </LinearLayout>
+    <FrameLayout android:id="@+id/comment_divider_bar"
+                 android:layout_above="@id/comment_box_with_btn"
+                 android:layout_width="match_parent"
+                 android:layout_height="2dp"
+                 android:background="@android:color/darker_gray"/>
 
     <ListView android:id="@+id/comment_list_view"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              android:layout_height="match_parent"
               android:scrollbars="none"
               android:background="#E8E8E8"
-              android:divider="@android:color/darker_gray"
-              android:dividerHeight="1dp"/>
-</LinearLayout>
+              android:divider="@android:color/transparent"
+              android:headerDividersEnabled="true"
+              android:layout_alignParentTop="true"
+              android:layout_above="@id/comment_divider_bar"/>
+
+</RelativeLayout>
