@@ -2,9 +2,11 @@ package moms.app.android.communication;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 import com.savagelook.android.UrlJsonAsyncTask;
+import moms.app.android.ui.TabsActivity;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
@@ -34,15 +36,18 @@ public class CreatePollTask implements TaskInterface{
     boolean isPicture1Url;
     boolean isPicture2Url;
     String mDescription;
+    Context mContext;
+
     public CreatePollTask(Activity activity)
     {
         this.mActivity = activity;
 
     }
 
-    public void submitRequest(String question, String title1, String title2, String auth_token
+    public void submitRequest(Context context, String question, String title1, String title2, String auth_token
             , String encodedImage1, String encodedImage2, boolean isPicture1Url,boolean isPicture2Url, String picutre1Url, String picture2Url, String descrition)
     {
+        this.mContext = context;
         this.mQuestion = question;
         this.mTitle1 = title1;
         this.mTitle2 = title2;
@@ -65,6 +70,8 @@ public class CreatePollTask implements TaskInterface{
             if (respond.getBoolean("success")) {
                 Toast.makeText(mActivity, respond.getString("info"),
                         Toast.LENGTH_LONG).show();
+                mContext.startActivity(new Intent(mActivity, TabsActivity.class));
+                mActivity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         } catch (Exception e) {
             Toast.makeText(mActivity, e.getMessage(), Toast.LENGTH_LONG)

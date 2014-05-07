@@ -81,7 +81,7 @@ public class PostPollFragment extends Fragment {
         photo1 = (ImageView) layout.findViewById(R.id.iv_poll_post_left);
         photo2 = (ImageView) layout.findViewById(R.id.iv_poll_post_right);
         submitBtn = (Button) layout.findViewById(R.id.btn_post_submit);
-        description = (EditText) layout.findViewById(R.id.et_poll_description);
+//        description = (EditText) layout.findViewById(R.id.et_poll_description);
         mActivity = getActivity();
 
         submitBtn.setOnClickListener(new View.OnClickListener() {
@@ -356,7 +356,8 @@ public class PostPollFragment extends Fragment {
         mQuestion_str = question.getText().toString();
         mTitle1_str = title1.getText().toString();
         mTitle2_str = title2.getText().toString();
-        mDescription_str = description.getText().toString();
+//        mDescription_str = description.getText().toString();
+        mDescription_str = "No description at this time";
 
         //first check if user has logged in by catching null pointer on getPreferences
         try{
@@ -382,7 +383,7 @@ public class PostPollFragment extends Fragment {
                 if((isPictureTwoUrl!=null) && ((isPictureTwoUrl && mImageUrl2!=null)
                         || (!isPictureTwoUrl && mEncodedImage2!= null))){
                     CreatePollTask pollTask = new CreatePollTask(mActivity);
-                    pollTask.submitRequest(mQuestion_str, mTitle1_str, mTitle2_str, mAuth_token, mEncodedImage1,
+                    pollTask.submitRequest(mActivity, mQuestion_str, mTitle1_str, mTitle2_str, mAuth_token, mEncodedImage1,
                             mEncodedImage2, isPictureOneUrl, isPictureTwoUrl, mImageUrl1, mImageUrl2, mDescription_str);
                     return; //return so following lines don't execute
                 }

@@ -25,7 +25,6 @@ public class BaseActivity extends Activity {
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.action_bar_bg));
         actionBar.setLogo(R.drawable.action_bar_logo);
         actionBar.setTitle("");
-        actionBar.setHomeButtonEnabled(true);
     }
 
     /**

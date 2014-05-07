@@ -1,8 +1,9 @@
 package moms.app.android.ui;
 
-import android.app.*;
+import android.app.ActionBar;
+import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,10 +14,8 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
-import com.savagelook.android.Lazy;
 import moms.app.android.R;
 import moms.app.android.communication.WebGeneral;
 import moms.app.android.login.Login;
@@ -29,8 +28,6 @@ public class TabsActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //enable indefinite progress bar in action bar (can be turned on and off)
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.tabs_activity);
 
         getActionBar().setHomeButtonEnabled(true);
@@ -88,7 +85,7 @@ public class TabsActivity extends FragmentActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.activity_menu, menu);
+        inflater.inflate(R.menu.tabs_activity_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -108,7 +105,7 @@ public class TabsActivity extends FragmentActivity {
                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                     return true;
                 }
-            case android.R.id.home:
+            case R.id.menu_refresh:
                 Intent i = new Intent(TabsActivity.this, TabsActivity.class);
                 startActivity(i);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
