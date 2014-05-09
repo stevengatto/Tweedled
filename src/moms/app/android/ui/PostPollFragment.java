@@ -48,10 +48,6 @@ public class PostPollFragment extends Fragment {
     ImageView photo2;
     Button submitBtn;
     String mAuth_token;
-    private Button takePhoto1;
-    private Button takePhoto2;
-    private Button googlePhoto1;
-    private Button googlePhoto2;
     private static int CHOOSE_PHOTO_1 = 1;
     private static int CHOOSE_PHOTO_2 = 2;
     private static int TAKE_PHOTO_1 = 3;
