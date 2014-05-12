@@ -25,7 +25,8 @@
                   android:screenOrientation="portrait"/>
         <activity android:name=".ui.PollItemActivity"
                   android:screenOrientation="portrait"
-                  android:parentActivityName=".ui.TabsActivity"/>
+                  android:parentActivityName=".ui.TabsActivity"
+                  android:windowSoftInputMode="adjustResize|stateHidden"/>
         <activity android:name=".ui.RegisterActivity"
                   android:screenOrientation="portrait"/>
         <activity android:name=".ui.DashboardActivity"

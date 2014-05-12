@@ -4,6 +4,7 @@
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 android:orientation="vertical"
+                android:gravity="bottom"
                 android:background="@color/poll_list_background">
 
     <LinearLayout android:id="@+id/comment_box_with_btn"
