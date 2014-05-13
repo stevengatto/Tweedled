@@ -87,18 +87,17 @@
 
                 </LinearLayout>
 
-
-                <!--<EditText android:id="@+id/et_poll_description"-->
-                          <!--android:layout_width="fill_parent"-->
-                          <!--android:hint="Description"-->
-                          <!--android:layout_height="50dp"-->
-                          <!--android:layout_marginLeft="6dp"-->
-                          <!--android:layout_marginRight="6dp"-->
-                          <!--android:maxLength="140"-->
-                          <!--android:fontFamily="sans-serif-thin"-->
-                          <!--android:textStyle="normal|bold"-->
-                          <!--android:background="@android:color/transparent"-->
-                          <!--android:layout_below="@id/layout_poll_post_images"/>-->
+                <EditText android:id="@+id/et_poll_description"
+                          android:layout_width="fill_parent"
+                          android:hint="Description"
+                          android:layout_height="50dp"
+                          android:layout_marginLeft="6dp"
+                          android:layout_marginRight="6dp"
+                          android:maxLength="140"
+                          android:fontFamily="sans-serif-thin"
+                          android:textStyle="normal|bold"
+                          android:background="@android:color/transparent"
+                          android:layout_below="@id/layout_poll_post_images"/>
 
             </RelativeLayout>
 

@@ -111,24 +111,21 @@
 
         </LinearLayout>
 
-        <!--<LinearLayout android:layout_width="match_parent"-->
-                      <!--android:layout_height="wrap_content"-->
-                      <!--android:orientation="horizontal"-->
-                      <!--android:visibility="gone">-->
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal">
 
-            <!--<TextView android:id="@+id/tv_poll_description"-->
-                      <!--android:layout_width="0dp"-->
-                      <!--android:layout_weight="8"-->
-                      <!--android:layout_height="wrap_content"-->
-                      <!--android:layout_gravity="center_vertical"-->
-                      <!--android:layout_marginLeft="6dp"-->
-                      <!--android:maxLines="1"-->
-                      <!--android:textColorLink="@android:color/holo_blue_dark"-->
-                      <!--android:fontFamily="sans-serif-thin"-->
-                      <!--android:textStyle="normal|bold"-->
-                      <!--android:textColor="@color/text_color"-->
-                      <!--android:textSize="18sp"-->
-                      <!--android:text="Description"/>-->
+            <TextView android:id="@+id/tv_poll_description"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_gravity="center_vertical"
+                      android:layout_marginLeft="6dp"
+                      android:maxLines="1"
+                      android:textColorLink="@android:color/holo_blue_dark"
+                      android:fontFamily="sans-serif-thin"
+                      android:textStyle="normal|bold"
+                      android:textColor="@color/text_color"
+                      android:textSize="18sp"/>
 
             <!--<ImageButton android:id="@+id/btn_poll_more"-->
                          <!--android:layout_width="0dp"-->
@@ -139,7 +136,7 @@
                          <!--android:clickable="true"-->
                          <!--android:background="@drawable/ic_more"/>-->
 
-        <!--</LinearLayout>-->
+        </LinearLayout>
 
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="wrap_content"

@@ -59,6 +59,7 @@ public class PollItemFragment extends Fragment {
         rightTitle.setText((String) bundle.get("rightTitle"));
         leftVotes.setText(bundle.get("leftVotes").toString());
         rightVotes.setText(bundle.get("rightVotes").toString());
+
         ImageLoader.getInstance().displayImage(bundle.get("leftImageUrl").toString(), leftImage,
                 null, new ImageLoadingListener(leftProgBar));
         ImageLoader.getInstance().displayImage(bundle.get("rightImageUrl").toString(), rightImage,

@@ -77,7 +77,7 @@ public class PostPollFragment extends Fragment {
         photo1 = (ImageView) layout.findViewById(R.id.iv_poll_post_left);
         photo2 = (ImageView) layout.findViewById(R.id.iv_poll_post_right);
         submitBtn = (Button) layout.findViewById(R.id.btn_post_submit);
-//        description = (EditText) layout.findViewById(R.id.et_poll_description);
+        description = (EditText) layout.findViewById(R.id.et_poll_description);
         mActivity = getActivity();
 
         submitBtn.setOnClickListener(new View.OnClickListener() {
@@ -352,8 +352,7 @@ public class PostPollFragment extends Fragment {
         mQuestion_str = question.getText().toString();
         mTitle1_str = title1.getText().toString();
         mTitle2_str = title2.getText().toString();
-//        mDescription_str = description.getText().toString();
-        mDescription_str = "No description at this time";
+        mDescription_str = description.getText().toString();
 
         //first check if user has logged in by catching null pointer on getPreferences
         try{

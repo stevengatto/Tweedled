@@ -51,6 +51,7 @@ public class HomeFragment extends Fragment {
                 intent.putExtra("rightVotes", current.getRightVotes());
                 intent.putExtra("leftImageUrl", current.getLeftImageUrl());
                 intent.putExtra("rightImageUrl", current.getRightImageUrl());
+                intent.putExtra("description", current.getDescription());
                 startActivity(intent);
                 thisActivity.overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.fade_out);
                 return true;

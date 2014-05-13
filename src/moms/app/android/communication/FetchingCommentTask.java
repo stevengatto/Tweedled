@@ -32,7 +32,8 @@ import java.util.List;
  * Created by klam on 4/17/14.
  * Class for fetching polls
  */
-public class FetchingCommentTask {
+public class
+        FetchingCommentTask {
 
     private Context mContext;
     private List<Comment> list = new ArrayList<Comment>();
@@ -65,7 +66,6 @@ public class FetchingCommentTask {
                 comment.setUsername(currentComment.getString("username"));
                 comment.setBody(currentComment.getString("body"));
                 list.add(comment);
-
             }
 
             //set up listView adapter and onItemClick listener
