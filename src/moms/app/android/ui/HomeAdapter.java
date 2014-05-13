@@ -75,7 +75,7 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
             holder.mainTitle = (TextView) currentView.findViewById(R.id.tv_poll_main_title);
             holder.subTitleLeft = (TextView) currentView.findViewById(R.id.tv_poll_sub_title_left);
             holder.subTitleRight = (TextView) currentView.findViewById(R.id.tv_poll_sub_title_right);
-            holder.description = (TextView) currentView.findViewById(R.id.tv_poll_description);
+            //holder.description = (TextView) currentView.findViewById(R.id.tv_poll_description);
             holder.leftImage = (ImageView) currentView.findViewById(R.id.iv_poll_left);
             holder.rightImage = (ImageView) currentView.findViewById(R.id.iv_poll_right);
             holder.leftProgressBar = (ProgressBar) currentView.findViewById(R.id.pb_poll_left);
@@ -124,9 +124,6 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
         holder.subTitleLeft.setText(currentPoll.getSubTitleLeft());
         holder.subTitleRight.setText(currentPoll.getSubTitleRight());
         //holder.description.setText(currentPoll.getDescription());
-//        holder.description.setText("This is the description I will be using today, it should run more than one" +
-//                "line so I am hoping to see how it looks. With any luck, I will be able to push the little button" +
-//                "on the right side and open this up. Soon it will bring us to a new page with comments.");
         ImageLoader.getInstance().displayImage(currentPoll.getLeftImageUrl(),holder.leftImage,
                 new ImageLoadingListener(holder.leftProgressBar));
         ImageLoader.getInstance().displayImage(currentPoll.getRightImageUrl(),holder.rightImage,
@@ -148,7 +145,7 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
         TextView mainTitle;
         TextView subTitleLeft;
         TextView subTitleRight;
-        TextView description;
+        //TextView description;
         ImageView leftImage;
         ImageView rightImage;
         ProgressBar leftProgressBar;
