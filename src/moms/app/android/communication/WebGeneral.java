@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
  */
 public class WebGeneral {
     public static final String BASE_URL = "http://107.170.50.231/";
-//    public static final String BASE_URL = "http://6c25d4e7.ngrok.com/";
+  //  public static final String BASE_URL = "http://5e04b4bc.ngrok.com/";
     public static final String LOGIN_URL = BASE_URL + "api/v1/sessions";
     public static final String FETCHING_POLL_URL = BASE_URL + "polls.json";
     public static final String CREATING_NEW_POLL_URL = BASE_URL + "polls/new";
@@ -15,7 +15,7 @@ public class WebGeneral {
     public static final String IMAGE_SEARCH_BASE_URL = "https://ajax.googleapis.com/ajax/services/search/images?" +
             "v=1.0&as_filetype=jpg&rsz=8";
 
-    public static String generateCreatingCommentURL(int poll_id){ return BASE_URL + "/polls/" + poll_id + "/comments"; }
+    public static String generateCommentURL(int poll_id){ return BASE_URL + "/polls/" + poll_id + "/comments.json"; }
 
     public static String generateVoteURL(int id)
     {

@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import moms.app.android.R;
+import moms.app.android.communication.CreateCommentTask;
+import moms.app.android.communication.FetchingCommentTask;
 import moms.app.android.model.testing.Comment;
 import moms.app.android.utils.ImageLoadingListener;
 
@@ -21,13 +23,13 @@ public class PollItemFragment extends Fragment {
 
     private EditText mCommentBox;
     private ImageButton mPostComment;
-
+    ListView listView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.poll_item_fragment, container, false);
         View header = inflater.inflate(R.layout.poll_item_header, container, false);
 
-        ListView listView = (ListView) view.findViewById(R.id.comment_list_view);
+        listView = (ListView) view.findViewById(R.id.comment_list_view);
 
         TextView mainTitle = (TextView) header.findViewById(R.id.tv_poll_main_title);
         TextView leftTitle = (TextView) header.findViewById(R.id.tv_poll_sub_title_left);
@@ -71,27 +73,25 @@ public class PollItemFragment extends Fragment {
         //     after web call like normal
         //
         //--------------------------------------------------------------
-
-        List<Comment> list = new ArrayList<Comment>();
-        for(int i=1; i<30; i++){
-            Comment comment = new Comment(null,null);
-            comment.setUsername("Username "+i);
-            comment.setBody("Comment "+i+" goes here, you can say whatever you'd like. Design in-progess");
-            list.add(comment);
-        }
-
-        PollItemAdapter adapter = new PollItemAdapter(getActivity(), R.layout.comment_list_item, list);
+        int id = (Integer) bundle.get("id");
         listView.addHeaderView(header);
-        listView.setAdapter(adapter);
+        List<Comment> list = new ArrayList<Comment>();
+       FetchingCommentTask fetchingCommentTask = new FetchingCommentTask(getActivity(),listView);
+       fetchingCommentTask.submitRequest(id);
+
+
 
         return view;
     }
 
     private void submitComment(){
         String comment = mCommentBox.getText().toString();
-
+        Bundle bundle = BaseActivity.intentToFragmentArguments(getActivity().getIntent());
         //do something with comment
-
+        CreateCommentTask createCommentTask = new CreateCommentTask(getActivity());
+        createCommentTask.submitRequest(bundle.getInt("id"), comment );
+        FetchingCommentTask fetchingCommentTask = new FetchingCommentTask(getActivity(),listView);
+        fetchingCommentTask.submitRequest(bundle.getInt("id"));
         return;
     }
 }

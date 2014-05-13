@@ -131,14 +131,14 @@
                       android:textSize="18sp"
                       android:text="Description"/>
 
-            <ImageButton android:id="@+id/btn_poll_more"
-                         android:layout_width="0dp"
-                         android:layout_weight="1"
-                         android:layout_height="30dp"
-                         android:layout_gravity="center_horizontal"
-                         android:layout_margin="5dp"
-                         android:clickable="true"
-                         android:background="@drawable/ic_more"/>
+            <!--<ImageButton android:id="@+id/btn_poll_more"-->
+                         <!--android:layout_width="0dp"-->
+                         <!--android:layout_weight="1"-->
+                         <!--android:layout_height="30dp"-->
+                         <!--android:layout_gravity="center_horizontal"-->
+                         <!--android:layout_margin="5dp"-->
+                         <!--android:clickable="true"-->
+                         <!--android:background="@drawable/ic_more"/>-->
 
         </LinearLayout>
 

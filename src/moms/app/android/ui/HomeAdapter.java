@@ -86,7 +86,7 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
             holder.rightVotesHeart = rightHeartVote;
             holder.vote1text = (TextView) currentView.findViewById(R.id.tv_poll_left_votes);
             holder.vote2text = (TextView) currentView.findViewById(R.id.tv_poll_right_votes);
-            holder.moreButton = (ImageButton) currentView.findViewById(R.id.btn_poll_more);
+          //  holder.moreButton = (ImageButton) currentView.findViewById(R.id.btn_poll_more);
 
 //            holder.moreButton.setOnClickListener(new View.OnClickListener() {
 //                @Override
@@ -123,10 +123,10 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
         holder.mainTitle.setText(currentPoll.getMainTitle());
         holder.subTitleLeft.setText(currentPoll.getSubTitleLeft());
         holder.subTitleRight.setText(currentPoll.getSubTitleRight());
-        holder.description.setText(currentPoll.getDescription());
-        holder.description.setText("This is the description I will be using today, it should run more than one" +
-                "line so I am hoping to see how it looks. With any luck, I will be able to push the little button" +
-                "on the right side and open this up. Soon it will bring us to a new page with comments.");
+        //holder.description.setText(currentPoll.getDescription());
+//        holder.description.setText("This is the description I will be using today, it should run more than one" +
+//                "line so I am hoping to see how it looks. With any luck, I will be able to push the little button" +
+//                "on the right side and open this up. Soon it will bring us to a new page with comments.");
         ImageLoader.getInstance().displayImage(currentPoll.getLeftImageUrl(),holder.leftImage,
                 new ImageLoadingListener(holder.leftProgressBar));
         ImageLoader.getInstance().displayImage(currentPoll.getRightImageUrl(),holder.rightImage,

@@ -65,7 +65,7 @@ public class FetchingPollTask {
                 String question = poll_json.getString("question");
                 String subTitleLeft = poll_json.getString("title_one");
                 String subTitleRight = poll_json.getString("title_two");
-                String description = poll_json.getString("description");
+                String description = (poll_json.getString("description") == null) ? "" : poll_json.getString("description");
                 Poll poll = new Poll(id, question,subTitleLeft,subTitleRight,null,null,null,null,null);
 
                 poll.setLeftVotes(poll_json.getInt("vote_one"));

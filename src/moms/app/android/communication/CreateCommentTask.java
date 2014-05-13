@@ -35,7 +35,7 @@ public class CreateCommentTask {
         this.mPollId = poll_id;
 
         CreateCommentAsyncTask createCommentAsyncTask = new CreateCommentAsyncTask(mContext);
-        createCommentAsyncTask.execute(WebGeneral.generateCreatingCommentURL(poll_id));
+        createCommentAsyncTask.execute(WebGeneral.generateCommentURL(poll_id));
     }
 
     private void onPostExecuteAction(JSONObject respond)
@@ -65,6 +65,7 @@ public class CreateCommentTask {
         protected JSONObject doInBackground(String... urls) {
             DefaultHttpClient client = new DefaultHttpClient();
             HttpPost post = new HttpPost(urls[0]);
+            respond = new JSONObject();
             String response;
             try {
                 try {
