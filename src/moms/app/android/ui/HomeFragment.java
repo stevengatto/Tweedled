@@ -36,27 +36,27 @@ public class HomeFragment extends Fragment {
 
         fetchingPolls();
 
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Log.d(null, "Entering onItemLongClick method in Polls ListView");
-                Toast.makeText(getActivity(), "Poll Long Click Received", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(thisActivity, PollItemActivity.class);
-                Poll current = (Poll) adapterView.getAdapter().getItem(position);
-                intent.putExtra("id", current.getId());
-                intent.putExtra("mainTitle", current.getMainTitle());
-                intent.putExtra("leftTitle", current.getSubTitleLeft());
-                intent.putExtra("rightTitle", current.getSubTitleRight());
-                intent.putExtra("leftVotes", current.getLeftVotes());
-                intent.putExtra("rightVotes", current.getRightVotes());
-                intent.putExtra("leftImageUrl", current.getLeftImageUrl());
-                intent.putExtra("rightImageUrl", current.getRightImageUrl());
-                intent.putExtra("description", current.getDescription());
-                startActivity(intent);
-                thisActivity.overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.fade_out);
-                return true;
-            }
-        });
+//        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+//                Log.d(null, "Entering onItemLongClick method in Polls ListView");
+//                Toast.makeText(getActivity(), "Poll Long Click Received", Toast.LENGTH_SHORT).show();
+//                Intent intent = new Intent(thisActivity, PollItemActivity.class);
+//                Poll current = (Poll) adapterView.getAdapter().getItem(position);
+//                intent.putExtra("id", current.getId());
+//                intent.putExtra("mainTitle", current.getMainTitle());
+//                intent.putExtra("leftTitle", current.getSubTitleLeft());
+//                intent.putExtra("rightTitle", current.getSubTitleRight());
+//                intent.putExtra("leftVotes", current.getLeftVotes());
+//                intent.putExtra("rightVotes", current.getRightVotes());
+//                intent.putExtra("leftImageUrl", current.getLeftImageUrl());
+//                intent.putExtra("rightImageUrl", current.getRightImageUrl());
+//                intent.putExtra("description", current.getDescription());
+//                startActivity(intent);
+//                thisActivity.overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.fade_out);
+//                return true;
+//            }
+//        });
 
         return layout;
     }

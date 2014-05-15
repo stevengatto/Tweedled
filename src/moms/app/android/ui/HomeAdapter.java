@@ -2,6 +2,7 @@ package moms.app.android.ui;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,13 +35,13 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
         // Create default options which will be used for every
         //  displayImage(...) call if no options will be passed to this method
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
-        .cacheInMemory(true)
-        .cacheOnDisc(true)
-        .build();
+                .cacheInMemory(true)
+                .cacheOnDisc(true)
+                .build();
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
-        .defaultDisplayImageOptions(defaultOptions)
-        .build();
+                .defaultDisplayImageOptions(defaultOptions)
+                .build();
 
 
         ImageLoader.getInstance().init(config);
@@ -86,17 +87,26 @@ public class HomeAdapter extends ArrayAdapter<Poll> {
             holder.rightVotesHeart = rightHeartVote;
             holder.vote1text = (TextView) currentView.findViewById(R.id.tv_poll_left_votes);
             holder.vote2text = (TextView) currentView.findViewById(R.id.tv_poll_right_votes);
-          //  holder.moreButton = (ImageButton) currentView.findViewById(R.id.btn_poll_more);
+            holder.moreButton = (ImageButton) currentView.findViewById(R.id.btn_poll_more);
 
-//            holder.moreButton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    if(holder.description.getMaxLines() == 1)
-//                        holder.description.setMaxLines(10);
-//                    else
-//                        holder.description.setMaxLines(1);
-//                }
-//            });
+            holder.moreButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, PollItemActivity.class);
+                    intent.putExtra("id", currentPoll.getId());
+                    intent.putExtra("mainTitle", currentPoll.getMainTitle());
+                    intent.putExtra("leftTitle", currentPoll.getSubTitleLeft());
+                    intent.putExtra("rightTitle", currentPoll.getSubTitleRight());
+                    intent.putExtra("leftVotes", currentPoll.getLeftVotes());
+                    intent.putExtra("rightVotes", currentPoll.getRightVotes());
+                    intent.putExtra("leftImageUrl", currentPoll.getLeftImageUrl());
+                    intent.putExtra("rightImageUrl", currentPoll.getRightImageUrl());
+                    intent.putExtra("description", currentPoll.getDescription());
+                    context.startActivity(intent);
+                    ((Activity) context).overridePendingTransition(android.R.anim.slide_in_left,
+                            android.R.anim.slide_out_right);
+                }
+            });
 
             currentView.setTag(holder);
         }

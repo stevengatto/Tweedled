@@ -42,8 +42,8 @@ public class CreateCommentTask {
     {
         try {
             if (respond.getBoolean("success")) {
-                Toast.makeText(mContext, respond.getString("info"),
-                        Toast.LENGTH_LONG).show();
+//                Toast.makeText(mContext, respond.getString("info"),
+//                        Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {
             Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_LONG)
